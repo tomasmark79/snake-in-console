@@ -11,7 +11,11 @@ Compiler::Compiler()
     else this->compilerVersion = "pre-standard C++." + __cplusplus;
 }
 
-const std::string Compiler::getCompilerVersionDescription() const
+const std::string Compiler::getCppCompilerV() const
 {
     return this->compilerVersion;
+}
+
+std::ostream& operator<<(std::ostream& str, const Compiler& cp) {
+    return str << cp.compilerVersion;
 }

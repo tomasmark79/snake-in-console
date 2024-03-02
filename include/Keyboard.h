@@ -3,7 +3,7 @@
 BOOL WINAPI CtrlHandler(DWORD fdwCtrlType);
 class Keyboard
 {
-    public:
-        Keyboard();
-        int getMyKeyboardCode() const;
+public:
+    Keyboard();
+    int getMyKeyboardCode() const;
 };

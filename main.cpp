@@ -1,4 +1,5 @@
 #include "Process.h"
+#include <iostream>
 
 // 4K resolution - too slow
 //#define WIDTH   (int)340

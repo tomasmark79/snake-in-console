@@ -50,16 +50,16 @@ const void Process::mainLoop()
         this->elapsed_time = this->end_time - this->start_time;
 
         // set precision
-        std::ostringstream proud;
-        proud << std::fixed << std::setprecision(1) << this->elapsed_time.count() ;
+        std::ostringstream _stream;
+        _stream << std::fixed << std::setprecision(1) << this->elapsed_time.count() ;
 
         msg =
-            Compiler().getCompilerVersionDescription() +
+            Compiler().getCppCompilerV() +
             " Snake X: " + std::to_string(snake->getSnakeX()[0]) +
             " Y: " + std::to_string(snake->getSnakeY()[0]) +
             " Length: " + std::to_string(snake->getSnakeLength() + 1) +
             " Direction: " + std::to_string(snake->getSnakeDirection()) +
-            " Retarder: " + proud.str() + "ms" +
+            " Retarder: " + _stream.str() + "ms" +
             " Cycle: " + std::to_string(cCounter++) + "\n";
 
 
