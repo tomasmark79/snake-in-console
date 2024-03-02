@@ -45,6 +45,12 @@ int Keyboard::getMyKeyboardCode() const
         case 'h':
             // help form
             return 5;
+        case 'H':
+            // help form
+            return 5;
+        case 'b':
+            // help form
+            return 6;
         }
     }
     return -1;

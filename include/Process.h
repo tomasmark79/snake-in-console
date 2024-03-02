@@ -1,11 +1,13 @@
 #pragma once
-#include "Graphics.h"
-#include "Snake.h"
 #include "Keyboard.h"
+#include "Field.h"
+#include "Snake.h"
+#include "Graphics.h"
 #include <chrono>
 #include <string>
 class Process
 {
+    Field* field;
     Graphics* graphics;
     Snake* snake;
     Keyboard keyboard;

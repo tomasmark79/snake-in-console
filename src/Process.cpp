@@ -8,8 +8,9 @@ using namespace std::chrono_literals;
 
 Process::Process(int width, int height)
 {
-    graphics = new Graphics(width, height);
-    snake = new Snake(width, height);
+    field = new Field(width, height);
+    snake = new Snake(*field);
+    graphics = new Graphics(*field);
     this->mainLoop();
 }
 
@@ -17,22 +18,19 @@ Process::~Process()
 {
     delete graphics;
     delete snake;
+    delete field;
 }
 
 const void Process::mainLoop()
 {
     int cCounter = 0;
+    int gameOverReason = 0;
 
     while (true)
     {
-        this->start_time = std::chrono::high_resolution_clock::now();
-
-        graphics->clearBuffer();
-        graphics->addWallsToBuffer();
-
         int snakeCommand = keyboard.getMyKeyboardCode();
 
-        snake->setSnakeWay(snakeCommand);
+        this->start_time = std::chrono::high_resolution_clock::now();
 
         // TO DO
         // temporary hack due no fruits yet
@@ -42,6 +40,16 @@ const void Process::mainLoop()
         if (snakeCommand == 5)
             graphics->printHelp();
 
+        if (snakeCommand == 6)
+        {
+            gameOverReason = 3;
+            break;
+        }
+
+        graphics->clearBuffer();
+        graphics->addWallsToBuffer();
+
+        snake->setSnakeWay(snakeCommand);
 
         graphics->addSnakeToBuffer(
             snake->getSnakeX(),
@@ -49,6 +57,10 @@ const void Process::mainLoop()
             snake->getSnakeLength());
 
         graphics->redrawBuffer();
+
+        gameOverReason = snake->getSnakeConflict();
+        if (gameOverReason == 1 || gameOverReason == 2)
+            break;
 
         this->end_time = std::chrono::high_resolution_clock::now();
         this->elapsed_time = this->end_time - this->start_time;
@@ -58,19 +70,19 @@ const void Process::mainLoop()
         _stream << std::fixed << std::setprecision(1) << this->elapsed_time.count() ;
 
         msg =
-            Compiler().getCppCompilerV() +
-            " Snake X: " + std::to_string(snake->getSnakeX()[0]) +
+            "Snake X: " + std::to_string(snake->getSnakeX()[0]) +
             " Y: " + std::to_string(snake->getSnakeY()[0]) +
             " Length: " + std::to_string(snake->getSnakeLength() + 1) +
             " Direction: " + std::to_string(snake->getSnakeDirection()) +
             " Retarder: " + _stream.str() + "ms" +
-            " Cycle: " + std::to_string(cCounter++) + "\n";
+            " Cycle: " + std::to_string(cCounter++);
+        graphics->prntVrtCenText(graphics->getScreenHeight(),msg);
+        graphics->prntVrtCenText(graphics->getScreenHeight() + 1,
+                                 "Press key H for help | Press ctrl+break to exit | Press ctrl+c for no action");
 
-
-        graphics->printInfo(msg);
-
+        // retarder
         std::this_thread::sleep_for(150ms);
-
     }
+    graphics->prntGameOver(gameOverReason);
 }
 

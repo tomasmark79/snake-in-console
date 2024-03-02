@@ -1,13 +1,13 @@
 #pragma once
 #include <string>
+#include "Field.h"
 using std::string;
 class Graphics
 {
+    Field* fie;
     char **buffer;
-    int width;
-    int height;
 public:
-    Graphics(int width /*columns*/, int height /*rows*/);
+    Graphics(Field& field);
     ~Graphics();
     const void clearBuffer() const;
     const void addWallsToBuffer() const;
@@ -16,7 +16,11 @@ public:
                                 int length);
     const void redrawBuffer() const;
     const void printInfo(string msg) const;
-    const void printVerticallyCenteredText(int row, std::string text) const;
+    const void prntVrtCenText(short row, std::string text) const;
+    const void prntGameOver(int reason) const;
     const void printHelp() const;
+    int getScreenWidth() const;
+    int getScreenHeight() const;
 };
+
 

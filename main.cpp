@@ -10,8 +10,12 @@
 int main()
 {
     // Welcome to the Snake game
-    Process gameSnake(WIDTH, HEIGHT);
+    while(true)
+    {
+        Process gameSnake(WIDTH, HEIGHT);
 
+
+    }
     return 0;
 }
 

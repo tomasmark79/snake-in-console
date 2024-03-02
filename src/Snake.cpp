@@ -2,13 +2,14 @@
 #include <iostream>
 #include <windows.h> // Beep
 
-Snake:: Snake(int width, int height)
-    :width(width), height(height)
+Snake:: Snake(Field& field)
 {
+    this->fie = &field;
+
     // snake baby will born here
     this->length = 0;
-    this->xArr[this->length] = this->width/2;
-    this->yArr[this->length] = this->height/2;
+    this->xArr[this->length] = this->fie->getFieldWidth()/2;
+    this->yArr[this->length] = this->fie->getFieldHeight()/2;
 
     // random first direction of snake baby
     std::srand(std::time(0));
@@ -30,6 +31,40 @@ int Snake::getSnakeLength() const
 int Snake::getSnakeDirection() const
 {
     return this->direction;
+}
+
+/** \brief
+ *
+ * \return 1 wall conflic 2 self conflict
+ *
+ */
+int Snake::getSnakeConflict() const
+{
+    if ((xArr[0] == 0 || xArr[0] == fie->getFieldWidth()-1) || (yArr[0] == 0 || yArr[0] == fie->getFieldHeight()-1))
+    {
+        {
+            Beep(1900,50);
+            Beep(1700,50);
+            Beep(1500,50);
+            Beep(1300,50);
+        }
+        return 1;
+    }
+
+    for (int tail = 0; tail < this->length; tail++)
+    {
+        if ( (xArr[0] == xTail[tail] && yArr[0] == yTail[tail]) )
+        {
+            {
+                Beep(1900,50);
+                Beep(1700,50);
+                Beep(1500,50);
+                Beep(1300,50);
+            }
+            return 2;
+        }
+    }
+    return 0;
 }
 
 const void Snake::addTail()

@@ -3,22 +3,23 @@
 #include <iostream>
 #include <windows.h> //SetConsoleCursorPosition
 #include <string>
+
 using std::cout;
 using std::endl;
 using std::string;
 
-Graphics::Graphics(int width, int height)
-    :width(width),height(height)
+Graphics::Graphics(Field& field)
 {
-    this->buffer = new char*[ this->height];
-    for (int i = 0; i < this->height; i++)
+    this->fie = &field;
+    this->buffer = new char*[ this->fie->getFieldHeight() ];
+    for (int i = 0; i < this->fie->getFieldHeight(); i++)
     {
-        this->buffer[i] = new char[this->width];
+        this->buffer[i] = new char[this->fie->getFieldWidth()];
     }
 }
 Graphics::~Graphics()
 {
-    for (int i = 0; i < height; i++)
+    for (int i = 0; i < this->fie->getFieldHeight(); i++)
     {
         delete buffer[i];
     }
@@ -27,9 +28,9 @@ Graphics::~Graphics()
 
 const void Graphics::clearBuffer() const
 {
-    for (int i = 0; i < this->height; i++)
+    for (int i = 0; i < this->fie->getFieldHeight(); i++)
     {
-        for (int j = 0; j < this->width; j++)
+        for (int j = 0; j < this->fie->getFieldWidth(); j++)
         {
             this->buffer[i][j] = ' ';
         }
@@ -39,15 +40,15 @@ const void Graphics::clearBuffer() const
 
 const void Graphics::addWallsToBuffer() const
 {
-    for (int row = 0; row < this->width; row++)
+    for (int row = 0; row < this->fie->getFieldWidth(); row++)
     {
         this->buffer[0][row] = '#'; // left column
-        this->buffer[this->height-1][row] = '#';
+        this->buffer[this->fie->getFieldHeight()-1][row] = '#';
     }
-    for (int col = 0; col < this->height; col++)
+    for (int col = 0; col < this->fie->getFieldHeight(); col++)
     {
         this->buffer[col][0] = '#'; // top row
-        this->buffer[col][this->width-1] = '#';
+        this->buffer[col][this->fie->getFieldWidth()-1] = '#';
     }
 }
 
@@ -62,9 +63,9 @@ const void Graphics::addSnakeToBuffer(int* x, int* y, int length)
 const void Graphics::redrawBuffer() const
 {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
-    for (int i = 0; i < this->height; i++)
+    for (int i = 0; i < this->fie->getFieldHeight(); i++)
     {
-        for (int j = 0; j < this->width; j++)
+        for (int j = 0; j < this->fie->getFieldWidth(); j++)
         {
             cout << this->buffer[i][j];
         }
@@ -77,40 +78,64 @@ const void Graphics::printInfo(std::string msg) const
     cout << msg;
 }
 
-const void Graphics::printVerticallyCenteredText(int row, std::string text) const
+const void Graphics::prntVrtCenText(short row, std::string text) const
 {
     SetConsoleCursorPosition(
         GetStdHandle(STD_OUTPUT_HANDLE),
-        COORD{ (this->width / 2) - (text.length() / 2), row });
+        COORD
+    {
+        (short)( (this->fie->getFieldWidth() / 2) - (text.length() / 2) ),
+        row
+    }
+    );
     cout << text << endl;
 }
 
 const void Graphics::printHelp() const
 {
     Compiler compiler;
+
     system("cls");
-    this->printVerticallyCenteredText(4, "Help");
-    this->printVerticallyCenteredText(5, "______________________________________");
-    this->printVerticallyCenteredText(5, "Compiled with Gcc v. " + compiler.getCppCompilerV());
-    this->printVerticallyCenteredText(6, "______________________________________");
-    this->printVerticallyCenteredText(7, "Snake control");
-    this->printVerticallyCenteredText(8, "by W A S D keys");
-    this->printVerticallyCenteredText(9, "______________________________________");
-    this->printVerticallyCenteredText(10, "for educational purpose");
-    this->printVerticallyCenteredText(11, "Copyright (c) 2024 Tomas Mark");
-    this->printVerticallyCenteredText(14, "press ENTER to go back to the game");
-
-//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ this->width/2, this->height/2 });
-//    cout << "Help" << endl;
-//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ this->width/2-9, this->height/2+1 });
-//    cout << "Compiled with gnu gcc version " << compiler << endl;
-//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ this->width/2-9, this->height/2+2 });
-//    cout << "---------------------------------------------" << endl;
-//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ this->width/2-9, this->height/2+3 });
-//    cout << "Snake control is provided by W A S D keys" << endl;
-//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ this->width/2-9, this->height/2+4 });
-//    cout << "---------------------------------------------" << endl;
-
-
+    this->prntVrtCenText(3, "Snake++");
+    this->prntVrtCenText(4, "0.0.1");
+    this->prntVrtCenText(5, "______________________________________");
+    this->prntVrtCenText(5, "Compiled with Gcc v. " + compiler.getCppCompilerV());
+    this->prntVrtCenText(6, "______________________________________");
+    this->prntVrtCenText(7, "Snake control");
+    this->prntVrtCenText(8, "by W A S D keys");
+    this->prntVrtCenText(9, "______________________________________");
+    this->prntVrtCenText(10, "for educational purpose");
+    this->prntVrtCenText(11, "Copyright (c) 2024 Tomas Mark");
+    this->prntVrtCenText(14, "press ENTER to go back to the game");
     std::cin.get();
 }
+
+const void Graphics::prntGameOver(int reason) const
+{
+    system("cls");
+    this->prntVrtCenText(7, "Game Over");
+
+    if (reason == 1)
+        this->prntVrtCenText(9, "Wall conflict!");
+
+    if (reason == 2)
+        this->prntVrtCenText(9, "Self eating conflict!");
+
+    if (reason == 3)
+        this->prntVrtCenText(9, "Pressed key B!");
+
+    this->prntVrtCenText(14, "press ENTER to start game again");
+    std::cin.clear();
+    std::cin.get();
+}
+
+int Graphics::getScreenWidth() const
+{
+    return this->fie->getFieldWidth();
+}
+
+int Graphics::getScreenHeight() const
+{
+    return this->fie->getFieldHeight();
+}
+
