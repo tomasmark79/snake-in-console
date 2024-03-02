@@ -39,6 +39,10 @@ const void Process::mainLoop()
         if (snakeCommand == 4)
             snake->addTail();
 
+        if (snakeCommand == 5)
+            graphics->printHelp();
+
+
         graphics->addSnakeToBuffer(
             snake->getSnakeX(),
             snake->getSnakeY(),

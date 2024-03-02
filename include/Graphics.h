@@ -16,5 +16,7 @@ public:
                                 int length);
     const void redrawBuffer() const;
     const void printInfo(string msg) const;
+    const void printVerticallyCenteredText(int row, std::string text) const;
+    const void printHelp() const;
 };
 

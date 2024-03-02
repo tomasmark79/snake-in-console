@@ -1,4 +1,5 @@
 #include "Graphics.h"
+#include "Compiler.h"
 #include <iostream>
 #include <windows.h> //SetConsoleCursorPosition
 #include <string>
@@ -76,3 +77,40 @@ const void Graphics::printInfo(std::string msg) const
     cout << msg;
 }
 
+const void Graphics::printVerticallyCenteredText(int row, std::string text) const
+{
+    SetConsoleCursorPosition(
+        GetStdHandle(STD_OUTPUT_HANDLE),
+        COORD{ (this->width / 2) - (text.length() / 2), row });
+    cout << text << endl;
+}
+
+const void Graphics::printHelp() const
+{
+    Compiler compiler;
+    system("cls");
+    this->printVerticallyCenteredText(4, "Help");
+    this->printVerticallyCenteredText(5, "______________________________________");
+    this->printVerticallyCenteredText(5, "Compiled with Gcc v. " + compiler.getCppCompilerV());
+    this->printVerticallyCenteredText(6, "______________________________________");
+    this->printVerticallyCenteredText(7, "Snake control");
+    this->printVerticallyCenteredText(8, "by W A S D keys");
+    this->printVerticallyCenteredText(9, "______________________________________");
+    this->printVerticallyCenteredText(10, "for educational purpose");
+    this->printVerticallyCenteredText(11, "Copyright (c) 2024 Tomas Mark");
+    this->printVerticallyCenteredText(14, "press ENTER to go back to the game");
+
+//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ this->width/2, this->height/2 });
+//    cout << "Help" << endl;
+//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ this->width/2-9, this->height/2+1 });
+//    cout << "Compiled with gnu gcc version " << compiler << endl;
+//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ this->width/2-9, this->height/2+2 });
+//    cout << "---------------------------------------------" << endl;
+//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ this->width/2-9, this->height/2+3 });
+//    cout << "Snake control is provided by W A S D keys" << endl;
+//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ this->width/2-9, this->height/2+4 });
+//    cout << "---------------------------------------------" << endl;
+
+
+    std::cin.get();
+}

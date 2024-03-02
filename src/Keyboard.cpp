@@ -42,6 +42,9 @@ int Keyboard::getMyKeyboardCode() const
         case 'x':
             // add tail hack
             return 4;
+        case 'h':
+            // help form
+            return 5;
         }
     }
     return -1;

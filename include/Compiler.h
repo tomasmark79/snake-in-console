@@ -1,5 +1,4 @@
-#ifndef COMPILER_H
-#define COMPILER_H
+#pragma once
 #include <string>
 #include <sstream>
 
@@ -11,5 +10,3 @@ public:
     const std::string getCppCompilerV() const;
     friend std::ostream& operator<<(std::ostream& str, const Compiler& cp);
 };
-
-#endif // COMPILER_H
