@@ -57,28 +57,23 @@ const void Graphics::addSnakeToBuffer(int* x, int* y, int length)
 {
     for (int tail = 0; tail <= length; tail++)
     {
-        this->buffer[y [tail] ] [x [tail] ] = '*';
+        this->buffer[y [tail] ] [x [tail] ] = 'O';
     }
 }
 
 const void Graphics::addFruitToBuffer(int* x, int* y, int fruitCount)
 {
-    try
+    for (int i = 0; i < fruitCount; i++)
     {
-        for (int i = 0; i < fruitCount; i++)
-        {
-            this->buffer[y [i] ] [x [i] ] = '@';
-        }
-    }
-    catch (std::exception& e)
-    {
-        cout << e.what();
+        this->buffer[y [i] ] [x [i] ] = '@';
     }
 }
 
 const void Graphics::redrawBuffer() const
 {
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
+    SetConsoleCursorPosition(
+        GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
+    // system("cls");
     for (int i = 0; i < this->fie->getFieldHeight(); i++)
     {
         for (int j = 0; j < this->fie->getFieldWidth(); j++)

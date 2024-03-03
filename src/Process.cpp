@@ -27,7 +27,7 @@ const void Process::mainLoop()
 {
     int cycleCounter = 0;
     int gameOverReason = 0;
-    int fruitTypeEatten = 0;
+    int fruitEattenIndex = 0;
 
     while (true)
     {
@@ -39,14 +39,6 @@ const void Process::mainLoop()
 
         graphics->clearBuffer();
         graphics->addWallsToBuffer();
-
-        // TO DO
-        // temporary hack due no fruits yet
-        if (snakeCommand == 4)
-            {
-                snake->addTail();
-                fruit->addFruit();
-            }
 
         if (snakeCommand == 5)
             graphics->printHelp();
@@ -75,12 +67,16 @@ const void Process::mainLoop()
         if (gameOverReason == 1 || gameOverReason == 2)
             break;
 
-        fruitTypeEatten = snake->getSnakeFruit(fruit->getFruitX()[0],
-            fruit->getFruitY()[0]);
-        if (fruitTypeEatten == 1)
+        fruitEattenIndex = snake->whichFruitSnakeEatten(
+            fruit->getFruitX(),
+            fruit->getFruitY(),
+            fruit->getFruitCount());
+
+        if (fruitEattenIndex > 0)
             {
                 snake->addTail();
-                fruit->refreshFruit();
+                fruit->refreshFruit(fruitEattenIndex-1);
+                Beep(5300, 40);
             }
 
 

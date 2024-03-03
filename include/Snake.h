@@ -22,6 +22,6 @@ public:
     int getSnakeConflict() const;
     const void setSnakeWay(int direction);
     const void addTail();
-    int getSnakeFruit(int FruitX, int FruitY) const;
+    int whichFruitSnakeEatten(int* FruitX, int* FruitY, int fruitCount ) const;
 };
 

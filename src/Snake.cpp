@@ -32,10 +32,21 @@ int Snake::getSnakeDirection() const
     return this->direction;
 }
 
-int Snake::getSnakeFruit(int FruitX, int FruitY) const
+/** \brief
+ *
+ * \param
+ * \param
+ * \return > 0 ? index of eatten fruit
+ *
+ */
+
+int Snake::whichFruitSnakeEatten(int* FruitX, int* FruitY, int fruitCount ) const
 {
-    if (xArr[0] ==  FruitX && yArr[0] == FruitY)
-        return 1;
+    for (int fruitIndex = 0; fruitIndex < fruitCount; fruitIndex ++)
+    {
+        if (xArr[0] ==  FruitX[fruitIndex] && yArr[0] == FruitY[fruitIndex])
+            return fruitIndex + 1;
+    }
     return 0;
 }
 
