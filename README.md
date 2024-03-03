@@ -5,14 +5,13 @@ Object-oriented code suitable for study purposes written in C++
 
 I wrote the traditional Snake game in an object-oriented way in the C++ programming language.
 
-    In an effort to get some practice in, I decided to create my own Snake game in my spare time, which can be played right in the console window. The game is rendered using only ASCII characters and runs under Windows. You can play the game in command line, powershell or tabby and so on. The source code is compilable against the C++ standard libraries. C++ standard version 17. I compile with GCC MinGW v13.2
-    Tomas Mark
+In an effort to get some practice in, I decided to create my own Snake game in my spare time, which can be played right in the console window. The game is rendered using only ASCII characters and runs under Windows. You can play the game in command line, powershell or tabby and so on. The source code is compilable against the C++ standard libraries. C++ standard version 17. I compile with GCC MinGW v13.2
+Tomas Mark
 
 I also plan to:
 
     Multiplayer - Hot seat for two or more snakes in one field at one time.
     Multiplayer - TCP/IP Server/Client for two or more snakes in one field at one time.
-
 
 ```
 //MIT License
