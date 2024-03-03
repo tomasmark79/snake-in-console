@@ -160,15 +160,15 @@ const void Graphics::coutHelp() const
 
     this->clearScreen();
     {
-        this->coutVCAWCoo(3, "Snake++");
-        this->coutVCAWCoo(4, "0.0.1");
+        this->coutVCAWCoo(3, "Snake-In-Console");
+        this->coutVCAWCoo(4, "0.0.2");
         this->coutVCAWCoo(5, "______________________________________");
         this->coutVCAWCoo(5, "Compiled with Gcc v. " + compiler.getCppCompilerV());
         this->coutVCAWCoo(6, "______________________________________");
         this->coutVCAWCoo(7, "Snake control");
         this->coutVCAWCoo(8, "by W A S D keys");
         this->coutVCAWCoo(9, "______________________________________");
-        this->coutVCAWCoo(10, "in hope of educational purpose");
+        this->coutVCAWCoo(10, "for educational purpose");
         this->coutVCAWCoo(11, "Copyright (c) 2024 Tomas Mark");
         this->coutVCAWCoo(14, "press ENTER");
     }
