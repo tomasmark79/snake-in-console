@@ -3,9 +3,8 @@
 #include <windows.h> // Beep
 
 Snake:: Snake(Field& field)
+   : fie(&field)
 {
-    this->fie = &field;
-
     // snake baby will born here
     this->length = 0;
     this->xArr[this->length] = this->fie->getFieldWidth()/2;
@@ -32,6 +31,14 @@ int Snake::getSnakeDirection() const
 {
     return this->direction;
 }
+
+int Snake::getSnakeFruit(int FruitX, int FruitY) const
+{
+    if (xArr[0] ==  FruitX && yArr[0] == FruitY)
+        return 1;
+    return 0;
+}
+
 
 /** \brief
  *

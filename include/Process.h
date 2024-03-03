@@ -1,15 +1,19 @@
 #pragma once
-#include "Keyboard.h"
 #include "Field.h"
 #include "Snake.h"
+#include "Fruit.h"
 #include "Graphics.h"
+#include "Keyboard.h"
+
 #include <chrono>
 #include <string>
+
 class Process
 {
     Field* field;
-    Graphics* graphics;
     Snake* snake;
+    Fruit* fruit;
+    Graphics* graphics;
     Keyboard keyboard;
     std::string msg;
     std::chrono::time_point<std::chrono::system_clock> start_time;

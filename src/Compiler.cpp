@@ -16,6 +16,7 @@ const std::string Compiler::getCppCompilerV() const
     return this->compilerVersion;
 }
 
-std::ostream& operator<<(std::ostream& str, const Compiler& cp) {
+std::ostream& operator<<(std::ostream& str, const Compiler& cp)
+{
     return str << cp.compilerVersion;
 }

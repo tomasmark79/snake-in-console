@@ -1,3 +1,4 @@
+#include <exception>
 #include "Graphics.h"
 #include "Compiler.h"
 #include <iostream>
@@ -9,8 +10,8 @@ using std::endl;
 using std::string;
 
 Graphics::Graphics(Field& field)
+    : fie(&field)
 {
-    this->fie = &field;
     this->buffer = new char*[ this->fie->getFieldHeight() ];
     for (int i = 0; i < this->fie->getFieldHeight(); i++)
     {
@@ -57,6 +58,21 @@ const void Graphics::addSnakeToBuffer(int* x, int* y, int length)
     for (int tail = 0; tail <= length; tail++)
     {
         this->buffer[y [tail] ] [x [tail] ] = '*';
+    }
+}
+
+const void Graphics::addFruitToBuffer(int* x, int* y, int fruitCount)
+{
+    try
+    {
+        for (int i = 0; i < fruitCount; i++)
+        {
+            this->buffer[y [i] ] [x [i] ] = '@';
+        }
+    }
+    catch (std::exception& e)
+    {
+        cout << e.what();
     }
 }
 
