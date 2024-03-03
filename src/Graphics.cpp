@@ -148,7 +148,6 @@ const void Graphics::coutHelp() const
 
 const void Graphics::coutGOver(int reason) const
 {
-    char q;
     system("cls");
     this->coutVCAWCoo(7, "Game Over");
     if (reason == 1)

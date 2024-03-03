@@ -6,7 +6,7 @@
 using namespace std::chrono_literals;
 
 Process::Process(int width, int height)
-:isNextGameWantedValue(true)
+:totalPoints(0), totalCycles(0), isNextGameWantedValue(true)
 {
     field = new Field(width, height);
     snake = new Snake(*field);
@@ -25,14 +25,14 @@ Process::~Process()
 
 const void Process::mainLoop()
 {
-    int totalCycles = 0;
     int eattenFruitElement = 0;
     int gameOverReason = 0;
 
+    this->start_time =
+        std::chrono::high_resolution_clock::now();
+
     while (true)
     {
-        this->start_time =
-            std::chrono::high_resolution_clock::now();
 
         int keyboardCode = keyboard.getMyKeyboardCode();
 
@@ -64,20 +64,46 @@ const void Process::mainLoop()
             Beep(5300, 40);
         }
 
+        // exit game
+        if (keyboardCode == 4)
+        {
+            this->isNextGameWantedValue = false;
+            break;
+        }
+
+        // help game
+        if (keyboardCode == 5)
+            graphics->coutHelp();
+
+        // restart game
+        if (keyboardCode == 6)
+            break;
+
+        //
+        gameOverReason = snake->isSnakeInConflict();
+        if (gameOverReason == 1 || gameOverReason == 2)
+        {
+            graphics->coutGOver(gameOverReason);
+            break;
+        }
+
         // retarder
         std::this_thread::sleep_for(150ms);
 
+        // time calc
         this->end_time =
             std::chrono::high_resolution_clock::now();
-        this->elapsed_time =
-            this->end_time - this->start_time;
+        this->elapsed_time=
+            (this->end_time - this->start_time) / 1000;
 
-        msg = "Points: " + std::to_string((snake->getSnakeLength() * SCORE_MULTIPLIER)) +
-        " Duration: " + std::to_string(totalCycles++);
+        // player information
+        totalPoints = snake->getSnakeLength() * SCORE_MULTIPLIER;
+        msg = "Points: " + std::to_string(this->totalPoints) +
+        " Elapsed: " + std::to_string((int)this->elapsed_time.count()) + "s";
         graphics->coutVCentered(msg);
-
         graphics->coutVCentered("(H)elp | (R)estart | (P)ause | e(X)it");
-
+    }
+}
 // debug
 //        // set precision
 //        std::stringstream _stream;
@@ -95,27 +121,8 @@ const void Process::mainLoop()
 //            " C: " + std::to_string(totalCycles++);
 //            graphics->coutVCentered(msg);
 
-        if (keyboardCode == 4)
-        {
-            this->isNextGameWantedValue = false;
-            break;
-        }
-        if (keyboardCode == 5)
-            graphics->coutHelp();
 
-        gameOverReason = snake->isSnakeInConflict();
-        if (gameOverReason == 1 || gameOverReason == 2)
-        {
-            graphics->coutGOver(gameOverReason);
-            break;
-        }
-        if (keyboardCode == 6)
-        {
-            gameOverReason = 3;
-            break;
-        }
-    }
-}
+
 
 const bool Process::isNextGameWanted() const
 {

@@ -7,6 +7,12 @@
 
 #define WIDTH   (int)50
 #define HEIGHT  (int)20
+
+//TO DO
+// Pomer velikost
+// Koeficient nasobku
+// mnozstvi ovoce
+
 int main()
 {
 
