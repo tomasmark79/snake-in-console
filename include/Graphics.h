@@ -6,9 +6,11 @@ class Graphics
 {
     Field* fie;
     char **videoBuffer;
+
 public:
     Graphics(Field& field);
     ~Graphics();
+    const void clearScreen() const;
     const void clearVideoBuffer() const;
     const void addWallsToVideoBuffer() const;
     const void addSnakeToVideoBuffer

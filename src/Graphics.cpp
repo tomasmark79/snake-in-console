@@ -4,6 +4,7 @@
 #include <iostream>
 #include <windows.h> //SetConsoleCursorPosition
 #include <string>
+#include <limits>
 
 using std::cout;
 using std::endl;
@@ -12,6 +13,7 @@ using std::string;
 Graphics::Graphics(Field& field)
     : fie(&field)
 {
+    this->clearScreen();
     this->videoBuffer = new char*[ this->fie->getFieldHeight() ];
     for (int i = 0; i < this->fie->getFieldHeight(); i++)
     {
@@ -25,6 +27,11 @@ Graphics::~Graphics()
         delete videoBuffer[i];
     }
     delete [] videoBuffer;
+}
+
+const void Graphics::clearScreen() const
+{
+    system("cls");
 }
 
 const void Graphics::clearVideoBuffer() const
@@ -101,14 +108,14 @@ const void Graphics::coutVCentered(std::string text) const
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
     GetConsoleScreenBufferInfo(consoleHandle, &consoleInfo);
-    int currentRow = consoleInfo.dwCursorPosition.Y;
+    short currentRow = consoleInfo.dwCursorPosition.Y;
 
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),COORD
     {
         (short)( (this->fie->getFieldWidth() / 2) - (text.length() / 2) ),
         currentRow
     }
-    );
+                            );
     cout << text << endl;
 }
 
@@ -129,36 +136,39 @@ const void Graphics::coutHelp() const
 {
     Compiler compiler;
 
-    system("cls");
-    this->coutVCAWCoo(3, "Snake++");
-    this->coutVCAWCoo(4, "0.0.1");
-    this->coutVCAWCoo(5, "______________________________________");
-    this->coutVCAWCoo(5, "Compiled with Gcc v. " + compiler.getCppCompilerV());
-    this->coutVCAWCoo(6, "______________________________________");
-    this->coutVCAWCoo(7, "Snake control");
-    this->coutVCAWCoo(8, "by W A S D keys");
-    this->coutVCAWCoo(9, "______________________________________");
-    this->coutVCAWCoo(10, "in hope of educational purpose");
-    this->coutVCAWCoo(11, "Copyright (c) 2024 Tomas Mark");
-    this->coutVCAWCoo(14, "press ENTER");
-    std::cin.clear();
-    std::cin.get();
-    system("cls");
+    this->clearScreen();
+    {
+        this->coutVCAWCoo(3, "Snake++");
+        this->coutVCAWCoo(4, "0.0.1");
+        this->coutVCAWCoo(5, "______________________________________");
+        this->coutVCAWCoo(5, "Compiled with Gcc v. " + compiler.getCppCompilerV());
+        this->coutVCAWCoo(6, "______________________________________");
+        this->coutVCAWCoo(7, "Snake control");
+        this->coutVCAWCoo(8, "by W A S D keys");
+        this->coutVCAWCoo(9, "______________________________________");
+        this->coutVCAWCoo(10, "in hope of educational purpose");
+        this->coutVCAWCoo(11, "Copyright (c) 2024 Tomas Mark");
+        this->coutVCAWCoo(14, "press ENTER");
+    }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    this->clearScreen();
 }
 
 const void Graphics::coutGOver(int reason) const
 {
-    system("cls");
-    this->coutVCAWCoo(7, "Game Over");
-    if (reason == 1)
-        this->coutVCAWCoo(9, "You hit a wall!");
-    if (reason == 2)
-        this->coutVCAWCoo(9, "You ate yourself!");
-    if (reason == 3)
-        this->coutVCAWCoo(9, "You interrupted game by pressing key R!");
-    this->coutVCAWCoo(14, "PRESS ENTER");
-    std::cin.clear();
-    std::cin.get();
-    system("cls");
+    this->clearScreen();
+    {
+        this->coutVCAWCoo(7, "Game Over");
+        if (reason == 1)
+            this->coutVCAWCoo(9, "You hit a wall!");
+        if (reason == 2)
+            this->coutVCAWCoo(9, "You ate yourself!");
+        if (reason == 3)
+            this->coutVCAWCoo(9, "You interrupted game by pressing key R!");
+        this->coutVCAWCoo(14, "PRESS ENTER");
+
+    }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    this->clearScreen();
 }
 

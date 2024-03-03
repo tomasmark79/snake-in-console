@@ -33,7 +33,6 @@ const void Process::mainLoop()
 
     while (true)
     {
-
         int keyboardCode = keyboard.getMyKeyboardCode();
 
         graphics->clearVideoBuffer();
@@ -104,6 +103,7 @@ const void Process::mainLoop()
         graphics->coutVCentered("(H)elp | (R)estart | (P)ause | e(X)it");
     }
 }
+
 // debug
 //        // set precision
 //        std::stringstream _stream;
