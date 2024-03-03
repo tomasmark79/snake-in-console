@@ -1,6 +1,7 @@
 #include "Keyboard.h"
 #include "conio.h" // _kbhit && _getch
 
+
 Keyboard::Keyboard()
 {
     if (!SetConsoleCtrlHandler(CtrlHandler, TRUE))
@@ -40,7 +41,10 @@ int Keyboard::getMyKeyboardCode() const
             // right
             return 3;
         case 'x':
-            // add tail hack
+            // exit
+            return 4;
+        case 'X':
+            // exit
             return 4;
         case 'h':
             // help form
@@ -48,7 +52,10 @@ int Keyboard::getMyKeyboardCode() const
         case 'H':
             // help form
             return 5;
-        case 'b':
+        case 'r':
+            // help form
+            return 6;
+        case 'R':
             // help form
             return 6;
         }

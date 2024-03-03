@@ -12,11 +12,13 @@ int main()
 
 
     // Welcome to the Snake game
+
     while(true)
     {
         std::srand(std::time(0));
         Process gameSnake(WIDTH, HEIGHT);
-        // return 0;
+        if (!gameSnake.isNextGameWanted())
+            break;
     }
     return 0;
 }

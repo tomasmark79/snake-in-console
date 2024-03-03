@@ -5,27 +5,33 @@ using std::string;
 class Graphics
 {
     Field* fie;
-    char **buffer;
+    char **videoBuffer;
 public:
     Graphics(Field& field);
     ~Graphics();
-    const void clearBuffer() const;
-    const void addWallsToBuffer() const;
-    const void addSnakeToBuffer(
+    const void clearVideoBuffer() const;
+    const void addWallsToVideoBuffer() const;
+    const void addSnakeToVideoBuffer
+    (
         const int* x,
         const int* y,
-        int length);
-    const void addFruitToBuffer(
+        int snakeLength
+    );
+    const void addFruitToVideoBuffer
+    (
         const int* x,
         const int* y,
-        int fruitCount);
-    const void redrawBuffer() const;
-    const void printInfo(string msg) const;
-    const void prntVrtCenText(short row, std::string text) const;
-    const void prntGameOver(int reason) const;
-    const void printHelp() const;
-    int getScreenWidth() const;
-    int getScreenHeight() const;
+        int fruitElement
+    );
+    const void redrawVideoBuffer() const;
+
+    const void Cout(string msg) const;
+
+    const void coutVCentered(std::string text) const;
+    const void coutVCAWCoo(short row, std::string text) const;
+
+    const void coutHelp() const;
+    const void coutGOver(int reason) const;
 };
 
 
