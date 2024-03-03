@@ -12,12 +12,12 @@ public:
     const void clearBuffer() const;
     const void addWallsToBuffer() const;
     const void addSnakeToBuffer(
-        int* x,
-        int* y,
+        const int* x,
+        const int* y,
         int length);
     const void addFruitToBuffer(
-        int* x,
-        int* y,
+        const int* x,
+        const int* y,
         int fruitCount);
     const void redrawBuffer() const;
     const void printInfo(string msg) const;

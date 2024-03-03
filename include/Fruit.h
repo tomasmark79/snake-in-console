@@ -1,27 +1,22 @@
-#ifndef FRUIT_H
-#define FRUIT_H
+#pragma once
 #include "Field.h"
 
-static const int MAX_FRUITS_IN_FIELD = 50;
+static const int MAX_FRUITS = 50;
 
 class Fruit
 {
     Field* fie;
-    int fruitCount;
-
-    int fruitXArr[MAX_FRUITS_IN_FIELD+1];
-    int fruitYArr[MAX_FRUITS_IN_FIELD+1];
-
+    int totalFruits;
+    int fruitXArr[MAX_FRUITS+1];
+    int fruitYArr[MAX_FRUITS+1];
 public:
     Fruit(Field& field);
-    int* getFruitX() const;
-    int* getFruitY() const;
-    int getFruitCount() const;
+    const int* getFruitX() const;
+    const int* getFruitY() const;
+    const int getRandomFruitX() const;
+    const int getRandomFruitY() const;
+    const int getTotalFruit() const;
 
-    const void addFruit();
+    const void addFruitItem();
     const void refreshFruit(int refreshIndex);
-
-
 };
-
-#endif // FRUIT_H

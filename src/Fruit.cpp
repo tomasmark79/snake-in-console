@@ -1,40 +1,46 @@
 #include "Fruit.h"
 
 Fruit::Fruit(Field& field)
-    : fie(&field), fruitCount(0)
+    : fie(&field), totalFruits(0)
 {
-    for (int i = 0; i < MAX_FRUITS_IN_FIELD; i ++)
-        this->addFruit();
+    for (int i = 0; i < MAX_FRUITS; i ++)
+        this->addFruitItem();
 }
 
-int* Fruit::getFruitX() const
+const int* Fruit::getFruitX() const
 {
     return (int*)fruitXArr;
 }
 
-int* Fruit::getFruitY() const
+const int* Fruit::getFruitY() const
 {
     return (int*)fruitYArr;
 }
 
-int Fruit::getFruitCount() const
+const int Fruit::getTotalFruit() const
 {
-    return this->fruitCount;
+    return this->totalFruits;
 }
 
-const void Fruit::addFruit()
+const int Fruit::getRandomFruitX() const
 {
-    int tempX = rand() % ( (this->fie->getFieldWidth()-2) +1);
-    int tempY = rand() % ( (this->fie->getFieldHeight()-2) +1);
-    this->fruitXArr[this->fruitCount] = tempX;
-    this->fruitYArr[this->fruitCount] = tempY;
-    this->fruitCount++;
+    return (rand() % (this->fie->getFieldWidth()-2) ) + 1;
+}
+
+const int Fruit::getRandomFruitY() const
+{
+    return (rand() % (this->fie->getFieldHeight()-2) ) + 1;
+}
+
+const void Fruit::addFruitItem()
+{
+    this->fruitXArr[this->totalFruits] = getRandomFruitX();
+    this->fruitYArr[this->totalFruits] = getRandomFruitY();
+    this->totalFruits++;
 }
 
 const void Fruit::refreshFruit(int refreshIndex)
 {
-    int tempX = rand() % ( (this->fie->getFieldWidth()-2) +1);
-    int tempY = rand() % ( (this->fie->getFieldHeight()-2) +1);
-    this->fruitXArr[refreshIndex] = tempX;
-    this->fruitYArr[refreshIndex] = tempY;
+    this->fruitXArr[refreshIndex] = getRandomFruitX();
+    this->fruitYArr[refreshIndex] = getRandomFruitY();
 }

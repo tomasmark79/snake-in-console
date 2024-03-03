@@ -6,6 +6,6 @@ class Field
     short height;
 public:
     Field(short width, short height);
-    short getFieldWidth() const;
-    short getFieldHeight() const;
+    const short getFieldWidth() const;
+    const short getFieldHeight() const;
 };

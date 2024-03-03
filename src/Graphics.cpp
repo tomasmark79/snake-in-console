@@ -53,19 +53,20 @@ const void Graphics::addWallsToBuffer() const
     }
 }
 
-const void Graphics::addSnakeToBuffer(int* x, int* y, int length)
+const void Graphics::addSnakeToBuffer(const int* x, const int* y, int length)
 {
     for (int tail = 0; tail <= length; tail++)
     {
-        this->buffer[y [tail] ] [x [tail] ] = 'O';
+        this->buffer[y [tail] ] [x [tail] ] =
+            tail == 0 ? 'S' : '0';
     }
 }
 
-const void Graphics::addFruitToBuffer(int* x, int* y, int fruitCount)
+const void Graphics::addFruitToBuffer(const int* x, const int* y, int fruitCount)
 {
     for (int i = 0; i < fruitCount; i++)
     {
-        this->buffer[y [i] ] [x [i] ] = '@';
+        this->buffer[y [i] ] [x [i] ] = ':';
     }
 }
 
@@ -73,7 +74,7 @@ const void Graphics::redrawBuffer() const
 {
     SetConsoleCursorPosition(
         GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
-    // system("cls");
+    //    system("cls");
     for (int i = 0; i < this->fie->getFieldHeight(); i++)
     {
         for (int j = 0; j < this->fie->getFieldWidth(); j++)
@@ -86,7 +87,7 @@ const void Graphics::redrawBuffer() const
 
 const void Graphics::printInfo(std::string msg) const
 {
-    cout << msg;
+    cout << msg << endl;
 }
 
 const void Graphics::prntVrtCenText(short row, std::string text) const

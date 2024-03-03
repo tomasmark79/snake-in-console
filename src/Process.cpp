@@ -52,7 +52,7 @@ const void Process::mainLoop()
         graphics->addFruitToBuffer(
             fruit->getFruitX(),
             fruit->getFruitY(),
-            fruit->getFruitCount());
+            fruit->getTotalFruit());
 
         snake->setSnakeWay(snakeCommand);
 
@@ -63,14 +63,14 @@ const void Process::mainLoop()
 
         graphics->redrawBuffer();
 
-        gameOverReason = snake->getSnakeConflict();
+        gameOverReason = snake->checkSnakeConflict();
         if (gameOverReason == 1 || gameOverReason == 2)
             break;
 
         fruitEattenIndex = snake->whichFruitSnakeEatten(
             fruit->getFruitX(),
             fruit->getFruitY(),
-            fruit->getFruitCount());
+            fruit->getTotalFruit());
 
         if (fruitEattenIndex > 0)
             {
@@ -98,9 +98,8 @@ const void Process::mainLoop()
             " Direction: " + std::to_string(snake->getSnakeDirection()) +
             " T: " + _stream.str() + "ms" +
             " C: " + std::to_string(cycleCounter++);
-        graphics->prntVrtCenText(graphics->getScreenHeight(),msg);
-        graphics->prntVrtCenText(graphics->getScreenHeight() + 1,
-                                 "Press key H for help | Press ctrl+break to exit | Press ctrl+c for no action");
+        graphics->printInfo(msg);
+        graphics->printInfo("Press key H for help | Press ctrl+break to exit | Press ctrl+c for no action");
 
         // retarder
         std::this_thread::sleep_for(150ms);

@@ -9,11 +9,14 @@
 #define HEIGHT  (int)20
 int main()
 {
+
+
     // Welcome to the Snake game
     while(true)
     {
+        std::srand(std::time(0));
         Process gameSnake(WIDTH, HEIGHT);
-        return 0;
+        // return 0;
     }
     return 0;
 }

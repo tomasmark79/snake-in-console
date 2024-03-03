@@ -3,44 +3,34 @@
 #include <windows.h> // Beep
 
 Snake:: Snake(Field& field)
-   : fie(&field)
+    : fie(&field), snakeLength(0)
 {
     // snake baby will born here
-    this->length = 0;
-    this->xArr[this->length] = this->fie->getFieldWidth()/2;
-    this->yArr[this->length] = this->fie->getFieldHeight()/2;
+    this->xArr[this->snakeLength] = this->fie->getFieldWidth()/2;
+    this->yArr[this->snakeLength] = this->fie->getFieldHeight()/2;
 
     // random first direction of snake baby
-    std::srand(std::time(0));
     this->setSnakeWay(rand() % 3);
 }
 
-int* Snake::getSnakeX() const
+const int* Snake::getSnakeX() const
 {
     return (int*)this->xArr;
 }
-int* Snake::getSnakeY()  const
+const int* Snake::getSnakeY()  const
 {
     return (int*)this->yArr;
 }
-int Snake::getSnakeLength() const
+const int Snake::getSnakeLength() const
 {
-    return this->length;
+    return this->snakeLength;
 }
-int Snake::getSnakeDirection() const
+const int Snake::getSnakeDirection() const
 {
-    return this->direction;
+    return this->snakeDirection;
 }
 
-/** \brief
- *
- * \param
- * \param
- * \return > 0 ? index of eatten fruit
- *
- */
-
-int Snake::whichFruitSnakeEatten(int* FruitX, int* FruitY, int fruitCount ) const
+const int Snake::whichFruitSnakeEatten(const int* FruitX, const int* FruitY, int fruitCount ) const
 {
     for (int fruitIndex = 0; fruitIndex < fruitCount; fruitIndex ++)
     {
@@ -50,34 +40,23 @@ int Snake::whichFruitSnakeEatten(int* FruitX, int* FruitY, int fruitCount ) cons
     return 0;
 }
 
-
-/** \brief
- *
- * \return 1 wall conflic 2 self conflict
- *
- */
-int Snake::getSnakeConflict() const
+const int Snake::checkSnakeConflict() const
 {
-    if ((xArr[0] == 0 || xArr[0] == fie->getFieldWidth()-1) || (yArr[0] == 0 || yArr[0] == fie->getFieldHeight()-1))
+    // hitting the wall check
+    if ((xArr[0] == 0 || xArr[0] == fie->getFieldWidth()-1) ||
+            (yArr[0] == 0 || yArr[0] == fie->getFieldHeight()-1))
     {
-        {
-            Beep(1900,50);
-            Beep(1700,50);
-            Beep(1500,50);
-            Beep(1300,50);
-        }
+        Beep(1400,300);
         return 1;
     }
 
-    for (int tail = 0; tail < this->length; tail++)
+    // hitting self tail check
+    for (int tail = 0; tail < this->snakeLength; tail++)
     {
         if ( (xArr[0] == xTail[tail] && yArr[0] == yTail[tail]) )
         {
             {
                 Beep(1900,50);
-                Beep(1700,50);
-                Beep(1500,50);
-                Beep(1300,50);
             }
             return 2;
         }
@@ -87,24 +66,24 @@ int Snake::getSnakeConflict() const
 
 const void Snake::addTail()
 {
-    this->length+=1;
+    this->snakeLength+=1;
 }
 
-const void Snake::setSnakeWay(int direction)
+const void Snake::setSnakeWay(int directionTaken)
 {
-    if (direction >=0 && direction <= 3)
-        this->direction = direction;
+    if (directionTaken >=0 && directionTaken <= 3)
+        this->snakeDirection = directionTaken;
 
     Beep(500,2);
 
     // store tail axis
-    for (int i = 0; i < length; i ++)
+    for (int i = 0; i < snakeLength; i ++)
     {
         xTail[i] = xArr[i];
         yTail[i] = yArr[i];
     }
 
-    switch(this->direction)
+    switch(this->snakeDirection)
     {
     case 0:
         // code for arrow up
@@ -128,7 +107,7 @@ const void Snake::setSnakeWay(int direction)
     }
 
     // restore tail axis
-    for (int i = 0; i < length; i ++)
+    for (int i = 0; i < snakeLength; i ++)
     {
         xArr[i+1] = xTail[i];
         yArr[i+1] = yTail[i];
