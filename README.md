@@ -1,6 +1,6 @@
 # snake-in-console
 
-Play ***Snake*** within console.
+Play ***Snake*** within Windows console.
 Object-oriented code suitable for study purposes written in C++
 
 I wrote the traditional Snake game in an object-oriented way in the C++ programming language.
