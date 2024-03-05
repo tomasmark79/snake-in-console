@@ -131,6 +131,9 @@ const void Process::mainLoop()
                     snakes[i]->setSnakeDie();
                     // graphics->coutGOver(gameOverReason);
                     // break;
+
+// TO DO - when die all, is necessary to stop time and create winner
+
                 }
             }
 
