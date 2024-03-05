@@ -2,12 +2,13 @@
 
 Play ***Snake*** within Windows console.
 
-I wrote the traditional Snake game in an object-oriented way in the C++ programming language.
-In an effort to get some practice in, I decided to create my own Snake game in my spare time, which can be played right in the console window. The game is rendered using only ASCII characters and runs under Windows. You can play the game in command line, powershell or tabby and so on. The source code is compilable against the C++ standard libraries. C++ standard version 17. I compile with GCC MinGW v13.2
+In an effort to get some practice in, I decided to create my own Snake game, which can be played within the the console windows. The Snake game is rendered using only ASCII characters. You can play the game in command line, powershell or tabby and so on. The source code is compilable against the C++ standard libraries. C++ standard version 17. I compiled with GCC MinGW v13.2
 
 Extra function:
+Up to 4 snakes for 4 players via Hot Seat (one keybard) !
 
-Up to 4 snakes for 4 players via Hot Seat!
+Todo:
+Implementation of several more game mechanism.
 
 ```
 ----------------------------------------
@@ -25,7 +26,7 @@ Start immediately with default settings yes/no ?
 ```
 ```
 
- ----------------------¦-------------------------------------------------------
+ ----------------------Â¦-------------------------------------------------------
 |::: :    :            X::  :::          :  ::::     :  :      :  ::     :   : |
 |:: :::: :: ::  : ::  :X :     ::    :  :::: :     :: :::  :  :     :    :     |
 |  ::::::     ::   :   X :       : :  :::  : :  ::: :: :      ::  ::        : :|
@@ -41,8 +42,8 @@ Start immediately with default settings yes/no ?
 |:: :: :  :  :: :::::     ::   : :  : :  : ::   :   ::::  :  :::::    : :  :0  |
 |    ::      : ::   :   :   :: : : : :    :::::     :: : : : ::: ::  : :    0::|
 |:: :   :  : :::::: :::      ::  :  ::  :   ::  ::   ::: : : : :    :: ::   0::|
-|:   : : :: ::::  :::  ::    : :   : ::  :: : : : ¢00000000000000000000000  0  |
-¢XXXXXXXXXXXX : :    :                  :::  :  :    :  :::  :   ::  :: :0  0  |
+|:   : : :: ::::  :::  ::    : :   : ::  :: : : : Â¢00000000000000000000000  0  |
+Â¢XXXXXXXXXXXX : :    :                  :::  :  :    :  :::  :   ::  :: :0  0  |
 |:: ::: : ::  :    :::   : ::: ::  :  :  : :  ::: : : :  : : : :::      :0::0: |
 |  :              :     : : :: ::  : :  :    ::::: : :  :  :::  : :    : 0: 0: |
 | : :: :   ::  :: : :::: ::  ::::: : :::     :::: :: ::    :: :: ::::    0 :0 :|
@@ -59,7 +60,7 @@ Start immediately with default settings yes/no ?
 |:  :   :: ::  :  :      ::  :::  X:   :: :: :   ::   : : ::: :::::  :     ::  |
 |   :: :   :: :  :: : :   ::      X : : :   : :  ::   : :  ::: :  : ::  :  :: :|
 | : :::   : :   : : :: :  ::: :  :X ::    :::   ::    : : :::::  ::   :: :  :::|
- ---------------------------------¦--------------------------------------------
+ ---------------------------------Â¦--------------------------------------------
                             Player Tomas Points: 671
                          Player writed Points: 132 Dead
                           Player C++ Points: 132 Dead
