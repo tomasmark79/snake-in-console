@@ -23,7 +23,7 @@
 #include "Process.h"
 #include <iostream>
 
-// #define DEBUG
+//#define DEBUG
 
 const int                   MAX_PLAYERS = 4;
 int totalPlayers    =       MAX_PLAYERS;
@@ -47,10 +47,10 @@ int main()
     playerNames[2] = "C++";
     playerNames[3] = "Snake";
 
-#ifdef DEBUG
+#ifndef DEBUG
 
     // Question 0
-    std::string yesOrNo = getStringAnswerFromPlayer("Start immediately with defaul settings yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
+    std::string yesOrNo = getStringAnswerFromPlayer("Start immediately with default settings yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
 
     // or user can create custom game
     if (yesOrNo.compare("yes") == 0 || yesOrNo.compare("y") == 0)
@@ -145,6 +145,7 @@ void printHead()
     std::cout << "|___/|_||_|\\__/_||_\\_\\___| in console"   << std::endl;
     std::cout << "----------------------------------------" << std::endl;
     std::cout << "Copyright (c) 2024 Tomas Mark" << std::endl;
+    std::cout << "tomas@digitalspace.name" << std::endl;
     std::cout << "Enjoy this example of OOP C++ code!" << std::endl;
     std::cout << std::endl;
 }

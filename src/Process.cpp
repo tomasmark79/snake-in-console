@@ -25,7 +25,6 @@
 #include <iomanip>  // std::setprecision
 #include <sstream>  // sstreamstring
 
-
 using namespace std::chrono_literals;
 
 Process::Process(int width, int height, double fruitEmptiness, int totalPlayers, std::string* playerNames)
@@ -158,7 +157,10 @@ const void Process::mainLoop()
               + std::to_string((int)this->elapsed_time.count()) + "s";
         graphics->coutVCentered(msg);
         graphics->coutVCentered("(H)elp | (R)estart | e(X)it");
-        graphics->coutVCentered("Copyright (c) 2024 Tomas Mark");
+
+        // auto marked = dye::vanilla("");
+        auto marked = "Copyright (c) 2024 Tomas Mark";
+        graphics->coutVCentered(marked);
 
 
 

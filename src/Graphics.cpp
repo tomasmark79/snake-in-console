@@ -27,7 +27,6 @@
 #include <windows.h> //SetConsoleCursorPosition
 #include <string>
 #include <limits>
-#include "c:\Projects\_Dep\color-console\include\color.hpp"
 
 using std::cout;
 using std::endl;
@@ -146,9 +145,11 @@ const void Graphics::coutVCentered(std::string text) const
     {
         (short)( (this->fie->getFieldWidth() / 2) - (text.length() / 2) ),
         currentRow
-    }
-                            );
-    cout << dye::aqua(text) << endl;
+    });
+
+    // color == 0 ? (cout << text << endl) : (cout << dye::aqua_on_yellow(text) << endl);
+    cout << text << endl;
+
 }
 
 const void Graphics::coutVCAWCoo(short row, std::string text) const
@@ -179,7 +180,13 @@ const void Graphics::coutHelp() const
         this->coutVCAWCoo(9, "----------------------------------------");
         this->coutVCAWCoo(11, "Copyright (c) 2024 Tomas Mark");
         this->coutVCAWCoo(12, "Enjoy this example of OOP C++ code!");
-        this->coutVCAWCoo(14, "press ENTER");
+
+        this->coutVCAWCoo(14, "Snake 1 - 'w' 's' 'a' 'd'");
+        this->coutVCAWCoo(15, "Snake 2 - 'i' 'k' 'j' 'l'");
+        this->coutVCAWCoo(16, "Snake 3 - '[' ''' ';' '\\'");
+        this->coutVCAWCoo(17, "Snake 4 - '8' '5' '4' '3'");
+        this->coutVCAWCoo(19, "PRESS ENTER TO CONTINUE");
+
     }
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     this->clearScreen();
