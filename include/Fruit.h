@@ -23,16 +23,17 @@
 #pragma once
 #include "Field.h"
 
-static const int MAX_FRUITS = 5050;
+static const int MAX_FRUITS = 1050;
 
 class Fruit
 {
     Field* fie;
     int totalFruits;
-    int fruitXArr[MAX_FRUITS+1];
-    int fruitYArr[MAX_FRUITS+1];
+    int* fruitXArr;// [MAX_FRUITS+1];
+    int* fruitYArr;// [MAX_FRUITS+1];
 public:
-    Fruit(Field& field);
+    Fruit(double fruitEmptiness, Field& field);
+    ~Fruit();
     const int* getFruitX() const;
     const int* getFruitY() const;
     const int getRandomFruitX() const;

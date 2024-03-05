@@ -1,4 +1,6 @@
 #include "Player.h"
+#include <iostream>
+
 
 Player::Player()
 {
@@ -9,6 +11,7 @@ Player::Player()
 Player::Player(int playerId, std::string playerName)
     : playerId(playerId), playerName(playerName)
 {
+
 }
 
 Player::~Player()

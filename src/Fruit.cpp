@@ -22,11 +22,27 @@
 
 #include "Fruit.h"
 
-Fruit::Fruit(Field& field)
+Fruit::Fruit(double fruitEmptiness, Field& field)
     : fie(&field), totalFruits(0)
 {
-    for (int i = 0; i < MAX_FRUITS; i ++)
+
+    int neededMemory =
+          (double)field.getFieldWidth()
+        * (double)field.getFieldHeight()
+        / (double)fruitEmptiness;
+
+    fruitXArr = new int[neededMemory];
+    fruitYArr = new int[neededMemory];
+
+    // seed fruit
+    for (int i = 0; i < neededMemory; i ++)
         this->addFruitItem();
+}
+
+Fruit::~Fruit()
+{
+    delete [] fruitYArr;
+    delete [] fruitXArr;
 }
 
 const int* Fruit::getFruitX() const

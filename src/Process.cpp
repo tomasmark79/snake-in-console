@@ -28,20 +28,19 @@
 
 using namespace std::chrono_literals;
 
-Process::Process(int width, int height, int totalPlayers, std::string& playerNames)
+Process::Process(int width, int height, double fruitEmptiness, int totalPlayers, std::string* playerNames)
     : totalPlayers(totalPlayers), isNextGameWantedValue(true)
 {
     field = new Field(width, height);
-    fruit = new Fruit(*field);
+    fruit = new Fruit(fruitEmptiness, *field);
     graphics = new Graphics(*field);
 
     players = new Player*[totalPlayers+1];
     snakes = new Snake*[totalPlayers+1];
     for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
-        players[playerId] = new Player(playerId, &playerNames[playerId]);
+        players[playerId] = new Player(playerId, playerNames[playerId]);
         snakes[playerId] = new Snake(playerId, *field);
-        graphics->Cout(players[playerId]->getPlayerName());
     }
 
     this->mainLoop();
@@ -67,11 +66,11 @@ const void Process::mainLoop()
     int eattenFruitElement = 0;
     int playerGameOverReason[4] = {0,0,0,0};
     int playerPoints[4] = {0,0,0,0};
+    std::string playerStats[4] = {"","","",""};
 
-//
-//    this->start_time =
-//        std::chrono::high_resolution_clock::now();
-//
+    this->start_time =
+        std::chrono::high_resolution_clock::now();
+
     while (true)
     {
         int playerInput[4] = {-1,-1,-1,-1};
@@ -136,10 +135,27 @@ const void Process::mainLoop()
             }
 
             playerPoints[i] = snakes[i]->getSnakeLength() * SCORE_MULTIPLIER;
+            playerStats[i] = "Player " + players[i]->getPlayerName() + " Points: " + std::to_string(playerPoints[i]) +
+            (snakes[i]->isSnakeDie() ? " Dead " : "");
         }
+
 
         graphics->redrawVideoBuffer();
 
+        // print player stats
+        for (int i = 0; i < 4; i++)
+            graphics->coutVCentered(playerStats[i]);
+
+        // print elapsed time
+        this->end_time =
+            std::chrono::high_resolution_clock::now();
+        this->elapsed_time=
+            (this->end_time - this->start_time) / 1000;
+
+        msg = "Duration: "
+              + std::to_string((int)this->elapsed_time.count()) + "s";
+        graphics->coutVCentered(msg);
+        graphics->coutVCentered("(H)elp | (R)estart | (P)ause | e(X)it");
 
 
 
@@ -158,55 +174,9 @@ const void Process::mainLoop()
         if (keyboardCode == 6)
             break;
 
-//
-//        //
-//        if (!snake1->isSnakeDie())
-//        {
-//            gameOverReasonSnake1 = snake1->isSnakeInConflict();
-//            if (gameOverReasonSnake1 == 1 || gameOverReasonSnake1 == 2)
-//            {
-//                snake1->setSnakeDie();
-//                // graphics->coutGOver(gameOverReason);
-//                // break;
-//            }
-//        }
-//
-//        if (!snake2->isSnakeDie())
-//        {
-//            gameOverReasonSnake2 = snake2->isSnakeInConflict();
-//
-//            if (gameOverReasonSnake2 == 1 || gameOverReasonSnake2 == 2)
-//            {
-//                snake2->setSnakeDie();
-//                // graphics->coutGOver(gameOverReason);
-//                // break;
-//            }
-//        }
-//
-//        // retarder
+        // retarder
         std::this_thread::sleep_for(150ms);
-//
-//        // time calc
-//        this->end_time =
-//            std::chrono::high_resolution_clock::now();
-//        this->elapsed_time=
-//            (this->end_time - this->start_time) / 1000;
-//
 
-//        // players information
-//        totalPointsSnake1 = snake1->getSnakeLength() * SCORE_MULTIPLIER;
-//        msg = "Snake 1 " + player1->getPlayerName() + " Points: " + std::to_string(this->totalPointsSnake1);
-//        graphics->coutVCentered(msg);
-//
-//        totalPointsSnake2 = snake2->getSnakeLength() * SCORE_MULTIPLIER;
-//        msg = "Snake 2 " + player2->getPlayerName() + " Points: " + std::to_string(this->totalPointsSnake2);
-//        graphics->coutVCentered(msg);
-//
-//        msg = "Elapsed: "
-//              + std::to_string((int)this->elapsed_time.count()) + "s";
-//        graphics->coutVCentered(msg);
-//
-//        graphics->coutVCentered("(H)elp | (R)estart | (P)ause | e(X)it");
     }
 
 }

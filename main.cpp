@@ -27,9 +27,10 @@
 // #define WIDTH   (int)340
 // #define HEIGHT  (int)75
 
-#define WIDTH   (int)100
-#define HEIGHT  (int)50
+#define WIDTH   (int)35
+#define HEIGHT  (int)35
 #define MAX_PLAYERS (int)4
+
 
 //TO DO
 // Pomer velikost
@@ -42,30 +43,53 @@ int main()
 
     int totalPlayers = 4;
     std::string playerNames[MAX_PLAYERS+1];
-    playerNames[0] = "Ufon";
+    playerNames[0] = "Snake 1";
+    playerNames[1] = "Snake 2";
+    playerNames[2] = "Snake 3";
+    playerNames[3] = "Snake 4";
 
     // get total players
-//    do
-//    {
-//        std::cout << "Enter number of player [1 -4]? ";
-//        std::cin >> totalPlayers;
-//        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-//
-//    } while(totalPlayers < 1 || totalPlayers > 4);
-//
-//    // get player names
-//    for (int playerId = 0; playerId < totalPlayers; playerId++)
-//    {
-//        std::cout << "Enter name of Snake " << playerId + 1 << "? ";
-//        std::cin >> playerNames[playerId];
-//        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-//    }
+    do
+    {
+        std::cout << "Enter number of player 1-4? ";
+        std::cin >> totalPlayers;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.clear();
+
+    }
+    while(totalPlayers < 1 || totalPlayers > 4);
+
+    // get player names
+    for (int playerId = 0; playerId < totalPlayers; playerId++)
+    {
+        std::cout << "Enter name of Snake " << playerId + 1 << "? ";
+        std::cin >> playerNames[playerId];
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+    // get field size
+    int width;
+    int height;
+
+    std::cout << "Enter width of field. (recomended 80) ? ";
+    std::cin >> width;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    std::cout << "Enter width of heihgt. (recomended 40) ? ";
+    std::cin >> height;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    // fruit density
+    int fruitEmptiness = 2.5;
+    std::cout << "Enter fruit emptiness (recomended 2.5)? ";
+    std::cin >> fruitEmptiness;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     // start play the game
     while(true)
     {
         std::srand(std::time(0));
-        Process gameSnake(WIDTH, HEIGHT, totalPlayers, *playerNames);
+        Process gameSnake(width, height, fruitEmptiness, totalPlayers, playerNames);
         if (!gameSnake.isNextGameWanted())
             break;
     }
