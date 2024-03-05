@@ -23,73 +23,118 @@
 #include "Process.h"
 #include <iostream>
 
-// 4K screen
-// #define WIDTH   (int)340
-// #define HEIGHT  (int)75
-
-#define WIDTH   (int)35
-#define HEIGHT  (int)35
-#define MAX_PLAYERS (int)4
-
-
-//TO DO
-// Pomer velikost
-// Koeficient nasobku
-// mnozstvi ovoce
+#define DEBUG
 
 int main()
 {
-    // Welcome to the Snake game
-
-    int totalPlayers = 4;
+    const int               PLAYER_ANSWER_TRESHHOLD = 5;
+    const int               MAX_PLAYERS = 4;
+    int totalPlayers    =   MAX_PLAYERS;
     std::string playerNames[MAX_PLAYERS+1];
-    playerNames[0] = "Snake 1";
-    playerNames[1] = "Snake 2";
-    playerNames[2] = "Snake 3";
-    playerNames[3] = "Snake 4";
 
-    // get total players
+    playerNames[0] = "Tomas";
+        playerNames[1] = "is";
+            playerNames[2] = "c++";
+                playerNames[3] = "developer";
+
+    int totalAnswers    = 0;
+    int fieldWidth      = 80;
+    int fieldHeight     = 35;
+    int fruitEmptiness  = 2.5;  // more is less fruit
+    std::cout << "----------------------------------------" << std::endl;
+    std::cout << "Welcome to the game" << std::endl;
+    std::cout << " ___              _"           << std::endl;
+    std::cout << "/ __| _ _   __ _ | |_____"    << std::endl;
+    std::cout << "\\__ \\| ' \\ / _` || / / -_)"   << std::endl;
+    std::cout << "|___/|_||_|\\__/_||_\\_\\___| in console"   << std::endl;
+    std::cout << "----------------------------------------" << std::endl;
+    std::cout << std::endl;
+
+#ifndef DEBUG
+
+    totalAnswers = 0;
     do
     {
+        if (totalAnswers == PLAYER_ANSWER_TRESHHOLD)
+        {
+            std::cout << "Game needs your correct inputs.";
+            exit(0);
+        }
+
         std::cout << "Enter number of player 1-4? ";
         std::cin >> totalPlayers;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cin.clear();
-
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        totalAnswers++;
     }
     while(totalPlayers < 1 || totalPlayers > 4);
 
-    // get player names
     for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
         std::cout << "Enter name of Snake " << playerId + 1 << "? ";
         std::cin >> playerNames[playerId];
+        std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        totalAnswers++;
     }
 
-    // get field size
-    int width;
-    int height;
+    totalAnswers = 0;
+    do
+    {
+        if (totalAnswers == PLAYER_ANSWER_TRESHHOLD)
+        {
+            std::cout << "Game needs your correct inputs.";
+            exit(0);
+        }
 
-    std::cout << "Enter width of field. (recomended 80) ? ";
-    std::cin >> width;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Enter width of field. (min 20 recomended 80) ? ";
+        std::cin >> fieldWidth;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        totalAnswers++;
+    }
+    while(fieldWidth < 20 || fieldWidth > 360);
 
-    std::cout << "Enter width of heihgt. (recomended 40) ? ";
-    std::cin >> height;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    totalAnswers = 0;
+    do
+    {
+        if (totalAnswers == PLAYER_ANSWER_TRESHHOLD)
+        {
+            std::cout << "Game needs your correct inputs.";
+            exit(0);
+        }
 
-    // fruit density
-    int fruitEmptiness = 2.5;
-    std::cout << "Enter fruit emptiness (recomended 2.5)? ";
-    std::cin >> fruitEmptiness;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Enter width of heihgt. (min 10 recomended 35) ? ";
+        std::cin >> fieldHeight;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        totalAnswers++;
+    }
+    while(fieldHeight < 10 || fieldHeight > 360);
 
-    // start play the game
+
+    totalAnswers = 0;
+    do
+    {
+        if (totalAnswers == PLAYER_ANSWER_TRESHHOLD)
+        {
+            std::cout << "Game needs your correct inputs.";
+            exit(0);
+        }
+        std::cout << "Enter fruit emptiness (min 1 recomended 2.5)? ";
+        std::cin >> fruitEmptiness;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        totalAnswers++;
+    }
+    while(fruitEmptiness < 1 || fruitEmptiness > 10);
+
+#endif
+
     while(true)
     {
         std::srand(std::time(0));
-        Process gameSnake(width, height, fruitEmptiness, totalPlayers, playerNames);
+        Process gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames);
         if (!gameSnake.isNextGameWanted())
             break;
     }
