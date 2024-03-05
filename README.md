@@ -7,8 +7,9 @@ In an effort to get some practice in, I decided to create my own Snake game, whi
 Extra function:
 Up to 4 snakes for 4 players via Hot Seat (one keybard) !
 
-Todo:
+To do:
 Implementation of several more game mechanism.
+Detect conglicts for each other.
 
 ```
 ----------------------------------------
