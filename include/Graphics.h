@@ -37,6 +37,7 @@ public:
     const void addWallsToVideoBuffer() const;
     const void addSnakeToVideoBuffer
     (
+        const int id,
         const int* x,
         const int* y,
         int snakeLength

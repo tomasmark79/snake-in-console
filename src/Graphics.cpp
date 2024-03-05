@@ -89,12 +89,14 @@ const void Graphics::addWallsToVideoBuffer() const
     }
 }
 
-const void Graphics::addSnakeToVideoBuffer(const int* x, const int* y, int snakeLength)
+const void Graphics::addSnakeToVideoBuffer(const int id, const int* x, const int* y, int snakeLength)
 {
     for (int bodyElement = 0; bodyElement <= snakeLength; bodyElement++)
     {
         this->videoBuffer[y [bodyElement] ] [x [bodyElement] ] =
-            bodyElement == 0 ? 'S' : '0';
+            bodyElement == 0 ? id == 1 ? '1' : '2' : '0';
+//        this->videoBuffer[y [bodyElement] ] [x [bodyElement] ] =
+//            bodyElement == 0 ? 'S' : '0';
     }
 }
 

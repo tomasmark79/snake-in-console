@@ -28,10 +28,13 @@
 using namespace std::chrono_literals;
 
 Process::Process(int width, int height)
-:totalPoints(0), totalCycles(0), isNextGameWantedValue(true)
+    :totalPointsSnake1(0), totalPointsSnake2(0), totalCycles(0), isNextGameWantedValue(true)
 {
     field = new Field(width, height);
-    snake = new Snake(*field);
+    player1 = new Player(1, "Tomas");
+    player2 = new Player(2, "Lucia");
+    snake1 = new Snake(1, *field);
+    snake2 = new Snake(2, *field);
     fruit = new Fruit(*field);
     graphics = new Graphics(*field);
     this->mainLoop();
@@ -41,7 +44,10 @@ Process::~Process()
 {
     delete graphics;
     delete fruit;
-    delete snake;
+    delete snake2;
+    delete snake1;
+    delete player2;
+    delete player1;
     delete field;
 }
 
@@ -55,7 +61,20 @@ const void Process::mainLoop()
 
     while (true)
     {
+        int player1code = - 1;
+        int player2code = - 1;
         int keyboardCode = keyboard.getMyKeyboardCode();
+
+        if (keyboardCode >= 10 && keyboardCode <=13)
+        {
+            player1code = keyboardCode - 10;
+        }
+        if (keyboardCode >= 20 && keyboardCode <=23)
+        {
+            player2code = keyboardCode - 20;
+        }
+
+
 
         graphics->clearVideoBuffer();
 
@@ -68,19 +87,36 @@ const void Process::mainLoop()
             fruit->getFruitY(),
             fruit->getTotalFruit());
 
-        // snake
-        snake->setSnakeDirectionAndShift(keyboardCode);
-        graphics->addSnakeToVideoBuffer(
-            snake->getSnakeX(),
-            snake->getSnakeY(),
-            snake->getSnakeLength());
+        // snakes
+        snake1->setSnakeDirectionAndShift(player1code);
+        snake2->setSnakeDirectionAndShift(player2code);
+        graphics->addSnakeToVideoBuffer(1,
+                                        snake1->getSnakeX(),
+                                        snake1->getSnakeY(),
+                                        snake1->getSnakeLength());
+
+        graphics->addSnakeToVideoBuffer(2,
+                                        snake2->getSnakeX(),
+                                        snake2->getSnakeY(),
+                                        snake2->getSnakeLength());
+
         graphics->redrawVideoBuffer();
-        if ( (eattenFruitElement = snake->getElementOfEattenFruit(
+        if ( (eattenFruitElement = snake1->getElementOfEattenFruit(
                                        fruit->getFruitX(),
                                        fruit->getFruitY(),
                                        fruit->getTotalFruit())) > 0)
         {
-            snake->growUpSnake();
+            snake1->growUpSnake();
+            fruit->refreshFruit(eattenFruitElement-1);
+            Beep(5300, 40);
+        }
+
+        if ( (eattenFruitElement = snake2->getElementOfEattenFruit(
+                                       fruit->getFruitX(),
+                                       fruit->getFruitY(),
+                                       fruit->getTotalFruit())) > 0)
+        {
+            snake2->growUpSnake();
             fruit->refreshFruit(eattenFruitElement-1);
             Beep(5300, 40);
         }
@@ -101,7 +137,14 @@ const void Process::mainLoop()
             break;
 
         //
-        gameOverReason = snake->isSnakeInConflict();
+        gameOverReason = snake1->isSnakeInConflict();
+        if (gameOverReason == 1 || gameOverReason == 2)
+        {
+            graphics->coutGOver(gameOverReason);
+            break;
+        }
+
+        gameOverReason = snake2->isSnakeInConflict();
         if (gameOverReason == 1 || gameOverReason == 2)
         {
             graphics->coutGOver(gameOverReason);
@@ -117,11 +160,18 @@ const void Process::mainLoop()
         this->elapsed_time=
             (this->end_time - this->start_time) / 1000;
 
-        // player information
-        totalPoints = snake->getSnakeLength() * SCORE_MULTIPLIER;
-        msg = "Points: " + std::to_string(this->totalPoints) +
-        " Elapsed: " + std::to_string((int)this->elapsed_time.count()) + "s";
+        // players information
+        totalPointsSnake1 = snake1->getSnakeLength() * SCORE_MULTIPLIER;
+        msg = "Snake 1 " + player1->getPlayerName() + " Points: " + std::to_string(this->totalPointsSnake1);
         graphics->coutVCentered(msg);
+
+        totalPointsSnake2 = snake2->getSnakeLength() * SCORE_MULTIPLIER;
+        msg = "Snake 2 " + player2->getPlayerName() + " Points: " + std::to_string(this->totalPointsSnake2);
+        graphics->coutVCentered(msg);
+
+        "Elapsed: "
+        + std::to_string((int)this->elapsed_time.count()) + "s";
+
         graphics->coutVCentered("(H)elp | (R)estart | (P)ause | e(X)it");
     }
 }

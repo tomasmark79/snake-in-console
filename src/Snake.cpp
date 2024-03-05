@@ -24,8 +24,8 @@
 #include <iostream>
 #include <windows.h> // Beep
 
-Snake:: Snake(Field& field)
-    : fie(&field), snakeLength(0)
+Snake:: Snake(int id, Field& field)
+    : id(id), fie(&field), snakeLength(0)
 {
     // snake baby will born here
     this->snakeCoosX[this->snakeLength] = this->fie->getFieldWidth()/2;

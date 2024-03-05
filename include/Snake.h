@@ -28,6 +28,7 @@ static const int stepDivider = 1;
 
 class Snake
 {
+    int id;
     Field* fie;
     int snakeLength;
     int snakeDirection;
@@ -41,7 +42,7 @@ class Snake
     const bool isStepBack(int directionTaken) const;
 
 public:
-    Snake(Field& field);
+    Snake(int id, Field& field);
     const void setSnakeDirectionAndShift(int direction);
     const int isSnakeInConflict() const;
     const int getElementOfEattenFruit

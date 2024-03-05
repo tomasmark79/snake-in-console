@@ -38,30 +38,24 @@ int Keyboard::getMyKeyboardCode() const
     {
         switch(_getch())
         {
-        case 'w':
-            // up
-            return 0;
-        case 'W':
-            // up
-            return 0;
-        case 's':
-            // down
-            return 1;
-        case 'S':
-            // down
-            return 1;
-        case 'a':
-            // left
-            return 2;
-        case 'A':
-            // left
-            return 2;
-        case 'd':
-            // right
-            return 3;
-        case 'D':
-            // right
-            return 3;
+        case UP1:
+            return 10;
+        case DOWN1:
+            return 11;
+        case LEFT1:
+            return 12;
+        case RIGHT1:
+            return 13;
+
+        case UP2:
+            return 20;
+        case DOWN2:
+            return 21;
+        case LEFT2:
+            return 22;
+        case RIGHT2:
+            return 23;
+
         case 'x':
             // exit
             return 4;

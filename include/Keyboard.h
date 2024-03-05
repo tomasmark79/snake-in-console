@@ -25,6 +25,22 @@
 BOOL WINAPI CtrlHandler(DWORD fdwCtrlType);
 class Keyboard
 {
+    enum playerControlLayout1
+    {
+        UP1 = 'w',
+        DOWN1 = 's',
+        LEFT1 = 'a',
+        RIGHT1 = 'd'
+    };
+
+    enum playerControlLayout2
+    {
+        UP2 = 'i',
+        DOWN2 = 'k',
+        LEFT2 = 'j',
+        RIGHT2 = 'l'
+    };
+
 public:
     Keyboard();
     int getMyKeyboardCode() const;

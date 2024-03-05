@@ -22,6 +22,7 @@
 
 #pragma once
 #include "Field.h"
+#include "Player.h"
 #include "Snake.h"
 #include "Fruit.h"
 #include "Graphics.h"
@@ -34,7 +35,9 @@ static const short SCORE_MULTIPLIER = 11;
 class Process
 {
 
-    int totalPoints;
+    int totalPointsSnake1;
+    int totalPointsSnake2;
+
     int totalCycles;
 
     std::chrono::time_point<std::chrono::system_clock> start_time;
@@ -42,7 +45,10 @@ class Process
     std::chrono::duration<double, std::milli> elapsed_time;
 
     Field* field;
-    Snake* snake;
+    Player* player1;
+    Player* player2;
+    Snake* snake1;
+    Snake* snake2;
     Fruit* fruit;
     Graphics* graphics;
     Keyboard keyboard;
