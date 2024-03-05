@@ -139,7 +139,6 @@ const void Process::mainLoop()
             (snakes[i]->isSnakeDie() ? " Dead " : "");
         }
 
-
         graphics->redrawVideoBuffer();
 
         // print player stats
@@ -155,7 +154,8 @@ const void Process::mainLoop()
         msg = "Duration: "
               + std::to_string((int)this->elapsed_time.count()) + "s";
         graphics->coutVCentered(msg);
-        graphics->coutVCentered("(H)elp | (R)estart | (P)ause | e(X)it");
+        graphics->coutVCentered("(H)elp | (R)estart | e(X)it");
+        graphics->coutVCentered("Copyright (c) 2024 Tomas Mark");
 
 
 
@@ -178,28 +178,7 @@ const void Process::mainLoop()
         std::this_thread::sleep_for(150ms);
 
     }
-
 }
-
-// debug
-//        // set precision
-//        std::stringstream _stream;
-//        _stream << std::fixed << std::setprecision(1) << this->elapsed_time.count();
-//        msg =
-//            "Snake X: " + std::to_string(snake->getSnakeX()[0]) +
-//            " Y: " + std::to_string(snake->getSnakeY()[0]) +
-//            " Fruit X: " + std::to_string(fruit->getFruitX()[0]) +
-//            " Y: " + std::to_string(fruit->getFruitY()[0]);
-//            graphics->coutVCentered(msg);
-//
-//        msg ="Length: " + std::to_string(snake->getSnakeLength() + 1) +
-//            " Direction: " + std::to_string(snake->getSnakeDirection()) +
-//            " T: " + _stream.str() + "ms" +
-//            " C: " + std::to_string(totalCycles++);
-//            graphics->coutVCentered(msg);
-
-
-
 
 const bool Process::isNextGameWanted() const
 {

@@ -27,6 +27,7 @@
 #include <windows.h> //SetConsoleCursorPosition
 #include <string>
 #include <limits>
+#include "c:\Projects\_Dep\color-console\include\color.hpp"
 
 using std::cout;
 using std::endl;
@@ -147,7 +148,7 @@ const void Graphics::coutVCentered(std::string text) const
         currentRow
     }
                             );
-    cout << text << endl;
+    cout << dye::aqua(text) << endl;
 }
 
 const void Graphics::coutVCAWCoo(short row, std::string text) const
@@ -169,16 +170,15 @@ const void Graphics::coutHelp() const
 
     this->clearScreen();
     {
-        this->coutVCAWCoo(3, "Snake-In-Console");
-        this->coutVCAWCoo(4, "0.0.2");
-        this->coutVCAWCoo(5, "______________________________________");
-        this->coutVCAWCoo(5, "Compiled with Gcc v. " + compiler.getCppCompilerV());
-        this->coutVCAWCoo(6, "______________________________________");
-        this->coutVCAWCoo(7, "Snake control");
-        this->coutVCAWCoo(8, "by W A S D keys");
-        this->coutVCAWCoo(9, "______________________________________");
-        this->coutVCAWCoo(10, "for educational purpose");
+        this->coutVCAWCoo(3, "----------------------------------------");
+        this->coutVCAWCoo(4, "Welcome to the game                     ");
+        this->coutVCAWCoo(5, "   ___              _                   ");
+        this->coutVCAWCoo(6, "  / __| _ _   __ _ | |_____             ");
+        this->coutVCAWCoo(7, "\\__ \\| ' \\ / _` || / / -_)           ");
+        this->coutVCAWCoo(8, "|___/|_||_|\\__/_||_\\_\\___| in console");
+        this->coutVCAWCoo(9, "----------------------------------------");
         this->coutVCAWCoo(11, "Copyright (c) 2024 Tomas Mark");
+        this->coutVCAWCoo(12, "Enjoy this example of OOP C++ code!");
         this->coutVCAWCoo(14, "press ENTER");
     }
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

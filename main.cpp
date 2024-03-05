@@ -27,7 +27,7 @@
 
 int main()
 {
-    const int               PLAYER_ANSWER_TRESHHOLD = 5;
+
     const int               MAX_PLAYERS = 4;
     int totalPlayers    =   MAX_PLAYERS;
     std::string playerNames[MAX_PLAYERS+1];
@@ -37,7 +37,6 @@ int main()
             playerNames[2] = "c++";
                 playerNames[3] = "developer";
 
-    int totalAnswers    = 0;
     int fieldWidth      = 80;
     int fieldHeight     = 35;
     int fruitEmptiness  = 2.5;  // more is less fruit
@@ -48,16 +47,21 @@ int main()
     std::cout << "\\__ \\| ' \\ / _` || / / -_)"   << std::endl;
     std::cout << "|___/|_||_|\\__/_||_\\_\\___| in console"   << std::endl;
     std::cout << "----------------------------------------" << std::endl;
+    std::cout << "Copyright (c) 2024 Tomas Mark" << std::endl;
+    std::cout << "Enjoy this example of OOP C++ code!" << std::endl;
+
     std::cout << std::endl;
 
 #ifndef DEBUG
 
-    totalAnswers = 0;
+    const char* userfailed = "\n\nGame needs your correct inputs.\n\n";
+    const int   PLAYER_ANSWER_TRESHHOLD = 5; // give 5 attempts for user to enter right values
+    int         totalAnswers = 0;
     do
     {
         if (totalAnswers == PLAYER_ANSWER_TRESHHOLD)
         {
-            std::cout << "Game needs your correct inputs.";
+            std::cout << userfailed;
             exit(0);
         }
 

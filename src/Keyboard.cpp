@@ -75,7 +75,6 @@ int Keyboard::getMyKeyboardCode() const
             return 43;
 
 
-
         case 'x':
             // exit
             return 4;
@@ -89,10 +88,8 @@ int Keyboard::getMyKeyboardCode() const
             // help form
             return 5;
         case 'r':
-            // help form
             return 6;
         case 'R':
-            // help form
             return 6;
         }
     }
