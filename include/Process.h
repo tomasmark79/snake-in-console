@@ -35,28 +35,29 @@ static const short SCORE_MULTIPLIER = 11;
 class Process
 {
 
-    int totalPointsSnake1;
-    int totalPointsSnake2;
-
-    int gameOverReasonSnake1;
-    int gameOverReasonSnake2;
-
-    int totalCycles;
-
-    std::chrono::time_point<std::chrono::system_clock> start_time;
-    std::chrono::time_point<std::chrono::system_clock> end_time;
-    std::chrono::duration<double, std::milli> elapsed_time;
+//    int totalPointsSnake1;
+//    int totalPointsSnake2;
+//
+//    int gameOverReasonSnake1;
+//    int gameOverReasonSnake2;
+//
+//    int totalCycles;
 
     Field* field;
-    Player* player1;
-    Player* player2;
-    Snake* snake1;
-    Snake* snake2;
+    int totalPlayers;
+    Player** players;
+    Snake** snakes;
     Fruit* fruit;
     Graphics* graphics;
     Keyboard keyboard;
+
     std::string msg;
     bool isNextGameWantedValue;
+
+        std::chrono::time_point<std::chrono::system_clock> start_time;
+    std::chrono::time_point<std::chrono::system_clock> end_time;
+    std::chrono::duration<double, std::milli> elapsed_time;
+
 
 
 public:
@@ -64,6 +65,5 @@ public:
     ~Process();
     const void mainLoop();
     const bool isNextGameWanted() const;
-
 
 };

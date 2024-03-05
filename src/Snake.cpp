@@ -32,7 +32,7 @@ Snake:: Snake(int id, Field& field)
     this->snakeCoosY[this->snakeLength] = this->fie->getFieldHeight()/2;
 
     // random first direction of snake baby
-    this->setSnakeDirectionAndShift(rand() % 3);
+    this->setSnakeDirectionAndShift((rand() % 4));
 }
 
 const void Snake::backupSnakeCoordinates()
@@ -63,8 +63,8 @@ const bool Snake::isStepBack(int directionTaken) const
                 (this->snakeDirection == 2 && directionTaken == 3) ||   // left can't right
                 (this->snakeDirection == 3 && directionTaken == 2) )    // and vice versa
         {
-            Beep(1700,75);
-            Beep(1400,75);
+            Beep(1700,1);
+            Beep(1400,2);
             return true;
         }
     }

@@ -23,7 +23,7 @@
 #pragma once
 #include "Field.h"
 
-static const int MAX_FRUITS = 50;
+static const int MAX_FRUITS = 5050;
 
 class Fruit
 {

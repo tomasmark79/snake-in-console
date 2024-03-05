@@ -27,8 +27,8 @@
 // #define WIDTH   (int)340
 // #define HEIGHT  (int)75
 
-#define WIDTH   (int)50
-#define HEIGHT  (int)20
+#define WIDTH   (int)100
+#define HEIGHT  (int)50
 #define MAX_PLAYERS (int)4
 
 //TO DO
@@ -40,25 +40,26 @@ int main()
 {
     // Welcome to the Snake game
 
-    int totalPlayers;
+    int totalPlayers = 4;
     std::string playerNames[MAX_PLAYERS+1];
+    playerNames[0] = "Ufon";
 
     // get total players
-    do
-    {
-        std::cout << "Enter number of player [1 -4]? ";
-        std::cin >> totalPlayers;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-    } while(totalPlayers < 1 || totalPlayers > 4);
-
-    // get player names
-    for (int playerId = 0; playerId < totalPlayers; playerId++)
-    {
-        std::cout << "Enter name of Snake " << playerId + 1 << "? ";
-        std::cin >> playerNames[playerId];
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
+//    do
+//    {
+//        std::cout << "Enter number of player [1 -4]? ";
+//        std::cin >> totalPlayers;
+//        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+//
+//    } while(totalPlayers < 1 || totalPlayers > 4);
+//
+//    // get player names
+//    for (int playerId = 0; playerId < totalPlayers; playerId++)
+//    {
+//        std::cout << "Enter name of Snake " << playerId + 1 << "? ";
+//        std::cin >> playerNames[playerId];
+//        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+//    }
 
     // start play the game
     while(true)

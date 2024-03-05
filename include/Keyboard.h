@@ -41,6 +41,22 @@ class Keyboard
         RIGHT2 = 'l'
     };
 
+    enum playerControlLayout3
+    {
+        UP3 = '8',
+        DOWN3 = '5',
+        LEFT3 = '4',
+        RIGHT3 = '6'
+    };
+
+    enum playerControlLayout4
+    {
+        UP4 = '[',
+        DOWN4 = '\'',
+        LEFT4 = ';',
+        RIGHT4 = '\\'
+    };
+
 public:
     Keyboard();
     int getMyKeyboardCode() const;

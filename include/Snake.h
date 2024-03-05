@@ -29,9 +29,9 @@ static const int stepDivider = 1;
 class Snake
 {
     int id;
-    bool isDie;
     Field* fie;
     int snakeLength;
+    bool isDie;
     int snakeDirection;
     int snakeCoosX[MAX_SNAKE_LENGTH];
     int snakeCoosY[MAX_SNAKE_LENGTH];

@@ -56,6 +56,26 @@ int Keyboard::getMyKeyboardCode() const
         case RIGHT2:
             return 23;
 
+        case UP3:
+            return 30;
+        case DOWN3:
+            return 31;
+        case LEFT3:
+            return 32;
+        case RIGHT3:
+            return 33;
+
+        case UP4:
+            return 40;
+        case DOWN4:
+            return 41;
+        case LEFT4:
+            return 42;
+        case RIGHT4:
+            return 43;
+
+
+
         case 'x':
             // exit
             return 4;
