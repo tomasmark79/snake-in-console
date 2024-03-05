@@ -38,6 +38,9 @@ class Process
     int totalPointsSnake1;
     int totalPointsSnake2;
 
+    int gameOverReasonSnake1;
+    int gameOverReasonSnake2;
+
     int totalCycles;
 
     std::chrono::time_point<std::chrono::system_clock> start_time;
@@ -57,7 +60,7 @@ class Process
 
 
 public:
-    Process(int width, int height);
+    Process(int width, int height, int totalPlayers, std::string& playerNames);
     ~Process();
     const void mainLoop();
     const bool isNextGameWanted() const;

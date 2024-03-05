@@ -27,8 +27,10 @@
 
 using namespace std::chrono_literals;
 
-Process::Process(int width, int height)
-    :totalPointsSnake1(0), totalPointsSnake2(0), totalCycles(0), isNextGameWantedValue(true)
+Process::Process(int width, int height, int totalPlayers, std::string& playerNames)
+    : totalPointsSnake1(0), totalPointsSnake2(0),
+      gameOverReasonSnake1(0), gameOverReasonSnake2(0),
+      totalCycles(0), isNextGameWantedValue(true)
 {
     field = new Field(width, height);
     player1 = new Player(1, "Tomas");
@@ -93,12 +95,14 @@ const void Process::mainLoop()
         graphics->addSnakeToVideoBuffer(1,
                                         snake1->getSnakeX(),
                                         snake1->getSnakeY(),
-                                        snake1->getSnakeLength());
+                                        snake1->getSnakeLength(),
+                                        snake1->isSnakeDie());
 
         graphics->addSnakeToVideoBuffer(2,
                                         snake2->getSnakeX(),
                                         snake2->getSnakeY(),
-                                        snake2->getSnakeLength());
+                                        snake2->getSnakeLength(),
+                                        snake2->isSnakeDie());
 
         graphics->redrawVideoBuffer();
         if ( (eattenFruitElement = snake1->getElementOfEattenFruit(
@@ -137,18 +141,27 @@ const void Process::mainLoop()
             break;
 
         //
-        gameOverReason = snake1->isSnakeInConflict();
-        if (gameOverReason == 1 || gameOverReason == 2)
+        if (!snake1->isSnakeDie())
         {
-            graphics->coutGOver(gameOverReason);
-            break;
+            gameOverReasonSnake1 = snake1->isSnakeInConflict();
+            if (gameOverReasonSnake1 == 1 || gameOverReasonSnake1 == 2)
+            {
+                snake1->setSnakeDie();
+                // graphics->coutGOver(gameOverReason);
+                // break;
+            }
         }
 
-        gameOverReason = snake2->isSnakeInConflict();
-        if (gameOverReason == 1 || gameOverReason == 2)
+        if (!snake2->isSnakeDie())
         {
-            graphics->coutGOver(gameOverReason);
-            break;
+            gameOverReasonSnake2 = snake2->isSnakeInConflict();
+
+            if (gameOverReasonSnake2 == 1 || gameOverReasonSnake2 == 2)
+            {
+                snake2->setSnakeDie();
+                // graphics->coutGOver(gameOverReason);
+                // break;
+            }
         }
 
         // retarder
@@ -169,8 +182,9 @@ const void Process::mainLoop()
         msg = "Snake 2 " + player2->getPlayerName() + " Points: " + std::to_string(this->totalPointsSnake2);
         graphics->coutVCentered(msg);
 
-        "Elapsed: "
-        + std::to_string((int)this->elapsed_time.count()) + "s";
+        msg = "Elapsed: "
+              + std::to_string((int)this->elapsed_time.count()) + "s";
+        graphics->coutVCentered(msg);
 
         graphics->coutVCentered("(H)elp | (R)estart | (P)ause | e(X)it");
     }

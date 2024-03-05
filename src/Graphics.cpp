@@ -89,14 +89,21 @@ const void Graphics::addWallsToVideoBuffer() const
     }
 }
 
-const void Graphics::addSnakeToVideoBuffer(const int id, const int* x, const int* y, int snakeLength)
+const void Graphics::addSnakeToVideoBuffer(const int id, const int* x, const int* y, int snakeLength, bool isDie)
 {
     for (int bodyElement = 0; bodyElement <= snakeLength; bodyElement++)
     {
-        this->videoBuffer[y [bodyElement] ] [x [bodyElement] ] =
-            bodyElement == 0 ? id == 1 ? '1' : '2' : '0';
-//        this->videoBuffer[y [bodyElement] ] [x [bodyElement] ] =
-//            bodyElement == 0 ? 'S' : '0';
+        if (!isDie)
+        {
+            this->videoBuffer[y [bodyElement] ] [x [bodyElement] ] =
+                bodyElement == 0 ? id == 1 ? '1' : '2' : '0';
+        }
+        else
+        {
+            this->videoBuffer[y [bodyElement] ] [x [bodyElement] ] =
+                bodyElement == 0 ? id == 1 ? '1' : '2' : 'X';
+
+        }
     }
 }
 
@@ -180,7 +187,6 @@ const void Graphics::coutHelp() const
 
 const void Graphics::coutGOver(int reason) const
 {
-    this->clearScreen();
     {
         this->coutVCAWCoo(7, "Game Over");
         if (reason == 1)
@@ -193,6 +199,6 @@ const void Graphics::coutGOver(int reason) const
 
     }
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    this->clearScreen();
+    // this->clearScreen();
 }
 

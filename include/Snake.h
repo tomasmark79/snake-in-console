@@ -29,6 +29,7 @@ static const int stepDivider = 1;
 class Snake
 {
     int id;
+    bool isDie;
     Field* fie;
     int snakeLength;
     int snakeDirection;
@@ -37,6 +38,7 @@ class Snake
     int backupCoosX[MAX_SNAKE_LENGTH];
     int backupCoosY[MAX_SNAKE_LENGTH];
 
+    const void inhumeSnake();
     const void backupSnakeCoordinates();
     const void restoreSnakeCoordinatesShifted();
     const bool isStepBack(int directionTaken) const;
@@ -44,6 +46,10 @@ class Snake
 public:
     Snake(int id, Field& field);
     const void setSnakeDirectionAndShift(int direction);
+
+    const void setSnakeDie();
+    const bool isSnakeDie() const;
+
     const int isSnakeInConflict() const;
     const int getElementOfEattenFruit
     (

@@ -25,7 +25,7 @@
 #include <windows.h> // Beep
 
 Snake:: Snake(int id, Field& field)
-    : id(id), fie(&field), snakeLength(0)
+    : id(id), fie(&field), snakeLength(0), isDie(false)
 {
     // snake baby will born here
     this->snakeCoosX[this->snakeLength] = this->fie->getFieldWidth()/2;
@@ -73,6 +73,9 @@ const bool Snake::isStepBack(int directionTaken) const
 
 const void Snake::setSnakeDirectionAndShift(int directionTaken)
 {
+    if (this->isDie)
+        return;
+
     Beep(500,2);
 
     if(this->isStepBack(directionTaken))
@@ -93,6 +96,15 @@ const void Snake::setSnakeDirectionAndShift(int directionTaken)
         snakeCoosX[0] +=stepDivider; // right
 
     this->restoreSnakeCoordinatesShifted();
+}
+
+const void Snake::setSnakeDie()
+{
+    this->isDie = true;
+}
+const bool Snake::isSnakeDie() const
+{
+    return this->isDie;
 }
 
 const int Snake::isSnakeInConflict() const

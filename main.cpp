@@ -29,6 +29,7 @@
 
 #define WIDTH   (int)50
 #define HEIGHT  (int)20
+#define MAX_PLAYERS (int)4
 
 //TO DO
 // Pomer velikost
@@ -37,14 +38,33 @@
 
 int main()
 {
-
-
     // Welcome to the Snake game
 
+    int totalPlayers;
+    std::string playerNames[MAX_PLAYERS+1];
+
+    // get total players
+    do
+    {
+        std::cout << "Enter number of player [1 -4]? ";
+        std::cin >> totalPlayers;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    } while(totalPlayers < 1 || totalPlayers > 4);
+
+    // get player names
+    for (int playerId = 0; playerId < totalPlayers; playerId++)
+    {
+        std::cout << "Enter name of Snake " << playerId + 1 << "? ";
+        std::cin >> playerNames[playerId];
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+    // start play the game
     while(true)
     {
         std::srand(std::time(0));
-        Process gameSnake(WIDTH, HEIGHT);
+        Process gameSnake(WIDTH, HEIGHT, totalPlayers, *playerNames);
         if (!gameSnake.isNextGameWanted())
             break;
     }

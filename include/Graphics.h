@@ -40,7 +40,8 @@ public:
         const int id,
         const int* x,
         const int* y,
-        int snakeLength
+        int snakeLength,
+        bool isDie
     );
     const void addFruitToVideoBuffer
     (
