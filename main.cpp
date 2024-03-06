@@ -57,7 +57,7 @@ int main()
     std::string yesOrNo = getStringAnswerFromPlayer("Start immediately with default settings yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
 
     // or user can create custom game
-    if (yesOrNo.compare("yes") == 0 || yesOrNo.compare("y") == 0)
+    if (yesOrNo.compare(0, 3, "yes") == 0 || yesOrNo.compare(0, 2, "ye") == 0 || yesOrNo.compare(0, 1, "y") == 0)
     {
         ;
     }
@@ -132,7 +132,7 @@ std::string getStringAnswerFromPlayer(std::string_view question, int min, int ma
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         totalAnswers++;
     }
-    while((int)answer.length() < min || (int)answer.length() > max);
+    while(static_cast<int>(answer.length()) < min || static_cast<int>(answer.length()) > max);
     return answer;
 }
 
