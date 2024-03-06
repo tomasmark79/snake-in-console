@@ -15,7 +15,7 @@ Cpp::Cpp()
     else this->cppV = "pre-standard C++." + __cplusplus;
 }
 
-const std::string Cpp::getCppV() const
+std::string Cpp::getCppV() const
 {
     return this->cppV;
 }

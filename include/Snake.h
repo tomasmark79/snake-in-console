@@ -30,10 +30,10 @@ public:
     const void setSnakeDirectionAndShift(int direction);
 
     const void setSnakeDie();
-    const bool isSnakeDie() const;
+    bool isSnakeDie() const;
 
-    const int isSnakeInConflict() const;
-    const int getElementOfEattenFruit
+    int isSnakeInConflict() const;
+    int getElementOfEattenFruit
     (
         const int* FruitX,
         const int* FruitY,
@@ -44,8 +44,8 @@ public:
     const int* getSnakeX() const;
     const int* getSnakeY() const;
 
-    const int getSnakeLength() const;
-    const int getSnakeDirection() const;
+    int getSnakeLength() const;
+    int getSnakeDirection() const;
 
 
 

@@ -11,6 +11,6 @@ class Cpp
     std::string cppV;
 public:
     Cpp();
-    const std::string getCppV() const;
+    std::string getCppV() const;
     friend std::ostream& operator<<(std::ostream& str, const Cpp& cp);
 };

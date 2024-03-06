@@ -37,17 +37,17 @@ const int* Fruit::getFruitY() const
     return /*(int*)*/fruitYArr;
 }
 
-const int Fruit::getTotalFruit() const
+int Fruit::getTotalFruit() const
 {
     return this->totalFruits;
 }
 
-const int Fruit::getRandomFruitX() const
+int Fruit::getRandomFruitX() const
 {
     return (rand() % (this->fie->getFieldWidth()-2) ) + 1;
 }
 
-const int Fruit::getRandomFruitY() const
+int Fruit::getRandomFruitY() const
 {
     return (rand() % (this->fie->getFieldHeight()-2) ) + 1;
 }

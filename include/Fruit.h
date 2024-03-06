@@ -18,9 +18,9 @@ public:
     ~Fruit();
     const int* getFruitX() const;
     const int* getFruitY() const;
-    const int getRandomFruitX() const;
-    const int getRandomFruitY() const;
-    const int getTotalFruit() const;
+    int getRandomFruitX() const;
+    int getRandomFruitY() const;
+    int getTotalFruit() const;
 
     const void addFruitItem();
     const void refreshFruit(int refreshIndex);

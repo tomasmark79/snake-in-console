@@ -84,12 +84,12 @@ const void Snake::setSnakeDie()
 {
     this->isDie = true;
 }
-const bool Snake::isSnakeDie() const
+bool Snake::isSnakeDie() const
 {
     return this->isDie;
 }
 
-const int Snake::isSnakeInConflict() const
+int Snake::isSnakeInConflict() const
 {
     if ((snakeCoosX[0] == 0 || snakeCoosX[0] == fie->getFieldWidth()-1) ||
             (snakeCoosY[0] == 0 || snakeCoosY[0] == fie->getFieldHeight()-1))
@@ -112,7 +112,7 @@ const int Snake::isSnakeInConflict() const
     return 0; // free way
 }
 
-const int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fruitCount ) const
+int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fruitCount ) const
 {
     for (int fruitIndex = 0; fruitIndex < fruitCount; fruitIndex ++)
     {
@@ -137,12 +137,12 @@ const int* Snake::getSnakeY()  const
     return (int*)this->snakeCoosY;
 }
 
-const int Snake::getSnakeLength() const
+int Snake::getSnakeLength() const
 {
     return this->snakeLength;
 }
 
-const int Snake::getSnakeDirection() const
+int Snake::getSnakeDirection() const
 {
     return this->snakeDirection;
 }
