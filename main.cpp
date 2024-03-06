@@ -22,6 +22,7 @@
 
 #include "Process.h"
 #include <iostream>
+#include <random>
 
 //#define DEBUG
 
@@ -40,6 +41,9 @@ void printHead();
 
 int main()
 {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
     printHead();
 
     playerNames[0] = "Tomas";
@@ -81,9 +85,6 @@ int main()
     // Start Game
     while(true)
     {
-
-        std::srand(std::time(0));
-
         Process gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames);
 
         if (!gameSnake.isNextGameWanted())
@@ -102,7 +103,7 @@ T1 getNumericAnswerFromPlayer(std::string question, int min, int max, int attemp
         if (totalAnswers == attemptTreshold)
         {
             std::cout << userfailed;
-            exit(0);
+            throw std::runtime_error("User failed to provide valid input.");
         }
         std::cout << question;
         std::cin >> value;
@@ -123,7 +124,7 @@ std::string getStringAnswerFromPlayer(std::string question, int min, int max, in
         if (totalAnswers == attemptTreshold)
         {
             std::cout << userfailed;
-            exit(0);
+            throw std::runtime_error("User failed to provide valid input.");
         }
         std::cout << question;
         std::cin >> answer;
