@@ -1,3 +1,7 @@
+//MIT License
+//
+//Copyright (c) 2024 Tomas Mark
+//
 #include "Player.h"
 #include <iostream>
 
