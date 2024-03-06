@@ -16,6 +16,6 @@ public:
     Player(int playerId, std::string playerName);
     virtual ~Player();
     const void setPlayerName(std::string playerName);
-    const std::string getPlayerName() const;
+    std::string getPlayerName() const;
 };
 

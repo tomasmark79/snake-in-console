@@ -29,7 +29,7 @@ const void Player::setPlayerName(std::string playerName)
 
 }
 
-const std::string Player::getPlayerName() const
+std::string Player::getPlayerName() const
 {
     return this->playerName;
 }
