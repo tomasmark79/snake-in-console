@@ -25,9 +25,9 @@
 
 //#define DEBUG
 
-const int                   MAX_PLAYERS = 4;
+constexpr int               MAX_PLAYERS = 4;
 int totalPlayers    =       MAX_PLAYERS;
-std::string playerNames    [MAX_PLAYERS+1];
+std::string playerNames    [MAX_PLAYERS];
 const int                   PLAYER_ANSWER_TRESHHOLD = 5; // give 5 attempts for user to enter right values
 const char* userfailed =    "\n\nGame needs your correct inputs.\n\n";
 int fieldWidth      = 80;
