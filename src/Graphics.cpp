@@ -22,7 +22,6 @@
 
 #include <exception>
 #include "Graphics.h"
-#include "Compiler.h"
 #include <iostream>
 #include <windows.h> //SetConsoleCursorPosition
 #include <string>
@@ -167,8 +166,6 @@ const void Graphics::coutVCAWCoo(short row, std::string text) const
 
 const void Graphics::coutHelp() const
 {
-    Compiler compiler;
-
     this->clearScreen();
     {
         this->coutVCAWCoo(3, "----------------------------------------");

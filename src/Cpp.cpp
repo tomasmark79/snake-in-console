@@ -20,25 +20,25 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#include "Compiler.h"
+#include "Cpp.h"
 
-Compiler::Compiler()
+Cpp::Cpp()
 {
-    if (__cplusplus == 202101L) this->compilerVersion = "C++23";
-    else if (__cplusplus == 202002L) this->compilerVersion ="C++20";
-    else if (__cplusplus == 201703L) this->compilerVersion = "C++17";
-    else if (__cplusplus == 201402L) this->compilerVersion = "C++14";
-    else if (__cplusplus == 201103L) this->compilerVersion = "C++11";
-    else if (__cplusplus == 199711L) this->compilerVersion = "C++98";
-    else this->compilerVersion = "pre-standard C++." + __cplusplus;
+    if (__cplusplus == 202101L) this->cppV = "C++23";
+    else if (__cplusplus == 202002L) this->cppV ="C++20";
+    else if (__cplusplus == 201703L) this->cppV = "C++17";
+    else if (__cplusplus == 201402L) this->cppV = "C++14";
+    else if (__cplusplus == 201103L) this->cppV = "C++11";
+    else if (__cplusplus == 199711L) this->cppV = "C++98";
+    else this->cppV = "pre-standard C++." + __cplusplus;
 }
 
-const std::string Compiler::getCppCompilerV() const
+const std::string Cpp::getCppV() const
 {
-    return this->compilerVersion;
+    return this->cppV;
 }
 
-std::ostream& operator<<(std::ostream& str, const Compiler& cp)
+std::ostream& operator<<(std::ostream& str, const Cpp& cp)
 {
-    return str << cp.compilerVersion;
+    return str << cp.cppV;
 }

@@ -24,11 +24,11 @@
 #include <string>
 #include <sstream>
 
-class Compiler
+class Cpp
 {
-    std::string compilerVersion;
+    std::string cppV;
 public:
-    Compiler();
-    const std::string getCppCompilerV() const;
-    friend std::ostream& operator<<(std::ostream& str, const Compiler& cp);
+    Cpp();
+    const std::string getCppV() const;
+    friend std::ostream& operator<<(std::ostream& str, const Cpp& cp);
 };

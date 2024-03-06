@@ -21,6 +21,7 @@
 //SOFTWARE.
 
 #include "Process.h"
+#include "Cpp.h"
 #include <iostream>
 #include <random>
 
@@ -30,7 +31,7 @@ constexpr int               MAX_PLAYERS = 4;
 int totalPlayers    =       MAX_PLAYERS;
 std::string playerNames    [MAX_PLAYERS];
 const int                   PLAYER_ANSWER_TRESHHOLD = 5; // give 5 attempts for user to enter right values
-const char* userfailed =    "\n\nGame needs your correct inputs.\n\n";
+const std::string_view      userfailed =    "\n\nGame needs your correct inputs.\n\n";
 int fieldWidth      = 80;
 int fieldHeight     = 35;
 int fruitEmptiness  = 2.5;  // more is less fruit
@@ -38,6 +39,7 @@ template<typename T1>
 T1 getNumericAnswerFromPlayer(std::string_view question, int min, int max, int attemptTreshold);
 std::string getStringAnswerFromPlayer(std::string_view question, int min, int max, int attemptTreshold);
 void printHead();
+static const Cpp cpp;
 
 int main()
 {
@@ -147,6 +149,6 @@ void printHead()
     std::cout << "----------------------------------------" << std::endl;
     std::cout << "Copyright (c) 2024 Tomas Mark" << std::endl;
     std::cout << "tomas@digitalspace.name" << std::endl;
-    std::cout << "Enjoy this example of OOP C++ code!" << std::endl;
+    std::cout << "Enjoy this example of OOP " << cpp.getCppV() << " code!" << std::endl;
     std::cout << std::endl;
 }

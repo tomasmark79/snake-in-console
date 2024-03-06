@@ -47,12 +47,12 @@ Fruit::~Fruit()
 
 const int* Fruit::getFruitX() const
 {
-    return (int*)fruitXArr;
+    return /*(int*)*/fruitXArr;
 }
 
 const int* Fruit::getFruitY() const
 {
-    return (int*)fruitYArr;
+    return /*(int*)*/fruitYArr;
 }
 
 const int Fruit::getTotalFruit() const
