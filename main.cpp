@@ -35,8 +35,8 @@ int fieldWidth      = 80;
 int fieldHeight     = 35;
 int fruitEmptiness  = 2.5;  // more is less fruit
 template<typename T1>
-T1 getNumericAnswerFromPlayer(std::string question, int min, int max, int attemptTreshold);
-std::string getStringAnswerFromPlayer(std::string question, int min, int max, int attemptTreshold);
+T1 getNumericAnswerFromPlayer(std::string_view question, int min, int max, int attemptTreshold);
+std::string getStringAnswerFromPlayer(std::string_view question, int min, int max, int attemptTreshold);
 void printHead();
 
 int main()
@@ -94,7 +94,7 @@ int main()
 }
 
 template<typename T1>
-T1 getNumericAnswerFromPlayer(std::string question, int min, int max, int attemptTreshold)
+T1 getNumericAnswerFromPlayer(std::string_view question, int min, int max, int attemptTreshold)
 {
     T1 value = 0;
     int totalAnswers = 0;
@@ -115,7 +115,7 @@ T1 getNumericAnswerFromPlayer(std::string question, int min, int max, int attemp
     return value;
 }
 
-std::string getStringAnswerFromPlayer(std::string question, int min, int max, int attemptTreshold)
+std::string getStringAnswerFromPlayer(std::string_view question, int min, int max, int attemptTreshold)
 {
     std::string answer = "";
     int totalAnswers = 0;
