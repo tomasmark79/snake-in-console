@@ -5,19 +5,18 @@
 #include "Fruit.h"
 
 Fruit::Fruit(double fruitEmptiness, Field& field)
-    : fie(&field), totalFruits(0)
+    :fie(&field), totalFruits(0)
 {
+    // count with double precission for fruit emptiness
+    int smartAlocMemory =
+        static_cast<double>(fie->getFieldWidth())
+        * static_cast<double>(fie->getFieldHeight()) / fruitEmptiness;
 
-    int neededMemory =
-          (double)field.getFieldWidth()
-        * (double)field.getFieldHeight()
-        / (double)fruitEmptiness;
-
-    fruitXArr = new int[neededMemory];
-    fruitYArr = new int[neededMemory];
+    fruitXArr = new int[smartAlocMemory];
+    fruitYArr = new int[smartAlocMemory];
 
     // seed fruit
-    for (int i = 0; i < neededMemory; i ++)
+    for (int i = 0; i < smartAlocMemory; i ++)
         this->addFruitItem();
 }
 

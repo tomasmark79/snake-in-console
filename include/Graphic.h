@@ -6,14 +6,14 @@
 #include <string>
 #include "Field.h"
 using std::string;
-class Graphics
+class Graphic
 {
     Field* fie;
     char **videoBuffer;
 
 public:
-    Graphics(Field& field);
-    ~Graphics();
+    Graphic(Field& field);
+    ~Graphic();
     const void clearScreen() const;
     const void clearVideoBuffer() const;
     const void addWallsToVideoBuffer() const;

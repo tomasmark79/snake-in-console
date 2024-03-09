@@ -3,7 +3,7 @@
 //Copyright (c) 2024 Tomas Mark
 //
 #include <exception>
-#include "Graphics.h"
+#include "Graphic.h"
 #include <iostream>
 #include <windows.h> //SetConsoleCursorPosition
 #include <string>
@@ -13,7 +13,7 @@ using std::cout;
 using std::endl;
 using std::string;
 
-Graphics::Graphics(Field& field)
+Graphic::Graphic(Field& field)
     : fie(&field)
 {
     this->clearScreen();
@@ -23,7 +23,7 @@ Graphics::Graphics(Field& field)
         this->videoBuffer[i] = new char[this->fie->getFieldWidth()];
     }
 }
-Graphics::~Graphics()
+Graphic::~Graphic()
 {
     for (int i = 0; i < this->fie->getFieldHeight(); i++)
     {
@@ -32,12 +32,12 @@ Graphics::~Graphics()
     delete [] videoBuffer;
 }
 
-const void Graphics::clearScreen() const
+const void Graphic::clearScreen() const
 {
     system("cls");
 }
 
-const void Graphics::clearVideoBuffer() const
+const void Graphic::clearVideoBuffer() const
 {
     SetConsoleCursorPosition(
         GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
@@ -51,7 +51,7 @@ const void Graphics::clearVideoBuffer() const
     }
 }
 
-const void Graphics::addWallsToVideoBuffer() const
+const void Graphic::addWallsToVideoBuffer() const
 {
     const char wallVMaterial = '|';
     const char wallHMaterial = '-';
@@ -70,7 +70,7 @@ const void Graphics::addWallsToVideoBuffer() const
     }
 }
 
-const void Graphics::addSnakeToVideoBuffer(const int id, const int* x, const int* y, int snakeLength, bool isDie)
+const void Graphic::addSnakeToVideoBuffer(const int id, const int* x, const int* y, int snakeLength, bool isDie)
 {
     for (int bodyElement = 0; bodyElement <= snakeLength; bodyElement++)
     {
@@ -88,7 +88,7 @@ const void Graphics::addSnakeToVideoBuffer(const int id, const int* x, const int
     }
 }
 
-const void Graphics::addFruitToVideoBuffer(const int* x, const int* y, int totalFruits)
+const void Graphic::addFruitToVideoBuffer(const int* x, const int* y, int totalFruits)
 {
     for (int fruitElement = 0; fruitElement < totalFruits; fruitElement++)
     {
@@ -96,7 +96,7 @@ const void Graphics::addFruitToVideoBuffer(const int* x, const int* y, int total
     }
 }
 
-const void Graphics::redrawVideoBuffer() const
+const void Graphic::redrawVideoBuffer() const
 {
     SetConsoleCursorPosition(
         GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
@@ -110,12 +110,12 @@ const void Graphics::redrawVideoBuffer() const
     }
 }
 
-const void Graphics::Cout(std::string msg) const
+const void Graphic::Cout(std::string msg) const
 {
     cout << msg << endl;
 }
 
-const void Graphics::coutVCentered(std::string text) const
+const void Graphic::coutVCentered(std::string text) const
 {
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
@@ -133,7 +133,7 @@ const void Graphics::coutVCentered(std::string text) const
 
 }
 
-const void Graphics::coutVCAWCoo(short row, std::string text) const
+const void Graphic::coutVCAWCoo(short row, std::string text) const
 {
     SetConsoleCursorPosition(
         GetStdHandle(STD_OUTPUT_HANDLE),
@@ -146,7 +146,7 @@ const void Graphics::coutVCAWCoo(short row, std::string text) const
     cout << text << endl;
 }
 
-const void Graphics::coutHelp() const
+const void Graphic::coutHelp() const
 {
     this->clearScreen();
     {
@@ -171,7 +171,7 @@ const void Graphics::coutHelp() const
     this->clearScreen();
 }
 
-const void Graphics::coutGOver(int reason) const
+const void Graphic::coutGOver(int reason) const
 {
     {
         this->coutVCAWCoo(7, "Game Over");

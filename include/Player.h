@@ -5,7 +5,6 @@
 #pragma once
 #include <string>
 
-
 class Player
 {
     int playerId;
@@ -14,7 +13,7 @@ class Player
 public:
     Player();
     Player(int playerId, std::string playerName);
-    virtual ~Player();
+    virtual ~Player() = default;
     const void setPlayerName(std::string playerName);
     std::string getPlayerName() const;
 };

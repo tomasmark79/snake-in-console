@@ -7,7 +7,7 @@
 #include "Player.h"
 #include "Snake.h"
 #include "Fruit.h"
-#include "Graphics.h"
+#include "Graphic.h"
 #include "Keyboard.h"
 
 #include <chrono>
@@ -16,22 +16,14 @@
 static const short SCORE_MULTIPLIER = 11;
 class Process
 {
-
-//    int totalPointsSnake1;
-//    int totalPointsSnake2;
-//
-//    int gameOverReasonSnake1;
-//    int gameOverReasonSnake2;
-//
-//    int totalCycles;
-
-    Field* field;
-    int totalPlayers;
-    Player** players;
-    Snake** snakes;
-    Fruit* fruit;
-    Graphics* graphics;
     Keyboard keyboard;
+    int totalPlayers;
+
+    std::unique_ptr<Field> field;
+    std::unique_ptr<Fruit> fruit;
+    std::unique_ptr<Graphic> graphic; // Graphic* Graphic
+    std::unique_ptr<std::unique_ptr<Player>[]> players; // Snakes** snakes
+    std::unique_ptr<std::unique_ptr<Snake>[]> snakes; // Player** players
 
     std::string msg;
     bool isNextGameWantedValue;

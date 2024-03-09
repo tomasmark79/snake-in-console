@@ -6,41 +6,29 @@
 #include <thread>   // std::this_thread::sleep_for
 #include <iomanip>  // std::setprecision
 #include <sstream>  // sstreamstring
+#include <memory>
 
 using namespace std::chrono_literals;
 
-Process::Process(int width, int height, double fruitEmptiness, int totalPlayers, std::string* playerNames)
+Process::Process(int width, int height, double fruitEmptiness,
+                 int totalPlayers, std::string* playerNames)
     : totalPlayers(totalPlayers), isNextGameWantedValue(true)
 {
-    // TO DO - could use std::unique_ptrs
-    field = new Field(width, height);
-    fruit = new Fruit(fruitEmptiness, *field);
-    graphics = new Graphics(*field);
 
-    players = new Player*[totalPlayers+1];
-    snakes = new Snake*[totalPlayers+1];
+    field       = std::make_unique  <Field>   (width, height);
+    fruit       = std::make_unique  <Fruit>   (fruitEmptiness, *field);
+    graphic     = std::make_unique  <Graphic> (*field);
+
+    players     = std::make_unique  <std::unique_ptr  <Player> []>    (totalPlayers+1);
+    snakes      = std::make_unique  <std::unique_ptr  <Snake>  []>    (totalPlayers+1); // snakes = new Snake*[totalPlayers+1];
+
+    // spawn player's id and names
     for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
-        players[playerId] = new Player(playerId, playerNames[playerId]);
-        snakes[playerId] = new Snake(playerId, *field);
+        players[playerId] = std::make_unique<Player>(playerId, playerNames[playerId]);
+        snakes[playerId] = std::make_unique<Snake>(playerId, *field); // snakes[playerId] = new Snake(playerId, *field);
     }
-
     this->mainLoop();
-}
-
-Process::~Process()
-{
-    for (int playerId = 0; playerId < totalPlayers; playerId++)
-    {
-        delete snakes[playerId];
-        delete players[playerId];
-    }
-    delete snakes;
-    delete players;
-
-    delete graphics;
-    delete fruit;
-    delete field;
 }
 
 const void Process::mainLoop()
@@ -68,13 +56,14 @@ const void Process::mainLoop()
         else if (keyboardCode >= 40 && keyboardCode <=43)
             playerInput[3] = keyboardCode - 40;
 
-        graphics->clearVideoBuffer();
+        // clear
+        graphic->clearVideoBuffer();
 
         // wall
-        graphics->addWallsToVideoBuffer();
+        graphic->addWallsToVideoBuffer();
 
         // fruit
-        graphics->addFruitToVideoBuffer(
+        graphic->addFruitToVideoBuffer(
             fruit->getFruitX(),
             fruit->getFruitY(),
             fruit->getTotalFruit());
@@ -86,11 +75,11 @@ const void Process::mainLoop()
             if (!snakes[i]->isSnakeDie())
                 snakes[i]->setSnakeDirectionAndShift(playerInput[i]);
 
-            graphics->addSnakeToVideoBuffer(i,
-                                            snakes[i]->getSnakeX(),
-                                            snakes[i]->getSnakeY(),
-                                            snakes[i]->getSnakeLength(),
-                                            snakes[i]->isSnakeDie());
+            graphic->addSnakeToVideoBuffer(i,
+                                           snakes[i]->getSnakeX(),
+                                           snakes[i]->getSnakeY(),
+                                           snakes[i]->getSnakeLength(),
+                                           snakes[i]->isSnakeDie());
 
 
             if ( (eattenFruitElement = snakes[i]->getElementOfEattenFruit(
@@ -111,24 +100,23 @@ const void Process::mainLoop()
                 if (playerGameOverReason[i] == 1 || playerGameOverReason[i] == 2)
                 {
                     snakes[i]->setSnakeDie();
-                    // graphics->coutGOver(gameOverReason);
+                    // Graphic->coutGOver(gameOverReason);
                     // break;
 
 // TO DO - when die all, is necessary to stop time and create winner
-
                 }
             }
 
             playerPoints[i] = snakes[i]->getSnakeLength() * SCORE_MULTIPLIER;
             playerStats[i] = "Player " + players[i]->getPlayerName() + " Points: " + std::to_string(playerPoints[i]) +
-            (snakes[i]->isSnakeDie() ? " Dead " : "");
+                             (snakes[i]->isSnakeDie() ? " Dead " : "");
         }
 
-        graphics->redrawVideoBuffer();
+        graphic->redrawVideoBuffer();
 
         // print player stats
         for (int i = 0; i < 4; i++)
-            graphics->coutVCentered(playerStats[i]);
+            graphic->coutVCentered(playerStats[i]);
 
         // print elapsed time
         this->end_time =
@@ -138,14 +126,8 @@ const void Process::mainLoop()
 
         msg = "Duration: "
               + std::to_string((int)this->elapsed_time.count()) + "s";
-        graphics->coutVCentered(msg);
-        graphics->coutVCentered("(H)elp | (R)estart | e(X)it");
-
-        // auto marked = dye::vanilla("");
-        auto marked = "Copyright (c) 2024 Tomas Mark";
-        graphics->coutVCentered(marked);
-
-
+        graphic->coutVCentered(msg);
+        graphic->coutVCentered("(H)elp | (R)estart | e(X)it");
 
         // exit game
         if (keyboardCode == 4)
@@ -156,7 +138,7 @@ const void Process::mainLoop()
 
         // help game
         if (keyboardCode == 5)
-            graphics->coutHelp();
+            graphic->coutHelp();
 
         // restart game
         if (keyboardCode == 6)
@@ -164,7 +146,6 @@ const void Process::mainLoop()
 
         // retarder
         std::this_thread::sleep_for(150ms);
-
     }
 }
 

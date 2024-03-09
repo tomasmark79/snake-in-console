@@ -129,12 +129,12 @@ const void Snake::growUpSnake()
 
 const int* Snake::getSnakeX() const
 {
-    return (int*)this->snakeCoosX;
+    return /*(int*)*/this->snakeCoosX;
 }
 
 const int* Snake::getSnakeY()  const
 {
-    return (int*)this->snakeCoosY;
+    return /*(int*)*/this->snakeCoosY;
 }
 
 int Snake::getSnakeLength() const
