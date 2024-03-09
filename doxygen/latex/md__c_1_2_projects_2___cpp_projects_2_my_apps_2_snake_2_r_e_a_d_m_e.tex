@@ -1,0 +1,125 @@
+\chapter{snake-\/in-\/console}
+\hypertarget{md__c_1_2_projects_2___cpp_projects_2_my_apps_2_snake_2_r_e_a_d_m_e}{}\label{md__c_1_2_projects_2___cpp_projects_2_my_apps_2_snake_2_r_e_a_d_m_e}\index{snake-\/in-\/console@{snake-\/in-\/console}}
+\label{md__c_1_2_projects_2___cpp_projects_2_my_apps_2_snake_2_r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__c_1_2_projects_2___cpp_projects_2_my_apps_2_snake_2_r_e_a_d_m_e_autotoc_md0}%
+ Play {\itshape {\bfseries{\doxylink{class_snake}{Snake}}}} within Windows console.
+
+In an effort to get some practice in, I decided to create my own \doxylink{class_snake}{Snake} game, which can be played within the the console windows. The \doxylink{class_snake}{Snake} game is rendered using only ASCII characters. You can play the game in command line, powershell or tabby and so on. The source code is compilable against the C++ standard libraries. C++ standard version 17. I compiled with GCC Min\+GW v13.\+2
+
+Extra function\+: Up to 4 snakes for 4 players via Hot Seat (one keybard) !
+
+To do\+: Implementation of several more game mechanism. Detect conglicts for each other.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{Welcome\ to\ the\ game}
+\DoxyCodeLine{\ \_\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \_}
+\DoxyCodeLine{/\ \_\_|\ \_\ \_\ \ \ \_\_\ \_\ |\ |\_\_\_\_\_}
+\DoxyCodeLine{\(\backslash\)\_\_\ \(\backslash\)|\ '\ \(\backslash\)\ /\ \_`\ ||\ /\ /\ -\/\_)}
+\DoxyCodeLine{|\_\_\_/|\_||\_|\(\backslash\)\_\_/\_||\_\(\backslash\)\_\(\backslash\)\_\_\_|\ in\ console}
+\DoxyCodeLine{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{Copyright\ (c)\ 2024\ Tomas\ Mark}
+\DoxyCodeLine{tomas@digitalspace.name}
+\DoxyCodeLine{Enjoy\ this\ example\ of\ OOP\ C++\ code!}
+\DoxyCodeLine{}
+\DoxyCodeLine{Start\ immediately\ with\ default\ settings\ yes/no\ ?}
+
+\end{DoxyCode}
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/¦-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{|:::\ :\ \ \ \ :\ \ \ \ \ \ \ \ \ \ \ \ X::\ \ :::\ \ \ \ \ \ \ \ \ \ :\ \ ::::\ \ \ \ \ :\ \ :\ \ \ \ \ \ :\ \ ::\ \ \ \ \ :\ \ \ :\ |}
+\DoxyCodeLine{|::\ ::::\ ::\ ::\ \ :\ ::\ \ :X\ :\ \ \ \ \ ::\ \ \ \ :\ \ ::::\ :\ \ \ \ \ ::\ :::\ \ :\ \ :\ \ \ \ \ :\ \ \ \ :\ \ \ \ \ |}
+\DoxyCodeLine{|\ \ ::::::\ \ \ \ \ ::\ \ \ :\ \ \ X\ :\ \ \ \ \ \ \ :\ :\ \ :::\ \ :\ :\ \ :::\ ::\ :\ \ \ \ \ \ ::\ \ ::\ \ \ \ \ \ \ \ :\ :|}
+\DoxyCodeLine{|\ :\ \ ::\ \ \ \ \ :::\ :::\ \ :\ X::\ \ ::\ \ \ \ :\ \ :\ \ :\ \ ::\ \ :\ :\ :\ :\ :\ \ \ ::::\ :::\ :::\ \ \ :\ :\ \ |}
+\DoxyCodeLine{|\ \ ::\ :\ ::\ :\ \ \ \ \ :\ \ :::X\ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \ \ :\ \ \ \ \ \ \ \ \ \ \ :\ \ \ \ :\ \ :\ \ \ \ \ \ 00000000:\ |}
+\DoxyCodeLine{|:::::::\ \ :::\ :\ \ \ ::\ :\ X::::\ \ \ :\ \ :\ \ \ ::\ \ \ \ :\ \ \ \ :\ :::::\ :\ \ \ ::\ \ \ :\ :\ \ \ ::\ \ 0\ \ |}
+\DoxyCodeLine{|\ \ \ :::\ \ :::::::\ \ :::\ \ X:\ :\ :\ :::\ :::\ ::\ \ :\ \ ::\ :\ :\ \ :\ :\ \ :\ \ :\ :\ ::\ ::\ \ \ :::0\ :|}
+\DoxyCodeLine{|::\ \ \ :::\ \ \ \ \ \ :\ :\ \ \ :\ X:\ \ \ ::\ \ \ \ \ ::\ :\ \ \ \ ::\ \ \ :\ \ \ :::::::\ :::\ \ \ \ ::\ \ :\ \ \ \ 0\ :|}
+\DoxyCodeLine{|:\ ::\ \ \ ::\ :\ :\ :\ \ \ ::::XXXX\ :\ \ \ \ \ \ \ :\ \ \ \ \ :::\ ::::\ \ \ ::\ \ ::\ \ \ \ :\ :\ \ ::\ ::\ \ \ 0\ \ |}
+\DoxyCodeLine{|\ \ \ \ \ :::::\ \ \ \ :\ :\ \ ::\ \ :\ \ :\ :\ \ \ ::\ \ \ \ \ \ \ :::\ :\ \ \ :\ \ :\ :\ \ ::\ :\ \ ::\ :::\ \ ::\ :0\ :|}
+\DoxyCodeLine{|\ ::\ :\ ::\ \ \ \ \ :\ \ \ :\ :\ :\ \ \ :\ :\ :::\ \ \ \ \ \ :\ \ \ :::\ ::\ \ ::\ \ \ :\ \ \ :\ :\ \ :\ \ :\ \ :\ :\ :0\ \ |}
+\DoxyCodeLine{|::::\ :\ \ \ ::\ :\ \ \ \ \ \ \ \ \ :::\ \ \ :\ \ \ \ :\ \ :\ \ \ \ :\ \ ::\ \ :\ :\ ::\ \ \ \ :\ \ ::\ :\ :\ \ :\ :\ ::0\ :|}
+\DoxyCodeLine{|::\ ::\ :\ \ :\ \ ::\ :::::\ \ \ \ \ ::\ \ \ :\ :\ \ :\ :\ \ :\ ::\ \ \ :\ \ \ ::::\ \ :\ \ :::::\ \ \ \ :\ :\ \ :0\ \ |}
+\DoxyCodeLine{|\ \ \ \ ::\ \ \ \ \ \ :\ ::\ \ \ :\ \ \ :\ \ \ ::\ :\ :\ :\ :\ \ \ \ :::::\ \ \ \ \ ::\ :\ :\ :\ :::\ ::\ \ :\ :\ \ \ \ 0::|}
+\DoxyCodeLine{|::\ :\ \ \ :\ \ :\ ::::::\ :::\ \ \ \ \ \ ::\ \ :\ \ ::\ \ :\ \ \ ::\ \ ::\ \ \ :::\ :\ :\ :\ :\ \ \ \ ::\ ::\ \ \ 0::|}
+\DoxyCodeLine{|:\ \ \ :\ :\ ::\ ::::\ \ :::\ \ ::\ \ \ \ :\ :\ \ \ :\ ::\ \ ::\ :\ :\ :\ ¢00000000000000000000000\ \ 0\ \ |}
+\DoxyCodeLine{¢XXXXXXXXXXXX\ :\ :\ \ \ \ :\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :::\ \ :\ \ :\ \ \ \ :\ \ :::\ \ :\ \ \ ::\ \ ::\ :0\ \ 0\ \ |}
+\DoxyCodeLine{|::\ :::\ :\ ::\ \ :\ \ \ \ :::\ \ \ :\ :::\ ::\ \ :\ \ :\ \ :\ :\ \ :::\ :\ :\ :\ \ :\ :\ :\ :::\ \ \ \ \ \ :0::0:\ |}
+\DoxyCodeLine{|\ \ :\ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \ \ \ \ :\ :\ ::\ ::\ \ :\ :\ \ :\ \ \ \ :::::\ :\ :\ \ :\ \ :::\ \ :\ :\ \ \ \ :\ 0:\ 0:\ |}
+\DoxyCodeLine{|\ :\ ::\ :\ \ \ ::\ \ ::\ :\ ::::\ ::\ \ :::::\ :\ :::\ \ \ \ \ ::::\ ::\ ::\ \ \ \ ::\ ::\ ::::\ \ \ \ 0\ :0\ :|}
+\DoxyCodeLine{|::\ \ \ XXXXXXXXXXXXXXXXXXXXXXXXXXXXX:\ \ :\ \ :\ \ :\ \ :\ \ \ \ :::\ \ :\ \ \ \ :\ \ :\ ::\ :::0\ :0\ \ |}
+\DoxyCodeLine{|:\ :\ :X\ :\ \ \ \ :\ :\ :\ :::\ \ \ \ \ \ \ ::\ \ :X\ \ \ \ \ \ \ \ \ \ \ ::\ ::\ \ \ :\ \ ::\ \ :\ ::::::\ :\ \ 0\ :0\ \ |}
+\DoxyCodeLine{|\ \ \ XXX\ \ :\ \ \ \ :::\ ::\ \ :\ ::\ :\ \ :\ \ \ X\ \ \ \ :\ \ \ \ ::\ ::\ ::::\ \ :\ :::\ \ \ \ \ \ ::\ :::0::0\ \ |}
+\DoxyCodeLine{|\ ::X\ :\ \ ::\ \ :::\ :\ \ ::\ \ :::\ \ :\ \ :\ X:\ :\ \ \ ::\ :::\ \ ::\ \ \ \ :\ \ :\ :\ \ \ ::\ :::\ :\ 0000::|}
+\DoxyCodeLine{|:\ :\ :\ :::\ :\ :\ :\ \ :\ \ :::\ ::\ \ \ :\ \ \ X\ \ :\ \ \ ::\ :\ \ \ :\ :\ \ \ \ :::\ :\ :\ \ \ \ :\ \ :\ \ \ \ :\ :\ :|}
+\DoxyCodeLine{|\ :\ ::\ :\ \ \ \ \ \ \ \ :\ \ \ \ \ :\ \ \ \ \ \ \ \ \ \ :X\ :\ \ \ \ \ \ :\ \ \ \ ::\ \ \ \ \ :::\ \ \ \ :\ \ ::\ :::::\ :\ :\ :|}
+\DoxyCodeLine{|::\ \ ::\ \ :\ \ \ \ :\ :\ \ :\ \ :\ \ ::::\ ::\ :X:\ \ :\ ::::\ :\ :\ \ \ :\ \ \ \ ::\ \ \ ::\ :\ \ \ ::::\ :\ :\ :\ |}
+\DoxyCodeLine{|\ \ \ ::\ ::\ :\ \ :\ ::\ :::::\ \ \ \ \ \ :\ ::\ X\ \ :\ :::\ :\ \ :\ :\ \ \ \ \ \ \ \ :\ :::\ \ \ \ \ :\ \ :\ \ :::\ :\ |}
+\DoxyCodeLine{|::\ \ \ :::::\ :::\ ::\ \ :\ :::\ \ \ \ \ ::\ \ X\ :\ :\ \ :\ \ :\ \ :\ \ \ \ :\ \ \ ::\ :\ :::\ \ ::::\ :\ \ :\ :::|}
+\DoxyCodeLine{|\ :\ \ \ ::\ \ :::\ :\ :\ :\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ \ \ \ :\ \ :\ :\ :\ ::\ \ :::\ \ \ \ \ \ \ :\ \ ::\ ::\ \ :\ :\ ::\ |}
+\DoxyCodeLine{|:\ \ :\ \ \ ::\ ::\ \ :\ \ :\ \ \ \ \ \ ::\ \ :::\ \ X:\ \ \ ::\ ::\ :\ \ \ ::\ \ \ :\ :\ :::\ :::::\ \ :\ \ \ \ \ ::\ \ |}
+\DoxyCodeLine{|\ \ \ ::\ :\ \ \ ::\ :\ \ ::\ :\ :\ \ \ ::\ \ \ \ \ \ X\ :\ :\ :\ \ \ :\ :\ \ ::\ \ \ :\ :\ \ :::\ :\ \ :\ ::\ \ :\ \ ::\ :|}
+\DoxyCodeLine{|\ :\ :::\ \ \ :\ :\ \ \ :\ :\ ::\ :\ \ :::\ :\ \ :X\ ::\ \ \ \ :::\ \ \ ::\ \ \ \ :\ :\ :::::\ \ ::\ \ \ ::\ :\ \ :::|}
+\DoxyCodeLine{\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/¦-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Player\ Tomas\ Points:\ 671}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Player\ writed\ Points:\ 132\ Dead}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Player\ C++\ Points:\ 132\ Dead}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Player\ Snake\ Points:\ 506\ Dead}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Duration:\ 36s}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (H)elp\ |\ (R)estart\ |\ e(X)it}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Copyright\ (c)\ 2024\ Tomas\ Mark}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{Welcome\ to\ the\ game}
+\DoxyCodeLine{\ \ \ \_\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \_}
+\DoxyCodeLine{\ \ /\ \_\_|\ \_\ \_\ \ \ \_\_\ \_\ |\ |\_\_\_\_\_}
+\DoxyCodeLine{\ \ \(\backslash\)\_\_\ \(\backslash\)|\ '\ \(\backslash\)\ /\ \_`\ ||\ /\ /\ -\/\_)}
+\DoxyCodeLine{\ \ |\_\_\_/|\_||\_|\(\backslash\)\_\_/\_||\_\(\backslash\)\_\(\backslash\)\_\_\_|\ in\ console}
+\DoxyCodeLine{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ Copyright\ (c)\ 2024\ Tomas\ Mark}
+\DoxyCodeLine{\ \ \ Enjoy\ this\ example\ of\ OOP\ C++\ code!}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Snake\ 1\ -\/\ 'w'\ 's'\ 'a'\ 'd'}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Snake\ 2\ -\/\ 'i'\ 'k'\ 'j'\ 'l'}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Snake\ 3\ -\/\ '['\ '''\ ';'\ '\(\backslash\)'}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Snake\ 4\ -\/\ '8'\ '5'\ '4'\ '3'}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ PRESS\ ENTER\ TO\ CONTINUE}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//MIT\ License}
+\DoxyCodeLine{//}
+\DoxyCodeLine{//Copyright\ (c)\ 2024\ Tomas\ Mark}
+\DoxyCodeLine{//}
+\DoxyCodeLine{//Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}
+\DoxyCodeLine{//of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}
+\DoxyCodeLine{//in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}
+\DoxyCodeLine{//to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}
+\DoxyCodeLine{//copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}
+\DoxyCodeLine{//furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}
+\DoxyCodeLine{//}
+\DoxyCodeLine{//The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}
+\DoxyCodeLine{//copies\ or\ substantial\ portions\ of\ the\ Software.}
+\DoxyCodeLine{//}
+\DoxyCodeLine{//THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}
+\DoxyCodeLine{//IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}
+\DoxyCodeLine{//FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}
+\DoxyCodeLine{//AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}
+\DoxyCodeLine{//LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}
+\DoxyCodeLine{//OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}
+\DoxyCodeLine{//SOFTWARE.\ }
+
+\end{DoxyCode}
+ 

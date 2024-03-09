@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "Field.h"
+#include <memory>
 
 static const short MAX_SNAKE_LENGTH = 256+1;
 static const int stepDivider = 1;
@@ -11,7 +12,7 @@ static const int stepDivider = 1;
 class Snake
 {
     int id;
-    Field* fie;
+    std::shared_ptr<Field> fie; // Field* fie;
     int snakeLength;
     bool isDie;
     int snakeDirection;
@@ -26,7 +27,7 @@ class Snake
     const bool isStepBack(int directionTaken) const;
 
 public:
-    Snake(int id, Field& field);
+    Snake(int id, std::shared_ptr<Field> field);
     const void setSnakeDirectionAndShift(int direction);
 
     const void setSnakeDie();

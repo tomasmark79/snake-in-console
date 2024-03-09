@@ -13,8 +13,8 @@ using std::cout;
 using std::endl;
 using std::string;
 
-Graphic::Graphic(Field& field)
-    : fie(&field)
+Graphic::Graphic(std::shared_ptr<Field> field)
+    :fie(field)
 {
     this->clearScreen();
     this->videoBuffer = new char*[ this->fie->getFieldHeight() ];

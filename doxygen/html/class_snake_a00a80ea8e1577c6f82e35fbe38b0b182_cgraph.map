@@ -1,0 +1,9 @@
+<map id="Snake::Snake" name="Snake::Snake">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,109,83"/>
+<area shape="rect" id="Node000002" href="$class_field.html#ac6daf36e40616c954e480fe0c7b48567" title=" " alt="" coords="173,5,313,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,53,176,34,178,39,110,58"/>
+<area shape="rect" id="Node000003" href="$class_field.html#a2d763bd4e1175cc1fdb10dd3c2b76c2b" title=" " alt="" coords="174,56,312,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="109,67,158,67,158,72,109,72"/>
+<area shape="rect" id="Node000004" href="$class_snake.html#a3d27c9420720f5fbde913ebaa0d77164" title=" " alt="" coords="157,107,329,149"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="103,81,160,99,158,104,101,86"/>
+</map>

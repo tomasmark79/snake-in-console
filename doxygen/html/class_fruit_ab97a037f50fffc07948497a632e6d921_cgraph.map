@@ -1,0 +1,13 @@
+<map id="Fruit::Fruit" name="Fruit::Fruit">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,87,57"/>
+<area shape="rect" id="Node000002" href="$class_fruit.html#a8128e0a9052f79dff8fb2abc0edc529d" title=" " alt="" coords="135,31,262,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,41,119,41,119,47,87,47"/>
+<area shape="rect" id="Node000003" href="$class_fruit.html#ad56f24ad5c4aacede305157b7b0a12d5" title=" " alt="" coords="311,5,465,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="262,33,295,28,296,34,263,38"/>
+<area shape="rect" id="Node000005" href="$class_fruit.html#ad5d712b554a02f29df35f1de39150181" title=" " alt="" coords="310,56,466,83"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="263,50,295,54,294,59,262,55"/>
+<area shape="rect" id="Node000004" href="$class_field.html#a2d763bd4e1175cc1fdb10dd3c2b76c2b" title=" " alt="" coords="516,5,653,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="465,16,501,16,501,21,465,21"/>
+<area shape="rect" id="Node000006" href="$class_field.html#ac6daf36e40616c954e480fe0c7b48567" title=" " alt="" coords="514,56,655,83"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="467,67,499,67,499,72,467,72"/>
+</map>

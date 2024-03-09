@@ -1,0 +1,9 @@
+<map id="Graphics::coutGOver" name="Graphics::coutGOver">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,148,57"/>
+<area shape="rect" id="Node000002" href="$class_graphics.html#a79adc72ac0ea564785e62efcad9f3309" title=" " alt="" coords="205,5,356,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,32,189,27,190,33,149,38"/>
+<area shape="rect" id="Node000003" href="$class_graphics.html#a9e25337ab35d0ee7f3597b48d0319a3c" title=" " alt="" coords="196,56,365,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="149,50,180,54,180,60,148,56"/>
+<area shape="rect" id="Node000004" href="$class_field.html#a2d763bd4e1175cc1fdb10dd3c2b76c2b" title=" " alt="" coords="413,56,550,83"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="365,67,397,67,397,72,365,72"/>
+</map>

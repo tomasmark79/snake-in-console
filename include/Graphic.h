@@ -3,16 +3,18 @@
 //Copyright (c) 2024 Tomas Mark
 //
 #pragma once
-#include <string>
 #include "Field.h"
+#include <memory>
+#include <string>
+
 using std::string;
 class Graphic
 {
-    Field* fie;
+    std::shared_ptr<Field> fie; // Field* fie;
     char **videoBuffer;
 
 public:
-    Graphic(Field& field);
+    Graphic(std::shared_ptr<Field> field);
     ~Graphic();
     const void clearScreen() const;
     const void clearVideoBuffer() const;

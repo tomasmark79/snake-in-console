@@ -4,8 +4,8 @@
 //
 #include "Fruit.h"
 
-Fruit::Fruit(double fruitEmptiness, Field& field)
-    :fie(&field), totalFruits(0)
+Fruit::Fruit(double fruitEmptiness, std::shared_ptr<Field> field)
+    :fie(field), totalFruits(0)
 {
     // count with double precission for fruit emptiness
     int smartAlocMemory =

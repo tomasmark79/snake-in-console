@@ -1,0 +1,7 @@
+<map id="Graphic::clearScreen" name="Graphic::clearScreen">
+<area shape="rect" id="Node000001" title=" " alt="" coords="179,31,322,57"/>
+<area shape="rect" id="Node000002" href="$class_graphic.html#a21e465cd9a4bc147bf310376d065d9e8" title=" " alt="" coords="5,5,131,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,35,131,30,131,25,164,29"/>
+<area shape="rect" id="Node000003" href="$class_graphic.html#ac2647004bfce30c7edf61e8160bc6d1f" title=" " alt="" coords="8,56,128,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="164,59,128,64,128,58,163,53"/>
+</map>

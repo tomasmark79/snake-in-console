@@ -9,7 +9,6 @@
 #include "Fruit.h"
 #include "Graphic.h"
 #include "Keyboard.h"
-
 #include <chrono>
 #include <string>
 
@@ -19,7 +18,7 @@ class Process
     Keyboard keyboard;
     int totalPlayers;
 
-    std::unique_ptr<Field> field;
+    std::shared_ptr<Field> field;
     std::unique_ptr<Fruit> fruit;
     std::unique_ptr<Graphic> graphic; // Graphic* Graphic
     std::unique_ptr<std::unique_ptr<Player>[]> players; // Snakes** snakes
@@ -32,12 +31,9 @@ class Process
     std::chrono::time_point<std::chrono::system_clock> end_time;
     std::chrono::duration<double, std::milli> elapsed_time;
 
-
-
 public:
     Process(int width, int height, double fruitEmptiness, int totalPlayers, std::string* playerNames);
-    ~Process();
+    ~Process() = default;
     const void mainLoop();
     const bool isNextGameWanted() const;
-
 };

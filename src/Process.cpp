@@ -15,9 +15,9 @@ Process::Process(int width, int height, double fruitEmptiness,
     : totalPlayers(totalPlayers), isNextGameWantedValue(true)
 {
 
-    field       = std::make_unique  <Field>   (width, height);
-    fruit       = std::make_unique  <Fruit>   (fruitEmptiness, *field);
-    graphic     = std::make_unique  <Graphic> (*field);
+    field       = std::make_shared  <Field>   (width, height);
+    fruit       = std::make_unique  <Fruit>   (fruitEmptiness, field);
+    graphic     = std::make_unique  <Graphic> (field);
 
     players     = std::make_unique  <std::unique_ptr  <Player> []>    (totalPlayers+1);
     snakes      = std::make_unique  <std::unique_ptr  <Snake>  []>    (totalPlayers+1); // snakes = new Snake*[totalPlayers+1];
@@ -26,7 +26,7 @@ Process::Process(int width, int height, double fruitEmptiness,
     for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
         players[playerId] = std::make_unique<Player>(playerId, playerNames[playerId]);
-        snakes[playerId] = std::make_unique<Snake>(playerId, *field); // snakes[playerId] = new Snake(playerId, *field);
+        snakes[playerId] = std::make_unique<Snake>(playerId, field); // snakes[playerId] = new Snake(playerId, *field);
     }
     this->mainLoop();
 }

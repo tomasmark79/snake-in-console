@@ -1,0 +1,9 @@
+<map id="Fruit::getRandomFruitX" name="Fruit::getRandomFruitX">
+<area shape="rect" id="Node000001" title=" " alt="" coords="310,31,464,57"/>
+<area shape="rect" id="Node000002" href="$class_fruit.html#a8128e0a9052f79dff8fb2abc0edc529d" title=" " alt="" coords="135,5,262,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="294,34,262,30,263,25,295,29"/>
+<area shape="rect" id="Node000004" href="$class_fruit.html#afde5d0b0fb5e55b9eddb0a40446f4ce1" title=" " alt="" coords="138,56,259,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="295,59,259,64,259,59,294,54"/>
+<area shape="rect" id="Node000003" href="$class_fruit.html#a3542c4ba40095c2231f5ddbb6113e6b2" title=" " alt="" coords="5,5,87,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="119,21,87,21,87,16,119,16"/>
+</map>

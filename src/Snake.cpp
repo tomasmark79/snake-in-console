@@ -6,8 +6,8 @@
 #include <iostream>
 #include <windows.h> // Beep
 
-Snake:: Snake(int id, Field& field)
-    : id(id), fie(&field), snakeLength(0), isDie(false)
+Snake:: Snake(int id, std::shared_ptr<Field> field)
+    : id(id), fie(field), snakeLength(0), isDie(false)
 {
     // snake baby will born here
     this->snakeCoosX[this->snakeLength] = this->fie->getFieldWidth()/2;

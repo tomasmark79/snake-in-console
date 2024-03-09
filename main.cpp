@@ -7,8 +7,6 @@
 #include <iostream>
 #include <random>
 
-//#define DEBUG
-
 constexpr int               MAX_PLAYERS = 4;
 int totalPlayers    =       MAX_PLAYERS;
 std::string playerNames    [MAX_PLAYERS];
@@ -34,8 +32,6 @@ int main()
     playerNames[1] = "writed";
     playerNames[2] = "C++";
     playerNames[3] = "Snake";
-
-#ifndef DEBUG
 
     // Question 0
     std::string yesOrNo = getStringAnswerFromPlayer("Start immediately with default settings yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
@@ -63,8 +59,6 @@ int main()
         // quesrion 5
         fruitEmptiness = getNumericAnswerFromPlayer<double>("Enter fruit emptiness (min 1 recomended 2.5) ? ", 1, 10, PLAYER_ANSWER_TRESHHOLD);
     }
-
-#endif
 
     // Start Game
     while(true)
@@ -132,5 +126,6 @@ void printHead()
     std::cout << "Copyright (c) 2024 Tomas Mark" << std::endl;
     std::cout << "tomas@digitalspace.name" << std::endl;
     std::cout << "Enjoy this example of OOP " << cpp.getCppV() << " code!" << std::endl;
+    std::cout << "build v0.0.2 - " << cpp.getCppV() << std::endl;
     std::cout << std::endl;
 }
