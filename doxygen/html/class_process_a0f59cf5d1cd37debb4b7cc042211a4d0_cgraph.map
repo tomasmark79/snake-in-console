@@ -1,9 +1,0 @@
-<map id="Process::mainLoop" name="Process::mainLoop">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,139,57"/>
-<area shape="rect" id="Node000002" href="$class_keyboard.html#a20abc1603688cd325902f09e7ce0d577" title=" " alt="" coords="187,5,392,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="139,34,171,30,171,35,139,39"/>
-<area shape="rect" id="Node000003" href="$main_8cpp.html#a0c77d03b7036ef8cfb56cdf60565edf2" title=" " alt="" coords="440,31,637,57"/>
-<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="139,41,424,41,424,47,139,47"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="393,26,425,30,424,35,392,32"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="497,32,489,22,495,12,511,6,539,4,569,7,584,13,582,18,567,12,539,9,512,11,498,16,495,21,501,29"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="Graphics::Graphics" name="Graphics::Graphics">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,139,83"/>
-<area shape="rect" id="Node000002" href="$class_graphics.html#a79adc72ac0ea564785e62efcad9f3309" title=" " alt="" coords="187,5,337,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,53,194,34,195,39,126,58"/>
-<area shape="rect" id="Node000003" href="$class_field.html#ac6daf36e40616c954e480fe0c7b48567" title=" " alt="" coords="192,56,332,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="139,67,176,67,176,72,139,72"/>
-<area shape="rect" id="Node000004" href="$class_field.html#a2d763bd4e1175cc1fdb10dd3c2b76c2b" title=" " alt="" coords="193,107,331,133"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="126,81,195,100,194,105,124,86"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="Graphics.h" name="Graphics.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="30,5,114,32"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,59,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="67,34,49,68,44,65,63,31"/>
-<area shape="rect" id="Node000003" href="$_field_8h.html" title=" " alt="" coords="83,80,144,107"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="82,31,101,65,96,68,77,34"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="84,155,143,181"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="116,107,116,139,111,139,111,107"/>
-</map>

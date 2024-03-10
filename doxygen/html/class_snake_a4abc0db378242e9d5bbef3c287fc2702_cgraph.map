@@ -1,7 +1,0 @@
-<map id="Snake::isSnakeInConflict" name="Snake::isSnakeInConflict">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,172,57"/>
-<area shape="rect" id="Node000002" href="$class_field.html#ac6daf36e40616c954e480fe0c7b48567" title=" " alt="" coords="220,5,360,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,31,204,27,205,32,172,36"/>
-<area shape="rect" id="Node000003" href="$class_field.html#a2d763bd4e1175cc1fdb10dd3c2b76c2b" title=" " alt="" coords="221,56,359,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="172,52,206,56,205,61,171,57"/>
-</map>

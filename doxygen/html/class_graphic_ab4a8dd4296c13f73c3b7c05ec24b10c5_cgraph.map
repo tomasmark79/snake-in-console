@@ -1,6 +1,0 @@
-<map id="Graphic::addSnakeToVideoBuffer" name="Graphic::addSnakeToVideoBuffer">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,21,185,64"/>
-<area shape="rect" id="Node000002" href="$main_8cpp.html#a0c77d03b7036ef8cfb56cdf60565edf2" title=" " alt="" coords="233,29,430,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,40,217,40,217,45,185,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="292,31,284,21,289,11,305,5,331,3,360,5,375,12,372,17,359,10,331,8,306,10,293,15,290,20,296,27"/>
-</map>
