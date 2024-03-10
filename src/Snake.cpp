@@ -7,14 +7,11 @@
 #include <windows.h> // Beep
 
 Snake:: Snake(int id, std::shared_ptr<Field> field)
-    : id(id), fie(field), snakeLength(0), isDie(false)
+    : id(id), fie(field), snakeLength(0), isDie(false), snakeDirection((rand() % 4))
 {
     // snake baby will born here
-    this->snakeCoosX[this->snakeLength] = this->fie->getFieldWidth()/2;
-    this->snakeCoosY[this->snakeLength] = this->fie->getFieldHeight()/2;
-
-    // random first direction of snake baby
-    this->setSnakeDirectionAndShift((rand() % 4));
+    snakeCoosX[snakeLength] = fie->getFieldWidth() / 2;
+    snakeCoosY[snakeLength] = fie->getFieldHeight() / 2;
 }
 
 void Snake::backupSnakeCoordinates()
@@ -36,7 +33,7 @@ void Snake::restoreSnakeCoordinatesShifted()
 }
 
 // step to back? - doesn't allow for Snake ;-)
-const bool Snake::isStepBack(int directionTaken) const
+bool Snake::isStepBack(int directionTaken) const
 {
     if (this->snakeLength > 0)
     {

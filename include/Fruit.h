@@ -11,14 +11,14 @@ static const int MAX_FRUITS = 1050;
 class Fruit
 {
     std::shared_ptr<Field> fie; // Field* fie;
-
     int totalFruits;
     int* fruitXArr;// [MAX_FRUITS+1];
     int* fruitYArr;// [MAX_FRUITS+1];
 public:
 
     Fruit(double fruitEmptiness, std::shared_ptr<Field> field);
-
+    Fruit(const Fruit& fruit);
+    Fruit& operator=(const Fruit& fruit);
     ~Fruit();
     const int* getFruitX() const;
     const int* getFruitY() const;

@@ -34,6 +34,6 @@ class Process
 public:
     Process(int width, int height, double fruitEmptiness, int totalPlayers, std::string* playerNames);
     ~Process() = default;
-    const void mainLoop();
-    const bool isNextGameWanted() const;
+    void mainLoop();
+    bool isNextGameWanted() const;
 };

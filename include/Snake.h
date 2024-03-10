@@ -24,7 +24,7 @@ class Snake
     void inhumeSnake();
     void backupSnakeCoordinates();
     void restoreSnakeCoordinatesShifted();
-    const bool isStepBack(int directionTaken) const;
+    bool isStepBack(int directionTaken) const;
 
 public:
     Snake(int id, std::shared_ptr<Field> field);

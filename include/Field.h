@@ -12,4 +12,5 @@ public:
     Field(short width, short height);
     short getFieldWidth() const;
     short getFieldHeight() const;
+    int getAreaElements() const;
 };

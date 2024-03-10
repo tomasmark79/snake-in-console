@@ -5,15 +5,17 @@
 #include "Fruit.h"
 
 Fruit::Fruit(double fruitEmptiness, std::shared_ptr<Field> field)
-    :fie(field), totalFruits(0)
+    :fie(field), totalFruits(0),
+    fruitXArr(new int [fie->getAreaElements()]),
+    fruitYArr(new int [fie->getAreaElements()])
 {
     // count with double precission for fruit emptiness
     int smartAlocMemory =
         static_cast<double>(fie->getFieldWidth())
         * static_cast<double>(fie->getFieldHeight()) / fruitEmptiness;
 
-    fruitXArr = new int[smartAlocMemory];
-    fruitYArr = new int[smartAlocMemory];
+//    fruitXArr = new int[smartAlocMemory];
+//    fruitYArr = new int[smartAlocMemory];
 
     // seed fruit
     for (int i = 0; i < smartAlocMemory; i ++)

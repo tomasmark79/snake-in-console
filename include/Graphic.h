@@ -15,7 +15,7 @@ class Graphic
 
 public:
     Graphic(std::shared_ptr<Field> field);
-    Graphic(const Graphic& other); //
+    Graphic(const Graphic& other);
     Graphic& operator=(const Graphic& other);
 
     ~Graphic();

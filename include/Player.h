@@ -11,10 +11,9 @@ class Player
     std::string playerName;
 
 public:
-    Player() {};
     Player(int playerId, std::string playerName);
     virtual ~Player() = default;
-    const void setPlayerName(std::string playerName);
+    void setPlayerName(std::string playerName);
     std::string getPlayerName() const;
 };
 

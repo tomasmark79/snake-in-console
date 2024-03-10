@@ -31,7 +31,7 @@ Process::Process(int width, int height, double fruitEmptiness,
     this->mainLoop();
 }
 
-const void Process::mainLoop()
+void Process::mainLoop()
 {
     int eattenFruitElement = 0;
     int playerGameOverReason[4] = {0,0,0,0};
@@ -149,7 +149,7 @@ const void Process::mainLoop()
     }
 }
 
-const bool Process::isNextGameWanted() const
+bool Process::isNextGameWanted() const
 {
     return this->isNextGameWantedValue;
 }
