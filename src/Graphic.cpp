@@ -32,12 +32,12 @@ Graphic::~Graphic()
     delete [] videoBuffer;
 }
 
-const void Graphic::clearScreen() const
+void Graphic::clearScreen() const
 {
     system("cls");
 }
 
-const void Graphic::clearVideoBuffer() const
+void Graphic::clearVideoBuffer() const
 {
     SetConsoleCursorPosition(
         GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
@@ -51,7 +51,7 @@ const void Graphic::clearVideoBuffer() const
     }
 }
 
-const void Graphic::addWallsToVideoBuffer() const
+void Graphic::addWallsToVideoBuffer() const
 {
     const char wallVMaterial = '|';
     const char wallHMaterial = '-';
@@ -70,7 +70,7 @@ const void Graphic::addWallsToVideoBuffer() const
     }
 }
 
-const void Graphic::addSnakeToVideoBuffer(const int id, const int* x, const int* y, int snakeLength, bool isDie)
+void Graphic::addSnakeToVideoBuffer(const int id, const int* x, const int* y, int snakeLength, bool isDie)
 {
     for (int bodyElement = 0; bodyElement <= snakeLength; bodyElement++)
     {
@@ -88,7 +88,7 @@ const void Graphic::addSnakeToVideoBuffer(const int id, const int* x, const int*
     }
 }
 
-const void Graphic::addFruitToVideoBuffer(const int* x, const int* y, int totalFruits)
+void Graphic::addFruitToVideoBuffer(const int* x, const int* y, int totalFruits)
 {
     for (int fruitElement = 0; fruitElement < totalFruits; fruitElement++)
     {
@@ -96,7 +96,7 @@ const void Graphic::addFruitToVideoBuffer(const int* x, const int* y, int totalF
     }
 }
 
-const void Graphic::redrawVideoBuffer() const
+void Graphic::redrawVideoBuffer() const
 {
     SetConsoleCursorPosition(
         GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
@@ -110,12 +110,12 @@ const void Graphic::redrawVideoBuffer() const
     }
 }
 
-const void Graphic::Cout(std::string msg) const
+void Graphic::Cout(std::string msg) const
 {
     cout << msg << endl;
 }
 
-const void Graphic::coutVCentered(std::string text) const
+void Graphic::coutVCentered(std::string text) const
 {
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
@@ -133,7 +133,7 @@ const void Graphic::coutVCentered(std::string text) const
 
 }
 
-const void Graphic::coutVCAWCoo(short row, std::string text) const
+void Graphic::coutVCAWCoo(short row, std::string text) const
 {
     SetConsoleCursorPosition(
         GetStdHandle(STD_OUTPUT_HANDLE),
@@ -146,7 +146,7 @@ const void Graphic::coutVCAWCoo(short row, std::string text) const
     cout << text << endl;
 }
 
-const void Graphic::coutHelp() const
+void Graphic::coutHelp() const
 {
     this->clearScreen();
     {
@@ -171,7 +171,7 @@ const void Graphic::coutHelp() const
     this->clearScreen();
 }
 
-const void Graphic::coutGOver(int reason) const
+void Graphic::coutGOver(int reason) const
 {
     {
         this->coutVCAWCoo(7, "Game Over");

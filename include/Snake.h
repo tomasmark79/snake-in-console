@@ -21,16 +21,16 @@ class Snake
     int backupCoosX[MAX_SNAKE_LENGTH];
     int backupCoosY[MAX_SNAKE_LENGTH];
 
-    const void inhumeSnake();
-    const void backupSnakeCoordinates();
-    const void restoreSnakeCoordinatesShifted();
+    void inhumeSnake();
+    void backupSnakeCoordinates();
+    void restoreSnakeCoordinatesShifted();
     const bool isStepBack(int directionTaken) const;
 
 public:
     Snake(int id, std::shared_ptr<Field> field);
-    const void setSnakeDirectionAndShift(int direction);
+    void setSnakeDirectionAndShift(int direction);
 
-    const void setSnakeDie();
+    void setSnakeDie();
     bool isSnakeDie() const;
 
     int isSnakeInConflict() const;
@@ -40,7 +40,7 @@ public:
         const int* FruitY,
         int fruitCount
     ) const;
-    const void growUpSnake();
+    void growUpSnake();
 
     const int* getSnakeX() const;
     const int* getSnakeY() const;

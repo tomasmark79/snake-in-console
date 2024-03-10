@@ -17,7 +17,7 @@ Snake:: Snake(int id, std::shared_ptr<Field> field)
     this->setSnakeDirectionAndShift((rand() % 4));
 }
 
-const void Snake::backupSnakeCoordinates()
+void Snake::backupSnakeCoordinates()
 {
     for (int bodyElement = 0; bodyElement < this->snakeLength; bodyElement ++)
     {
@@ -26,7 +26,7 @@ const void Snake::backupSnakeCoordinates()
     }
 }
 
-const void Snake::restoreSnakeCoordinatesShifted()
+void Snake::restoreSnakeCoordinatesShifted()
 {
     for (int bodyElement = 0; bodyElement < this->snakeLength; bodyElement ++)
     {
@@ -53,7 +53,7 @@ const bool Snake::isStepBack(int directionTaken) const
     return false;
 }
 
-const void Snake::setSnakeDirectionAndShift(int directionTaken)
+void Snake::setSnakeDirectionAndShift(int directionTaken)
 {
     if (this->isDie)
         return;
@@ -80,7 +80,7 @@ const void Snake::setSnakeDirectionAndShift(int directionTaken)
     this->restoreSnakeCoordinatesShifted();
 }
 
-const void Snake::setSnakeDie()
+void Snake::setSnakeDie()
 {
     this->isDie = true;
 }
@@ -122,7 +122,7 @@ int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fru
     return 0;
 }
 
-const void Snake::growUpSnake()
+void Snake::growUpSnake()
 {
     this->snakeLength+=1;
 }

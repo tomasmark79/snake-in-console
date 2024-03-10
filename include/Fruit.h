@@ -26,6 +26,6 @@ public:
     int getRandomFruitY() const;
     int getTotalFruit() const;
 
-    const void addFruitItem();
-    const void refreshFruit(int refreshIndex);
+    void addFruitItem();
+    void refreshFruit(int refreshIndex);
 };

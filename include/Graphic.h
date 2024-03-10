@@ -15,11 +15,15 @@ class Graphic
 
 public:
     Graphic(std::shared_ptr<Field> field);
+    Graphic(const Graphic& other); //
+    Graphic& operator=(const Graphic& other);
+
     ~Graphic();
-    const void clearScreen() const;
-    const void clearVideoBuffer() const;
-    const void addWallsToVideoBuffer() const;
-    const void addSnakeToVideoBuffer
+
+    void clearScreen() const;
+    void clearVideoBuffer() const;
+    void addWallsToVideoBuffer() const;
+    void addSnakeToVideoBuffer
     (
         const int id,
         const int* x,
@@ -27,21 +31,21 @@ public:
         int snakeLength,
         bool isDie
     );
-    const void addFruitToVideoBuffer
+    void addFruitToVideoBuffer
     (
         const int* x,
         const int* y,
         int fruitElement
     );
-    const void redrawVideoBuffer() const;
+    void redrawVideoBuffer() const;
 
-    const void Cout(string msg) const;
+    void Cout(string msg) const;
 
-    const void coutVCentered(std::string text) const;
-    const void coutVCAWCoo(short row, std::string text) const;
+    void coutVCentered(std::string text) const;
+    void coutVCAWCoo(short row, std::string text) const;
 
-    const void coutHelp() const;
-    const void coutGOver(int reason) const;
+    void coutHelp() const;
+    void coutGOver(int reason) const;
 };
 
 

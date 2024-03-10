@@ -51,14 +51,14 @@ int Fruit::getRandomFruitY() const
     return (rand() % (this->fie->getFieldHeight()-2) ) + 1;
 }
 
-const void Fruit::addFruitItem()
+void Fruit::addFruitItem()
 {
     this->fruitXArr[this->totalFruits] = getRandomFruitX();
     this->fruitYArr[this->totalFruits] = getRandomFruitY();
     this->totalFruits++;
 }
 
-const void Fruit::refreshFruit(int refreshIndex)
+void Fruit::refreshFruit(int refreshIndex)
 {
     this->fruitXArr[refreshIndex] = getRandomFruitX();
     this->fruitYArr[refreshIndex] = getRandomFruitY();
