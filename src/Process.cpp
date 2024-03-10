@@ -12,7 +12,7 @@ using namespace std::chrono_literals;
 
 Process::Process(int width, int height, double fruitEmptiness,
                  int totalPlayers, std::string* playerNames)
-    : totalPlayers(totalPlayers), isNextGameWantedValue(true)
+    : totalPlayers(totalPlayers), isGamingContinue(true)
 {
 
     field       = std::make_shared  <Field>   (width, height);
@@ -103,7 +103,11 @@ void Process::mainLoop()
                     // Graphic->coutGOver(gameOverReason);
                     // break;
 
-// TO DO - when die all, is necessary to stop time and create winner
+
+// TODO (tomas#1#): Conflix for of each other
+
+// TODO (tomas#1#): Stop Time if game over
+
                 }
             }
 
@@ -132,7 +136,7 @@ void Process::mainLoop()
         // exit game
         if (keyboardCode == 4)
         {
-            this->isNextGameWantedValue = false;
+            this->isGamingContinue = false;
             break;
         }
 
@@ -149,7 +153,7 @@ void Process::mainLoop()
     }
 }
 
-bool Process::isNextGameWanted() const
+bool Process::isGaming() const
 {
-    return this->isNextGameWantedValue;
+    return this->isGamingContinue;
 }

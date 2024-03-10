@@ -25,7 +25,7 @@ class Process
     std::unique_ptr<std::unique_ptr<Snake>[]> snakes; // Player** players
 
     std::string msg;
-    bool isNextGameWantedValue;
+    bool isGamingContinue;
 
     std::chrono::time_point<std::chrono::system_clock> start_time;
     std::chrono::time_point<std::chrono::system_clock> end_time;
@@ -35,5 +35,5 @@ public:
     Process(int width, int height, double fruitEmptiness, int totalPlayers, std::string* playerNames);
     ~Process() = default;
     void mainLoop();
-    bool isNextGameWanted() const;
+    bool isGaming() const;
 };

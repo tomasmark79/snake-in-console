@@ -6,7 +6,6 @@
 #include "Cpp.h"
 #include <iostream>
 #include <random>
-// #include <string>
 
 constexpr int               MAX_PLAYERS = 4;
 int totalPlayers    =       MAX_PLAYERS;
@@ -66,7 +65,7 @@ int main()
     {
         Process gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames);
 
-        if (!gameSnake.isNextGameWanted())
+        if (!gameSnake.isGaming())
             break;
     }
     return 0;
