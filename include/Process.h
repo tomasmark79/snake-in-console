@@ -15,6 +15,8 @@
 #include <map>
 
 static const short SCORE_MULTIPLIER = 11;
+static const short SNAKE_SPEED = 1;
+
 class Process
 {
 
@@ -26,9 +28,6 @@ class Process
     std::unique_ptr<Graphic> graphic; // Graphic* Graphic
     std::unique_ptr<std::unique_ptr<Player>[]> players; // Player** players
     std::unique_ptr<std::shared_ptr<Snake>[]> snakes; // Snakes**
-
-    // std::string msg;
-    bool isGamingContinue;
 
     std::chrono::time_point<std::chrono::system_clock> start_time;
     std::chrono::time_point<std::chrono::system_clock> end_time;
@@ -44,5 +43,7 @@ public:
     ~Process() = default;
     void mainLoop();
     void checkSnakeConflicts(int currSnake);
-    bool isGaming() const;
+
+    bool isGameGoingOn;
+    bool getIsGameGoingOn() const;
 };

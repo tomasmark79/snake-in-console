@@ -13,7 +13,7 @@ using namespace std::chrono_literals;
 
 Process::Process(int width, int height, double fruitEmptiness,
                  int totalPlayers, std::string* playerNames)
-    : totalPlayers(totalPlayers), isGamingContinue(true)
+    : totalPlayers(totalPlayers), isGameGoingOn(true)
 {
     field       = std::make_shared  <Field>   (width, height);
     fruit       = std::make_unique  <Fruit>   (fruitEmptiness, field);
@@ -25,7 +25,7 @@ Process::Process(int width, int height, double fruitEmptiness,
     for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
         players[playerId] = std::make_unique<Player>(playerId, playerNames[playerId]);
-        snakes[playerId] = std::make_unique<Snake>(playerId, 1, field->getFieldWidth()/2, field->getFieldHeight()/2); // snakes[playerId] = new Snake(playerId, *field);
+        snakes[playerId] = std::make_unique<Snake>(playerId, SNAKE_SPEED, field->getFieldWidth()/2, field->getFieldHeight()/2); // snakes[playerId] = new Snake(playerId, *field);
     }
 
     this->mainLoop();
@@ -79,7 +79,7 @@ void Process::mainLoop()
                                            snakes[currSnake]->getX(),
                                            snakes[currSnake]->getY(),
                                            snakes[currSnake]->getLength(),
-                                           snakes[currSnake]->isJustDead());
+                                           snakes[currSnake]->getIsDead());
 
             if ( (eattenFruitElement     = snakes[currSnake]->getElementOfEattenFruit(
                                                fruit->getFruitX(),
@@ -93,11 +93,11 @@ void Process::mainLoop()
 
             this->checkSnakeConflicts(currSnake);
 
-            // TODO (tomas#1#): If all snakes Die, stop time
-
             playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
             playerStats[currSnake] = "Player " + players[currSnake]->getPlayerName() + " Points: " + std::to_string(playerPoints[currSnake]) +
-                                     (snakes[currSnake]->isJustDead() ? " Dead by " + snakes[currSnake]->getDeadDescripion()/*+ deads.at(snakes[currSnake]->getDeadReason())*/  : "");
+                                     (snakes[currSnake]->getIsDead() ? " Dead by " + snakes[currSnake]->getDeadDescripion()/*+ deads.at(snakes[currSnake]->getDeadReason())*/  : "");
+
+            // TODO (tomas#1#): If all snakes Die, stop time
 
         } // current snake
 
@@ -121,7 +121,7 @@ void Process::mainLoop()
         // exit game
         if (keyboardCode == 4)
         {
-            this->isGamingContinue = false;
+            this->isGameGoingOn = false;
             break;
         }
 
@@ -144,12 +144,10 @@ void Process::mainLoop()
 //! \return 1 wall, 2 itself, 3 foreign snake conflict
 //!
 //!
-
 // TODO (tomas#1#): Required remove returns, but mixed condition can occur
-
 void Process::checkSnakeConflicts(int currSnake)
 {
-    if (snakes[currSnake]->isJustDead())
+    if (snakes[currSnake]->getIsDead())
         return;
 
     // hitting wall check
@@ -195,9 +193,7 @@ void Process::checkSnakeConflicts(int currSnake)
     }
 }
 
-
-
-bool Process::isGaming() const
+bool Process::getIsGameGoingOn() const
 {
-    return this->isGamingContinue;
+    return this->isGameGoingOn;
 }

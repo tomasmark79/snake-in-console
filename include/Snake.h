@@ -19,12 +19,17 @@ class Snake
     int direction;
     bool isDead;
     int deadCode;
-    const map<int, string> deadDescription { {0, "living"}, {1, "wall"}, {2, "self"}, {3, "another Snake"} };
+
+    const map<int, string> deadDescription
+    {
+        {0, "is living"}, {1, "wall"}, {2, "self"}, {3, "another Snake"}
+    };
 
     int snakeCoosX[MAX_SNAKE_LENGTH];
     int snakeCoosY[MAX_SNAKE_LENGTH];
     int backupCoosX[MAX_SNAKE_LENGTH];
     int backupCoosY[MAX_SNAKE_LENGTH];
+
     void inhumeSnake();
     void backupCoordinates();
     void restoreCoordinatesShifted();
@@ -51,14 +56,14 @@ public:
         return this->deadCode;
     };
 
-    bool isJustDead() const
+    bool getIsDead() const
     {
         return this->isDead;
     };
 
     string getDeadDescripion() const
     {
-        return deadDescription.at(deadCode);
+        return this->deadDescription.at(deadCode);
     };
 
     // eat fruit and grow up
@@ -71,7 +76,7 @@ public:
 
     void growUp()
     {
-        length+=1;
+        this->length+=1;
     };
 
     int getLength() const

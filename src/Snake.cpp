@@ -3,10 +3,9 @@
 //Copyright (c) 2024 Tomas Mark
 //
 #include "Snake.h"
-#include <iostream>
 
 Snake::Snake(int id, int stepDivider, int spawnX, int spawnY):
-    id(id), stepDivider(1), length(0), direction((rand() % 4)),isDead(false),deadCode(0)
+    id(id), stepDivider(stepDivider), length(0), direction((rand() % 4)),isDead(false),deadCode(0)
 {
     // snake baby will born here
     snakeCoosX[0] = spawnX;
@@ -64,25 +63,25 @@ void Snake::setMyDirectionAndShift(int directionPassed)
     this->backupCoordinates();
 
     if (this->direction == 0)
-        snakeCoosY[0] -=stepDivider; // up
+        this->snakeCoosY[0] -= this->stepDivider; // up
     else if (this->direction == 1)
-        snakeCoosY[0] +=stepDivider; // down
+        this->snakeCoosY[0] +=this->stepDivider; // down
     else if (this->direction == 2)
-        snakeCoosX[0] -=stepDivider; // left
+        this->snakeCoosX[0] -=this->stepDivider; // left
     else if (this->direction == 3)
-        snakeCoosX[0] +=stepDivider; // right
+        this->snakeCoosX[0] +=this->stepDivider; // right
 
     this->restoreCoordinatesShifted();
 }
 
 int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fruitCount ) const
 {
-    if (isDead)
+    if (this->isDead)
         return 0;
 
     for (int fruitIndex = 0; fruitIndex < fruitCount; fruitIndex ++)
     {
-        if (snakeCoosX[0] ==  FruitX[fruitIndex] && snakeCoosY[0] == FruitY[fruitIndex])
+        if (this->snakeCoosX[0] ==  FruitX[fruitIndex] && this->snakeCoosY[0] == FruitY[fruitIndex])
             return fruitIndex + 1;
     }
     return 0;

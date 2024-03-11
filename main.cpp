@@ -65,7 +65,7 @@ int main()
     {
         Process gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames);
 
-        if (!gameSnake.isGaming())
+        if (!gameSnake.getIsGameGoingOn())
             break;
     }
     return 0;
