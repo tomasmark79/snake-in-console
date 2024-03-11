@@ -72,9 +72,7 @@ void Process::mainLoop()
         // go through snakes
         for (int currSnake = 0; currSnake < this->totalPlayers; currSnake ++)
         {
-
-            if (!snakes[currSnake]->amIDead())
-                snakes[currSnake]->setMyDirectionAndShift(playerInput[currSnake]);
+            snakes[currSnake]->setMyDirectionAndShift(playerInput[currSnake]);
 
             graphic->addSnakeToVideoBuffer(currSnake,
                                            snakes[currSnake]->getSnakeX(),

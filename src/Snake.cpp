@@ -9,7 +9,7 @@
 Snake::Snake(int id, int spawnX, int spawnY)
     :   id(id),
         length(0),
-        isDie(false),
+        isDead(false),
         snakeDirection((rand() % 4))
 {
     // snake baby will born here
@@ -36,14 +36,14 @@ void Snake::restoreCoordinatesShifted()
 }
 
 // step to back? - doesn't allow for Snake ;-)
-bool Snake::isStepBack(int directionTaken) const
+bool Snake::isStepBack(int direction) const
 {
     if (this->length > 0)
     {
-        if (    (this->snakeDirection == 0 && directionTaken == 1) ||      // up can't down
-                (this->snakeDirection == 1 && directionTaken == 0) ||   // down con't up
-                (this->snakeDirection == 2 && directionTaken == 3) ||   // left can't right
-                (this->snakeDirection == 3 && directionTaken == 2) )    // and vice versa
+        if (    (this->snakeDirection == 0 && direction == 1) ||      // up can't down
+                (this->snakeDirection == 1 && direction == 0) ||   // down con't up
+                (this->snakeDirection == 2 && direction == 3) ||   // left can't right
+                (this->snakeDirection == 3 && direction == 2) )    // and vice versa
         {
             Beep(1700,20);
             Beep(1400,14);
@@ -55,7 +55,7 @@ bool Snake::isStepBack(int directionTaken) const
 
 void Snake::setMyDirectionAndShift(int directionTaken)
 {
-    if (this->isDie)
+    if (this->isDead)
         return;
 
     Beep(500,2);
@@ -82,11 +82,11 @@ void Snake::setMyDirectionAndShift(int directionTaken)
 
 void Snake::setMeDead()
 {
-    this->isDie = true;
+    this->isDead = true;
 }
 bool Snake::amIDead() const
 {
-    return this->isDie;
+    return this->isDead;
 }
 
 int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fruitCount ) const
@@ -106,12 +106,12 @@ void Snake::growUpSnake()
 
 const int* Snake::getSnakeX() const
 {
-    return /*(int*)*/this->snakeCoosX;
+    return this->snakeCoosX;
 }
 
 const int* Snake::getSnakeY()  const
 {
-    return /*(int*)*/this->snakeCoosY;
+    return this->snakeCoosY;
 }
 
 int Snake::getSnakeLength() const

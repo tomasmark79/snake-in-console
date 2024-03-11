@@ -17,7 +17,7 @@ class Snake
     int id;
     std::shared_ptr<Field> fie; // Field* fie;
     int length;
-    bool isDie;
+    bool isDead;
     int snakeDirection;
     int snakeCoosX[MAX_SNAKE_LENGTH];
     int snakeCoosY[MAX_SNAKE_LENGTH];
@@ -27,7 +27,7 @@ class Snake
     void inhumeSnake();
     void backupCoordinates();
     void restoreCoordinatesShifted();
-    bool isStepBack(int directionTaken) const;
+    bool isStepBack(int direction) const;
 
 public:
     Snake(int id, int spawnX, int spawnY);
