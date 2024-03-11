@@ -159,7 +159,6 @@ void Graphic::coutVerticalCenteredMultilineString(int startAtRow, string multili
     }
 }
 
-
 void Graphic::coutHelp() const
 {
     this->clearScreen();

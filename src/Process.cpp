@@ -125,7 +125,7 @@ void Process::mainLoop()
 
 
         // all players dead
-        if (totalDeadPlayers == 3)
+        if (totalDeadPlayers == totalPlayers)
         {
             graphic->coutGameOver();
             break;
@@ -143,7 +143,7 @@ void Process::mainLoop()
 
         // help game
         if (keyboardCode == 5)
-            graphic->coutGameOver();//graphic->coutHelp();
+            graphic->coutHelp();
 
         // sleep interval in ms
         std::this_thread::sleep_for(std::chrono::milliseconds(150));
