@@ -26,6 +26,7 @@ static const int SNAKE_SPEED = 1;
 class Process
 {
     int totalPlayers;
+    int totalDeadPlayers;
     shared_ptr<Field> field;
     unique_ptr<Fruit> fruit;
     unique_ptr<Graphic> graphic; // Graphic* Graphic

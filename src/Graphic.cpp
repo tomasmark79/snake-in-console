@@ -6,26 +6,27 @@
 #include "Graphic.h"
 #include <iostream>
 #include <windows.h> //SetConsoleCursorPosition
-#include <string>
 #include <limits>
+#include <Cpp.h>
+#include <sstream>
 
 using std::cout;
 using std::endl;
 using std::string;
 
-Graphic::Graphic(std::shared_ptr<Field> field)
-    :fie(field)
+Graphic::Graphic(int totalW, int totalH)
+    :totalW(totalW), totalH(totalH),
+     videoBuffer(new char* [ totalH ])
 {
     this->clearScreen();
-    this->videoBuffer = new char*[ this->fie->getFieldHeight() ];
-    for (int i = 0; i < this->fie->getFieldHeight(); i++)
+    for (int i = 0; i < totalH; i++)
     {
-        this->videoBuffer[i] = new char[this->fie->getFieldWidth()];
+        this->videoBuffer[i] = new char[ totalW ];
     }
 }
 Graphic::~Graphic()
 {
-    for (int i = 0; i < this->fie->getFieldHeight(); i++)
+    for (int i = 0; i < totalH; i++)
     {
         delete videoBuffer[i];
     }
@@ -41,9 +42,9 @@ void Graphic::clearVideoBuffer() const
 {
     SetConsoleCursorPosition(
         GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
-    for (int i = 0; i < this->fie->getFieldHeight(); i++)
+    for (int i = 0; i < totalH; i++)
     {
-        for (int j = 0; j < this->fie->getFieldWidth(); j++)
+        for (int j = 0; j < totalW; j++)
         {
             this->videoBuffer[i][j] = ' ';
         }
@@ -58,15 +59,15 @@ void Graphic::addWallsToVideoBuffer() const
     //    const char wallCornerMaterialSlash = '\\';
     //    const char wallCornerMaterialBackSlash = '/';
 
-    for (int row = 1; row < this->fie->getFieldWidth()-1; row++)
+    for (int row = 1; row < totalW-1; row++)
     {
         this->videoBuffer[0][row] = wallHMaterial; // left column
-        this->videoBuffer[this->fie->getFieldHeight()-1][row] = wallHMaterial;
+        this->videoBuffer[totalH-1][row] = wallHMaterial;
     }
-    for (int col = 1; col < this->fie->getFieldHeight()-1; col++)
+    for (int col = 1; col < totalH-1; col++)
     {
         this->videoBuffer[col][0] = wallVMaterial; // top row
-        this->videoBuffer[col][this->fie->getFieldWidth()-1] = wallVMaterial;
+        this->videoBuffer[col][totalW-1] = wallVMaterial;
     }
 }
 
@@ -100,9 +101,9 @@ void Graphic::redrawVideoBuffer() const
 {
     SetConsoleCursorPosition(
         GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
-    for (int y = 0; y < this->fie->getFieldHeight(); y++)
+    for (int y = 0; y < totalH; y++)
     {
-        for (int x = 0; x < this->fie->getFieldWidth(); x++)
+        for (int x = 0; x < totalW; x++)
         {
             cout << this->videoBuffer[y][x];
         }
@@ -115,7 +116,7 @@ void Graphic::Cout(std::string msg) const
     cout << msg << endl;
 }
 
-void Graphic::coutVCentered(std::string text) const
+void Graphic::coutVCentered(string text) const
 {
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
@@ -124,7 +125,7 @@ void Graphic::coutVCentered(std::string text) const
 
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),COORD
     {
-        (short)( (this->fie->getFieldWidth() / 2) - (text.length() / 2) ),
+        (short)( (totalW / 2) - (text.length() / 2) ),
         currentRow
     });
 
@@ -133,58 +134,79 @@ void Graphic::coutVCentered(std::string text) const
 
 }
 
-void Graphic::coutVCAWCoo(short row, std::string text) const
+void Graphic::coutVCAWCoo(short row, string text) const
 {
     SetConsoleCursorPosition(
         GetStdHandle(STD_OUTPUT_HANDLE),
         COORD
     {
-        (short)( (this->fie->getFieldWidth() / 2) - (text.length() / 2) ),
+        (short)( (totalW / 2) - (text.length() / 2) ),
         row
     }
     );
     cout << text << endl;
 }
 
+void Graphic::coutVerticalCenteredMultilineString(int startAtRow, string multilineString) const
+{
+    std::istringstream iss(multilineString);
+    string line;
+    while (std::getline(iss, line))
+    {
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD
+        { (short)( (totalW / 2) - (line.length() / 2) ), static_cast<short>(startAtRow++) } );
+        cout << line << endl;
+    }
+}
+
+
 void Graphic::coutHelp() const
 {
     this->clearScreen();
     {
-        this->coutVCAWCoo(3, "----------------------------------------");
-        this->coutVCAWCoo(4, "Welcome to the game                     ");
-        this->coutVCAWCoo(5, "   ___              _                   ");
-        this->coutVCAWCoo(6, "  / __| _ _   __ _ | |_____             ");
-        this->coutVCAWCoo(7, "\\__ \\| ' \\ / _` || / / -_)           ");
-        this->coutVCAWCoo(8, "|___/|_||_|\\__/_||_\\_\\___| in console");
-        this->coutVCAWCoo(9, "----------------------------------------");
-        this->coutVCAWCoo(11, "Copyright (c) 2024 Tomas Mark");
-        this->coutVCAWCoo(12, "Enjoy this example of OOP C++ code!");
-
+        std::cout << getAppBanner();
+        this->coutVCAWCoo(13, "-------keyb control------");
         this->coutVCAWCoo(14, "Snake 1 - 'w' 's' 'a' 'd'");
         this->coutVCAWCoo(15, "Snake 2 - 'i' 'k' 'j' 'l'");
         this->coutVCAWCoo(16, "Snake 3 - '[' ''' ';' '\\'");
         this->coutVCAWCoo(17, "Snake 4 - '8' '5' '4' '3'");
         this->coutVCAWCoo(19, "PRESS ENTER TO CONTINUE");
-
     }
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     this->clearScreen();
 }
 
-void Graphic::coutGOver(int reason) const
+void Graphic::coutGameOver() const
 {
-    {
-        this->coutVCAWCoo(7, "Game Over");
-        if (reason == 1)
-            this->coutVCAWCoo(9, "You hit a wall!");
-        if (reason == 2)
-            this->coutVCAWCoo(9, "You ate yourself!");
-        if (reason == 3)
-            this->coutVCAWCoo(9, "You interrupted game by pressing key R!");
-        this->coutVCAWCoo(14, "PRESS ENTER");
-
-    }
+    coutVerticalCenteredMultilineString(9, getGameOverBanner());
+    coutVerticalCenteredMultilineString(15, "\n\nPRESS ENTER TO CONTINUE\n\n");
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    // this->clearScreen();
+    this->clearScreen();
 }
 
+string getGameOverBanner()
+{
+    return
+        "_____ _____ _____ _____    _____ _____ _____ _____\n"
+        "|   __|  _  |     |   __|  |     |  |  |   __| __  |\n"
+        "|  |  |     | | | |   __|  |  |  |  |  |   __|    -|\n"
+        "|_____|__|__|_|_|_|_____|  |_____|\\___/|_____|__|__|\n";
+}
+
+string getAppBanner()
+{
+    // 11 rows
+    Cpp cpp;
+    return
+        "----------------------------------------\n"
+        "Welcome to the game\n"
+        " ___              _\n"
+        "/ __| _ _   __ _ | |_____\n"
+        "\\__ \\| ' \\ / _` || / / -_)\n"
+        "|___/|_||_|\\__/_||_\\_\\___| in console\n"
+        "----------------------------------------\n"
+        "Copyright (c) 2024 Tomas Mark\n"
+        "tomas@digitalspace.name\n"
+        "Enjoy this example of OOP " + cpp.getCppV() + " code!\n"
+        "build v0.0.3\n";
+}

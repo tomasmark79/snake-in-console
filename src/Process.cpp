@@ -11,9 +11,10 @@
 Process::Process(int width, int height, double fruitEmptiness,
                  int totalPlayers, string* playerNames)
     : totalPlayers(totalPlayers),
+      totalDeadPlayers(0),
       field(make_shared    <Field>   (width, height)),
       fruit(make_unique    <Fruit>   (fruitEmptiness, width, height)),
-      graphic(make_unique  <Graphic> (field)),
+      graphic(make_unique  <Graphic> (width, height)),
       players(make_unique  <unique_ptr <Player> []> (totalPlayers + 1)),
       snakes(make_unique   <shared_ptr <Snake>  []> (totalPlayers + 1)),
       isGameGoingOn(true)
@@ -123,6 +124,13 @@ void Process::mainLoop()
         graphic->coutVCentered("(H)elp | (R)estart | e(X)it");
 
 
+        // all players dead
+        if (totalDeadPlayers == 3)
+        {
+            graphic->coutGameOver();
+            break;
+        }
+
         // restart game
         if (keyboardCode == 6)
             break;
@@ -135,7 +143,7 @@ void Process::mainLoop()
 
         // help game
         if (keyboardCode == 5)
-            graphic->coutHelp();
+            graphic->coutGameOver();//graphic->coutHelp();
 
         // sleep interval in ms
         std::this_thread::sleep_for(std::chrono::milliseconds(150));
@@ -162,6 +170,7 @@ void Process::checkSnakeConflicts(int currSnake)
        )
     {
         snakes[currSnake]->setDeadAndCode(1);
+        totalDeadPlayers++;
         return;
     }
 
@@ -173,6 +182,7 @@ void Process::checkSnakeConflicts(int currSnake)
            )
         {
             snakes[currSnake]->setDeadAndCode(2);
+            totalDeadPlayers++;
             return;
         }
     }
@@ -190,6 +200,7 @@ void Process::checkSnakeConflicts(int currSnake)
                 {
                     // eats each other
                     snakes[currSnake]->setDeadAndCode(3);
+                    totalDeadPlayers++;
                     return;
                 }
             }

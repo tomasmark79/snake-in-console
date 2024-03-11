@@ -4,17 +4,21 @@
 //
 #pragma once
 #include "Field.h"
-#include <memory>
 #include <string>
 
 using std::string;
+
+string getAppBanner();
+string getGameOverBanner();
+
 class Graphic
 {
-    std::shared_ptr<Field> fie; // Field* fie;
-    char **videoBuffer;
+    int totalW;
+    int totalH;
+    char **videoBuffer; // C style pointer to an arrays int this class is the intent
 
 public:
-    Graphic(std::shared_ptr<Field> field);
+    Graphic(int totalW, int totalH);
     Graphic(const Graphic& other);
     Graphic& operator=(const Graphic& other);
 
@@ -41,11 +45,12 @@ public:
 
     void Cout(string msg) const;
 
-    void coutVCentered(std::string text) const;
-    void coutVCAWCoo(short row, std::string text) const;
+    void coutVCentered(string text) const;
+    void coutVCAWCoo(short row, string text) const;
+    void coutVerticalCenteredMultilineString(int startAtRow, string multilineString) const;
 
     void coutHelp() const;
-    void coutGOver(int reason) const;
+    void coutGameOver() const;
 };
 
 

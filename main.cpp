@@ -3,7 +3,7 @@
 //Copyright (c) 2024 Tomas Mark
 //
 #include "Process.h"
-#include "Cpp.h"
+#include "Graphic.h"
 #include <iostream>
 #include <random>
 
@@ -19,14 +19,13 @@ template<typename T1>
 T1 getNumericAnswerFromPlayer(std::string_view question, int min, int max, int attemptTreshold);
 std::string getStringAnswerFromPlayer(std::string_view question, int min, int max, int attemptTreshold);
 void printHead();
-static const Cpp cpp;
 
 int main()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    printHead();
+    std::cout << getAppBanner();
 
     playerNames[0] = "Tomas";
     playerNames[1] = "writed";
@@ -114,18 +113,4 @@ std::string getStringAnswerFromPlayer(std::string_view question, int min, int ma
     return answer;
 }
 
-void printHead()
-{
-    std::cout << "----------------------------------------" << std::endl;
-    std::cout << "Welcome to the game" << std::endl;
-    std::cout << " ___              _"           << std::endl;
-    std::cout << "/ __| _ _   __ _ | |_____"    << std::endl;
-    std::cout << "\\__ \\| ' \\ / _` || / / -_)"   << std::endl;
-    std::cout << "|___/|_||_|\\__/_||_\\_\\___| in console"   << std::endl;
-    std::cout << "----------------------------------------" << std::endl;
-    std::cout << "Copyright (c) 2024 Tomas Mark" << std::endl;
-    std::cout << "tomas@digitalspace.name" << std::endl;
-    std::cout << "Enjoy this example of OOP " << cpp.getCppV() << " code!" << std::endl;
-    std::cout << "build v0.0.3 - " << cpp.getCppV() << std::endl;
-    std::cout << std::endl;
-}
+
