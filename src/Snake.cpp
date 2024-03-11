@@ -38,9 +38,12 @@ void Snake::restoreCoordinatesShifted()
 // step to back? - doesn't allow for Snake ;-)
 bool Snake::isStepBack(int direction) const
 {
+    if (isDead)
+        return false;
+
     if (this->length > 0)
     {
-        if (    (this->snakeDirection == 0 && direction == 1) ||      // up can't down
+        if (    (this->snakeDirection == 0 && direction == 1) ||   // up can't down
                 (this->snakeDirection == 1 && direction == 0) ||   // down con't up
                 (this->snakeDirection == 2 && direction == 3) ||   // left can't right
                 (this->snakeDirection == 3 && direction == 2) )    // and vice versa
@@ -55,7 +58,7 @@ bool Snake::isStepBack(int direction) const
 
 void Snake::setMyDirectionAndShift(int directionTaken)
 {
-    if (this->isDead)
+    if (isDead)
         return;
 
     Beep(500,2);
@@ -84,6 +87,17 @@ void Snake::setMeDead()
 {
     this->isDead = true;
 }
+
+void Snake::setDeadReason(int deadReason)
+{
+    this->deadReason = deadReason;
+}
+
+int Snake::getDeadReason() const
+{
+    return this->deadReason;
+}
+
 bool Snake::amIDead() const
 {
     return this->isDead;
@@ -91,6 +105,9 @@ bool Snake::amIDead() const
 
 int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fruitCount ) const
 {
+    if (isDead)
+        return 0;
+
     for (int fruitIndex = 0; fruitIndex < fruitCount; fruitIndex ++)
     {
         if (snakeCoosX[0] ==  FruitX[fruitIndex] && snakeCoosY[0] == FruitY[fruitIndex])

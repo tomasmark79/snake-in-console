@@ -34,7 +34,7 @@ Process::Process(int width, int height, double fruitEmptiness,
 void Process::mainLoop()
 {
     int eattenFruitElement = 0;
-    int snakeDiedReason[4] = {0,0,0,0};
+    // int snakeDiedReason[4] = {0,0,0,0};
     int playerPoints[4] = {0,0,0,0};
     bool isAllDead = false;
     std::string playerStats[4] = {"","","",""};
@@ -72,6 +72,7 @@ void Process::mainLoop()
         // go through snakes
         for (int currSnake = 0; currSnake < this->totalPlayers; currSnake ++)
         {
+            // Snake direction and movement and buffer filling
             snakes[currSnake]->setMyDirectionAndShift(playerInput[currSnake]);
 
             graphic->addSnakeToVideoBuffer(currSnake,
@@ -80,11 +81,10 @@ void Process::mainLoop()
                                            snakes[currSnake]->getLength(),
                                            snakes[currSnake]->amIDead());
 
-
-            if ( (eattenFruitElement = snakes[currSnake]->getElementOfEattenFruit(
-                                           fruit->getFruitX(),
-                                           fruit->getFruitY(),
-                                           fruit->getTotalFruit())) > 0)
+            if ( (eattenFruitElement     = snakes[currSnake]->getElementOfEattenFruit(
+                                               fruit->getFruitX(),
+                                               fruit->getFruitY(),
+                                               fruit->getTotalFruit())) > 0)
             {
                 snakes[currSnake]->growUp();
                 fruit->refreshFruit(eattenFruitElement-1);
@@ -92,16 +92,16 @@ void Process::mainLoop()
             }
 
 
+
             if (!snakes[currSnake]->amIDead())
-                if ((snakeDiedReason[currSnake] = this->isSnakeInConflict(currSnake))
-                        > 0)
+                if (this->isSnakeInConflict(currSnake) > 0)
                     snakes[currSnake]->setMeDead();
 
             // TODO (tomas#1#): If all snakes Die, stop time
 
             playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
             playerStats[currSnake] = "Player " + players[currSnake]->getPlayerName() + " Points: " + std::to_string(playerPoints[currSnake]) +
-                                     (snakes[currSnake]->amIDead() ? " Dead by " + deads.at(snakeDiedReason[currSnake]) : "");
+                                     (snakes[currSnake]->amIDead() ? " Dead by " + deads.at(snakes[currSnake]->getDeadReason()) : "");
 
         } // current snake
 
@@ -118,7 +118,7 @@ void Process::mainLoop()
             (this->end_time - this->start_time) / 1000;
 
         graphic->coutVCentered("Duration: "
-              + std::to_string((int)this->elapsed_time.count()) + "s");
+                               + std::to_string((int)this->elapsed_time.count()) + "s");
 
         graphic->coutVCentered("(H)elp | (R)estart | e(X)it");
 
@@ -150,6 +150,9 @@ void Process::mainLoop()
 //!
 int Process::isSnakeInConflict(int currSnake)
 {
+//    if (snakes[currSnake]->amIDead())
+//        return snakes[currSnake]->amIDead();
+
     // hitting wall check
     if ( snakes[currSnake]->getXHead() == 0 ||
             snakes[currSnake]->getXHead() == field->getFieldWidth()-1 ||
@@ -157,6 +160,7 @@ int Process::isSnakeInConflict(int currSnake)
             snakes[currSnake]->getYHead() == field->getFieldHeight()-1
        )
     {
+        snakes[currSnake]->setDeadReason(1);
         return 1;
     }
 
@@ -167,6 +171,7 @@ int Process::isSnakeInConflict(int currSnake)
                 snakes[currSnake]->getYHead() == snakes[currSnake]->getY()[tail]
            )
         {
+            snakes[currSnake]->setDeadReason(2);
             return 2;
         }
     }
@@ -183,6 +188,7 @@ int Process::isSnakeInConflict(int currSnake)
                         snakes[currSnake]->getYHead() == snakes[foreignSnake]->getY()[tail] )
                 {
                     // eats each other
+                    snakes[currSnake]->setDeadReason(3);
                     return 3;
                 }
             }

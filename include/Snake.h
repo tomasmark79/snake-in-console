@@ -12,12 +12,10 @@ static const int stepDivider = 1;
 
 class Snake
 {
-    // std::shared_ptr<std::vector<std::shared_ptr<Snake>>> snakes;
-    // int totalSnakes;
     int id;
-    std::shared_ptr<Field> fie; // Field* fie;
     int length;
     bool isDead;
+    int deadReason;
     int snakeDirection;
     int snakeCoosX[MAX_SNAKE_LENGTH];
     int snakeCoosY[MAX_SNAKE_LENGTH];
@@ -35,6 +33,8 @@ public:
     void setMyDirectionAndShift(int direction);
 
     void setMeDead();
+    void setDeadReason(int deadReason);
+    int getDeadReason() const;
     bool amIDead() const;
 
     int getElementOfEattenFruit
