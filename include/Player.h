@@ -13,12 +13,15 @@ class Player
 public:
     Player(int playerId, string playerName)
         : playerId(playerId), playerName(playerName) {};
+
     void setPlayerName(string playerName)
     {
         this->playerName = playerName;
     };
-    string getPlayerName() const{
-    return this->playerName;
+
+    string getPlayerName() const
+    {
+        return this->playerName;
     };
 };
 
