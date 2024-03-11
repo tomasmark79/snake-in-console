@@ -7,11 +7,11 @@
 Snake::Snake(int id, int stepDivider, int spawnX, int spawnY, int totalElements):
     id(id), stepDivider(stepDivider), length(0), direction((rand() % 4)),isDead(false),deadCode(0)
 {
-    int possibleSnakeLength = totalElements / 2;
-    snakeCoosX =  std::make_unique <int[]> (possibleSnakeLength);
-    snakeCoosY =  std::make_unique <int[]> (possibleSnakeLength);
-    backupCoosX = std::make_unique <int[]> (possibleSnakeLength);
-    backupCoosY = std::make_unique <int[]> (possibleSnakeLength);
+    int reallyNotImpossibleHugeSnakeLength = totalElements / 2;
+    snakeCoosX =  std::make_unique <int[]> (reallyNotImpossibleHugeSnakeLength);
+    snakeCoosY =  std::make_unique <int[]> (reallyNotImpossibleHugeSnakeLength);
+    backupCoosX = std::make_unique <int[]> (reallyNotImpossibleHugeSnakeLength);
+    backupCoosY = std::make_unique <int[]> (reallyNotImpossibleHugeSnakeLength);
 
     // snake baby will born here
     snakeCoosX[0] = spawnX;
@@ -22,7 +22,10 @@ Snake::Snake(int id, int stepDivider, int spawnX, int spawnY, int totalElements)
 
 Snake::~Snake()
 {
-
+    snakeCoosX.reset();
+    snakeCoosY.reset();
+    backupCoosX.reset();
+    backupCoosY.reset();
 }
 
 void Snake::backupCoordinates()
