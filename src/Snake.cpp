@@ -12,8 +12,7 @@ Snake::Snake(int id, int spawnX, int spawnY)
         isDie(false),
         snakeDirection((rand() % 4))
 {
-
-//    // snake baby will born here
+    // snake baby will born here
     snakeCoosX[0] = spawnX;
     snakeCoosY[0] = spawnY;
 }
@@ -81,7 +80,7 @@ void Snake::setMyDirectionAndShift(int directionTaken)
     this->restoreCoordinatesShifted();
 }
 
-void Snake::setMyDead()
+void Snake::setMeDead()
 {
     this->isDie = true;
 }

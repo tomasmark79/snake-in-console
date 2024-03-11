@@ -34,7 +34,7 @@ public:
 
     void setMyDirectionAndShift(int direction);
 
-    void setMyDead();
+    void setMeDead();
     bool amIDead() const;
 
     int getElementOfEattenFruit

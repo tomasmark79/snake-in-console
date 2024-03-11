@@ -36,6 +36,7 @@ void Process::mainLoop()
     int eattenFruitElement = 0;
     int snakeDiedReason[4] = {0,0,0,0};
     int playerPoints[4] = {0,0,0,0};
+    bool isAllDead = false;
     std::string playerStats[4] = {"","","",""};
 
     this->start_time =
@@ -96,7 +97,7 @@ void Process::mainLoop()
             if (!snakes[currSnake]->amIDead())
                 if ((snakeDiedReason[currSnake] = this->isSnakeInConflict(currSnake))
                         > 0)
-                    snakes[currSnake]->setMyDead();
+                    snakes[currSnake]->setMeDead();
 
             // TODO (tomas#1#): If all snakes Die, stop time
 
@@ -118,9 +119,9 @@ void Process::mainLoop()
         this->elapsed_time=
             (this->end_time - this->start_time) / 1000;
 
-        msg = "Duration: "
-              + std::to_string((int)this->elapsed_time.count()) + "s";
-        graphic->coutVCentered(msg);
+        graphic->coutVCentered("Duration: "
+              + std::to_string((int)this->elapsed_time.count()) + "s");
+
         graphic->coutVCentered("(H)elp | (R)estart | e(X)it");
 
         // exit game
@@ -143,10 +144,15 @@ void Process::mainLoop()
     }
 }
 
-
+//! \brief  Is controlling Snake conflict with environment
+//!
+//! \param  current element number of Snake instance
+//! \return 1 wall, 2 itself, 3 foreign snake conflict
+//!
+//!
 int Process::isSnakeInConflict(int currSnake)
 {
-    // hitting wall
+    // hitting wall check
     if ( snakes[currSnake]->getSnakeXHead() == 0 ||
             snakes[currSnake]->getSnakeXHead() == field->getFieldWidth()-1 ||
             snakes[currSnake]->getSnakeYHead() == 0 ||
@@ -156,7 +162,7 @@ int Process::isSnakeInConflict(int currSnake)
         return 1;
     }
 
-    // eats itsefl
+    // hitting itsefl check
     for (int tail = 1; tail < snakes[currSnake]->getSnakeLength(); tail++)
     {
         if (snakes[currSnake]->getSnakeXHead() == snakes[currSnake]->getSnakeX()[tail] &&
@@ -167,11 +173,10 @@ int Process::isSnakeInConflict(int currSnake)
         }
     }
 
-
     // looking for foreign snake instance
     for (int foreignSnake = 0; foreignSnake < totalPlayers; foreignSnake++)
     {
-        // looging for foreign snake tail
+        // looking for foreign snake tail
         for (int tail = 0; tail < snakes[foreignSnake]->getSnakeLength(); tail++)
         {
             if (currSnake != foreignSnake) // if not the same Snake
@@ -179,16 +184,16 @@ int Process::isSnakeInConflict(int currSnake)
                 if (    snakes[currSnake]->getSnakeXHead() == snakes[foreignSnake]->getSnakeX()[tail] &&
                         snakes[currSnake]->getSnakeYHead() == snakes[foreignSnake]->getSnakeY()[tail] )
                 {
+                    // eats each other
                     return 3;
                 }
             }
         }
     }
 
-//        if (playerGameOverReason[currSnake] > 1)
-//            snakes[currSnake]->setMeDie();
+    // no conflict
     return 0;
-} // current snake not died
+}
 
 
 

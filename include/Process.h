@@ -27,7 +27,7 @@ class Process
     std::unique_ptr<std::unique_ptr<Player>[]> players; // Player** players
     std::unique_ptr<std::shared_ptr<Snake>[]> snakes; // Snakes**
 
-    std::string msg;
+    // std::string msg;
     bool isGamingContinue;
 
     std::chrono::time_point<std::chrono::system_clock> start_time;
