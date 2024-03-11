@@ -98,40 +98,6 @@ bool Snake::isSnakeDie() const
     return this->isDie;
 }
 
-int Snake::isSnakeInConflict()
-{
-    // Snake Head definition
-    int snakeHeadX = snakeCoosX[0];
-    int snakeHeadY = snakeCoosY[0];
-
-    // int whoAmI = id;
-
-    // hitting wall
-    if ((snakeHeadX == 0 || snakeHeadX == fie->getFieldWidth()-1) ||
-            (snakeHeadY == 0 || snakeHeadY == fie->getFieldHeight()-1))
-        return dieReason = 1;
-
-    // eats itsefl
-    for (int tail = 0; tail < this->snakeLength; tail++)
-    {
-        if ( (snakeHeadX == backupCoosX[tail] &&
-                snakeHeadY == backupCoosY[tail]) )
-            return dieReason = 2;
-    }
-//    // eats each other
-//    for (int snakeId = 0 /* +1 = ignore self conflict*/; snakeId < this->totalSnakes; snakeId++)
-//    {
-//        for (int tail = 0; tail < (*snakes)[snakeId]->snakeLength; tail++)
-//        {
-//            if ( (snakeHeadX == (*snakes)[snakeId]->backupCoosX[tail] &&
-//                    snakeHeadY == (*snakes)[snakeId]->backupCoosY[tail]) )
-//                return dieReason = 3;
-//        }
-//    }
-
-    return dieReason = 0; // free way
-}
-
 int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fruitCount ) const
 {
     for (int fruitIndex = 0; fruitIndex < fruitCount; fruitIndex ++)

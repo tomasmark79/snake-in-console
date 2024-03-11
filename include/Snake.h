@@ -39,7 +39,6 @@ public:
     void setSnakeDie();
     bool isSnakeDie() const;
 
-    int isSnakeInConflict();
     int getElementOfEattenFruit
     (
         const int* FruitX,
