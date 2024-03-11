@@ -22,7 +22,7 @@ Process::Process(int width, int height, double fruitEmptiness,
     for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
         players[playerId] = make_unique<Player>(playerId, playerNames[playerId]);
-        snakes[playerId] = make_unique<Snake>(playerId, SNAKE_SPEED, field->getFieldWidth()/2, field->getFieldHeight()/2); // snakes[playerId] = new Snake(playerId, *field);
+        snakes[playerId] = make_unique<Snake>(playerId, SNAKE_SPEED, field->getFieldWidth()/2, field->getFieldHeight()/2, field->getAreaElements()); // snakes[playerId] = new Snake(playerId, *field);
     }
 
     this->mainLoop();

@@ -30,15 +30,15 @@ class Snake
         {0, "is living"}, {1, "wall"}, {2, "self"}, {3, "another Snake"}
     };
 
-    int snakeCoosX[MAX_SNAKE_LENGTH];
-    int snakeCoosY[MAX_SNAKE_LENGTH];
-    int backupCoosX[MAX_SNAKE_LENGTH];
-    int backupCoosY[MAX_SNAKE_LENGTH];
+//    int snakeCoosX[MAX_SNAKE_LENGTH];
+//    int snakeCoosY[MAX_SNAKE_LENGTH];
+//    int backupCoosX[MAX_SNAKE_LENGTH];
+//    int backupCoosY[MAX_SNAKE_LENGTH];
 
-    shared_ptr<int> u_snakeCoosX;
-    shared_ptr<int> u_snakeCoosY;
-    shared_ptr<int> u_backupCoosX;
-    shared_ptr<int> u_backupCoosY;
+    shared_ptr<int[]> snakeCoosX;
+    shared_ptr<int[]> snakeCoosY;
+    shared_ptr<int[]> backupCoosX;
+    shared_ptr<int[]> backupCoosY;
 
     void inhumeSnake();
     void backupCoordinates();
@@ -46,8 +46,8 @@ class Snake
     bool isStepBack(int directionPassed) const;
 
 public:
-    Snake(int id, int stepDivider, int spawnX, int spawnY);
-
+    Snake(int id, int stepDivider, int spawnX, int spawnY, int totalElements);
+    ~Snake();
     void setMyDirectionAndShift(int directionPassed);
 
     int getDirection() const
@@ -96,32 +96,32 @@ public:
 
     int getXHead() const
     {
-        return this->snakeCoosX[0];
+        return this->snakeCoosX.get()[0];
     };
 
     int getYHead() const
     {
-        return this->snakeCoosY[0];
+        return this->snakeCoosY.get()[0];
     }
 
     const int* getX() const
     {
-        return this->snakeCoosX;
+        return this->snakeCoosX.get();
     };
 
     const int* getY() const
     {
-        return this->snakeCoosY;
+        return this->snakeCoosY.get();
     };
 
     const int* getBackupX() const
     {
-        return this->backupCoosX;
+        return this->backupCoosX.get();
     };
 
     const int* getBackupY() const
     {
-        return this->backupCoosY;
+        return this->backupCoosY.get();
     };
 
 
