@@ -6,9 +6,21 @@
 #include <iostream>
 #include <windows.h> // Beep
 
-Snake:: Snake(int id, std::shared_ptr<Field> field)
-    : id(id), fie(field), snakeLength(0), isDie(false), snakeDirection((rand() % 4))
+Snake::Snake(
+    std::shared_ptr<std::vector<std::shared_ptr<Snake>>> snakes,
+    int totalSnakes,
+    int id,
+    std::shared_ptr<Field> field
+)
+    :   snakes(snakes),
+        totalSnakes(totalSnakes),
+        id(id),
+        fie(field),
+        snakeLength(0),
+        isDie(false),
+        snakeDirection((rand() % 4))
 {
+
     // snake baby will born here
     snakeCoosX[snakeLength] = fie->getFieldWidth() / 2;
     snakeCoosY[snakeLength] = fie->getFieldHeight() / 2;
@@ -42,8 +54,8 @@ bool Snake::isStepBack(int directionTaken) const
                 (this->snakeDirection == 2 && directionTaken == 3) ||   // left can't right
                 (this->snakeDirection == 3 && directionTaken == 2) )    // and vice versa
         {
-            Beep(1700,1);
-            Beep(1400,2);
+            Beep(1700,20);
+            Beep(1400,14);
             return true;
         }
     }
@@ -86,27 +98,38 @@ bool Snake::isSnakeDie() const
     return this->isDie;
 }
 
-int Snake::isSnakeInConflict() const
+int Snake::isSnakeInConflict()
 {
-    if ((snakeCoosX[0] == 0 || snakeCoosX[0] == fie->getFieldWidth()-1) ||
-            (snakeCoosY[0] == 0 || snakeCoosY[0] == fie->getFieldHeight()-1))
-    {
-        Beep(1400,300);
-        return 1; // hitting wall
-    }
+    // Snake Head definition
+    int snakeHeadX = snakeCoosX[0];
+    int snakeHeadY = snakeCoosY[0];
 
+    // int whoAmI = id;
+
+    // hitting wall
+    if ((snakeHeadX == 0 || snakeHeadX == fie->getFieldWidth()-1) ||
+            (snakeHeadY == 0 || snakeHeadY == fie->getFieldHeight()-1))
+        return dieReason = 1;
+
+    // eats itsefl
     for (int tail = 0; tail < this->snakeLength; tail++)
     {
-        if ( (snakeCoosX[0] == backupCoosX[tail] &&
-                snakeCoosY[0] == backupCoosY[tail]) )
+        if ( (snakeHeadX == backupCoosX[tail] &&
+                snakeHeadY == backupCoosY[tail]) )
+            return dieReason = 2;
+    }
+    // eats each other
+    for (int snakeId = 0 /* +1 = ignore self conflict*/; snakeId < this->totalSnakes; snakeId++)
+    {
+        for (int tail = 0; tail < (*snakes)[snakeId]->snakeLength; tail++)
         {
-            {
-                Beep(1900,50);
-            }
-            return 2; // eats itsefl
+            if ( (snakeHeadX == (*snakes)[snakeId]->backupCoosX[tail] &&
+                    snakeHeadY == (*snakes)[snakeId]->backupCoosY[tail]) )
+                return dieReason = 3;
         }
     }
-    return 0; // free way
+
+    return dieReason = 0; // free way
 }
 
 int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fruitCount ) const
@@ -144,4 +167,8 @@ int Snake::getSnakeDirection() const
     return this->snakeDirection;
 }
 
+int Snake::getSnakeDieReason() const
+{
+    return this->dieReason;
+}
 

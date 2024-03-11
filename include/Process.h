@@ -11,6 +11,7 @@
 #include "Keyboard.h"
 #include <chrono>
 #include <string>
+#include <vector>
 
 static const short SCORE_MULTIPLIER = 11;
 class Process
@@ -21,8 +22,9 @@ class Process
     std::shared_ptr<Field> field;
     std::unique_ptr<Fruit> fruit;
     std::unique_ptr<Graphic> graphic; // Graphic* Graphic
-    std::unique_ptr<std::unique_ptr<Player>[]> players; // Snakes** snakes
-    std::unique_ptr<std::unique_ptr<Snake>[]> snakes; // Player** players
+    std::unique_ptr<std::unique_ptr<Player>[]> players; // Player** players
+    // std::shared_ptr<std::shared_ptr<Snake>[]> snakes; // Snake** snakes
+    std::shared_ptr<std::vector<std::shared_ptr<Snake>>> snakes; // Snake*(vector*) snakes
 
     std::string msg;
     bool isGamingContinue;
@@ -32,7 +34,12 @@ class Process
     std::chrono::duration<double, std::milli> elapsed_time;
 
 public:
-    Process(int width, int height, double fruitEmptiness, int totalPlayers, std::string* playerNames);
+    Process(int width,
+            int height,
+            double fruitEmptiness,
+            int totalPlayers,
+            std::string* playerNames
+            );
     ~Process() = default;
     void mainLoop();
     bool isGaming() const;
