@@ -18,19 +18,14 @@ Process::Process(int width, int height, double fruitEmptiness,
     field       = std::make_shared  <Field>   (width, height);
     fruit       = std::make_unique  <Fruit>   (fruitEmptiness, field);
     graphic     = std::make_unique  <Graphic> (field);
-
     players     = std::make_unique<std::unique_ptr<Player> []> (totalPlayers+1);
-//    snakes      = std::make_shared<std::vector<std::shared_ptr<Snake>>>(totalPlayers+1);
-    snakes  = std::make_unique<std::shared_ptr<Snake> []> (totalPlayers+1);
+    snakes      = std::make_unique<std::shared_ptr<Snake>  []> (totalPlayers+1);
 
     // spawn player's id and names
     for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
         players[playerId] = std::make_unique<Player>(playerId, playerNames[playerId]);
         snakes[playerId] = std::make_unique<Snake>(nullptr, totalPlayers, playerId, field); // snakes[playerId] = new Snake(playerId, *field);
-        // (*snakes) - dereferuje, takže získáme pristup k obsahu
-//        (*snakes)[playerId] = std::make_shared<Snake>(snakes, totalPlayers, playerId, field); // snakes[playerId] = new Snake(playerId, *field);
-
     }
 
     this->mainLoop();
