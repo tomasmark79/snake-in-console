@@ -5,12 +5,11 @@
 #include "Fruit.h"
 
 Fruit::Fruit(double fruitEmptiness, int totalW, int totalH)
-    :totalW(totalW), totalH(totalH), totalFruits(0)
+    :totalW(totalW), totalH(totalH),
+     fruitXArr(make_unique <int[]> (totalW*totalH)), // contain coords in array of int which mean ammount of fruits
+     fruitYArr(make_unique <int[]> (totalW*totalH)), // contain coords in array of int which mean ammount of fruits
+     totalFruits(0)
 {
-     // contain coords in array of int which mean ammount of fruits
-     fruitXArr = make_unique <int[]> (totalW*totalH);
-     fruitYArr = make_unique <int[]> (totalW*totalH);
-
     int smartAlocMemory = totalW*totalH/fruitEmptiness;
 
     // seed fruit

@@ -10,14 +10,14 @@
 
 Process::Process(int width, int height, double fruitEmptiness,
                  int totalPlayers, string* playerNames)
-    : totalPlayers(totalPlayers), isGameGoingOn(true)
+    : totalPlayers(totalPlayers),
+      field(make_shared    <Field>   (width, height)),
+      fruit(make_unique    <Fruit>   (fruitEmptiness, width, height)),
+      graphic(make_unique  <Graphic> (field)),
+      players(make_unique  <unique_ptr <Player> []> (totalPlayers + 1)),
+      snakes(make_unique   <shared_ptr <Snake>  []> (totalPlayers + 1)),
+      isGameGoingOn(true)
 {
-    field       = make_shared  <Field>   (width, height);
-    fruit       = make_unique  <Fruit>   (fruitEmptiness, width, height);
-    graphic     = make_unique  <Graphic> (field);
-    players     = make_unique  <unique_ptr <Player> []> (totalPlayers+1);
-    snakes      = make_unique  <shared_ptr <Snake>  []> (totalPlayers+1);
-
     // spawn player's id and names
     for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
@@ -28,15 +28,24 @@ Process::Process(int width, int height, double fruitEmptiness,
     this->mainLoop();
 }
 
+Process::~Process()
+{
+    snakes.reset();
+    players.reset();
+    graphic.reset();
+    fruit.reset();
+    field.reset();
+}
+
 void Process::mainLoop()
 {
     int eattenFruitElement = 0;
     int playerPoints[4] = {0,0,0,0};
     std::string playerStats[4] = {"","","",""};
 
-    this->start_time =
-        std::chrono::high_resolution_clock::now();
+    std::chrono::time_point<std::chrono::system_clock> start_time = std::chrono::high_resolution_clock::now();
 
+    Keyboard keyboard;
     while (true)
     {
         int playerInput[4] = {-1,-1,-1,-1};
@@ -90,11 +99,11 @@ void Process::mainLoop()
 
             playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
             playerStats[currSnake] = "Player with Snake "
-                + players[currSnake]->getPlayerName()
-                + " Points: " + std::to_string(playerPoints[currSnake])
-                + (snakes[currSnake]->getIsDead()
-                   ? " was killed by " + snakes[currSnake]->getDeadDescripion()
-                   : " lives");
+                                     + players[currSnake]->getPlayerName()
+                                     + " Points: " + std::to_string(playerPoints[currSnake])
+                                     + (snakes[currSnake]->getIsDead()
+                                        ? " was killed by " + snakes[currSnake]->getDeadDescripion()
+                                        : " lives");
 
             // TODO (tomas#1#): If all snakes Die, stop time
 
@@ -102,15 +111,15 @@ void Process::mainLoop()
 
         graphic->redrawVideoBuffer();
 
-        // print elapsed time
-        this->end_time = std::chrono::high_resolution_clock::now();
-        this->elapsed_time= (this->end_time - this->start_time) / 1000;
+        // calc elapsed time
+        std::chrono::time_point<std::chrono::system_clock> end_time = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> elapsed_time = (end_time - start_time) / 1000;
 
         // print stats
         for (int i = 0; i < 4; i++)
             graphic->coutVCentered(playerStats[i]);
         graphic->coutVCentered("Duration: " +
-            std::to_string((int)this->elapsed_time.count()) + "s");
+                               std::to_string((int)elapsed_time.count()) + "s");
         graphic->coutVCentered("(H)elp | (R)estart | e(X)it");
 
 

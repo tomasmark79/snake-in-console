@@ -5,18 +5,18 @@
 #include "Snake.h"
 
 Snake::Snake(int id, int stepDivider, int totalW, int totalH, int spawnX, int spawnY):
-    totalW(totalW), totalH(totalH), id(id), stepDivider(stepDivider), length(0), direction((rand() % 4)), isDead(false), deadCode(0)
+    totalW(totalW), totalH(totalH),
+    snakeCoosX(std::make_unique <int[]> (totalW*totalH)),
+    snakeCoosY(std::make_unique <int[]> (totalW*totalH)),
+    backupCoosX(std::make_unique <int[]> (totalW*totalH)),
+    backupCoosY(std::make_unique <int[]> (totalW*totalH)),
+    id(id), stepDivider(stepDivider), length(0), direction((rand() % 4)), isDead(false), deadCode(0)
 {
-    snakeCoosX =  std::make_unique <int[]> (totalW*totalH);
-    snakeCoosY =  std::make_unique <int[]> (totalW*totalH);
-    backupCoosX = std::make_unique <int[]> (totalW*totalH);
-    backupCoosY = std::make_unique <int[]> (totalW*totalH);
-
     // snake baby will born here
     snakeCoosX[0] = spawnX;
     snakeCoosY[0] = spawnY;
 
-// TODO (tomas#1#): Direction must be fot every snake different
+    // TODO (tomas#1#): Direction must be fot every snake different at the start of the game
 }
 
 Snake::~Snake()

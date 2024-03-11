@@ -20,24 +20,17 @@ using std::make_shared;
 using std::make_unique;
 using std::string;
 
-static const short SCORE_MULTIPLIER = 11;
-static const short SNAKE_SPEED = 1;
+static const int SCORE_MULTIPLIER = 11;
+static const int SNAKE_SPEED = 1;
 
 class Process
 {
-
-    Keyboard keyboard;
     int totalPlayers;
-
     shared_ptr<Field> field;
     unique_ptr<Fruit> fruit;
     unique_ptr<Graphic> graphic; // Graphic* Graphic
-    unique_ptr<unique_ptr<Player>[]> players; // Player** players
-    unique_ptr<shared_ptr<Snake>[]> snakes; // Snakes**
-
-    std::chrono::time_point<std::chrono::system_clock> start_time;
-    std::chrono::time_point<std::chrono::system_clock> end_time;
-    std::chrono::duration<double, std::milli> elapsed_time;
+    unique_ptr<unique_ptr<Player>[]> players;
+    unique_ptr<shared_ptr<Snake> []> snakes;
 
 public:
     Process(int width,
@@ -46,7 +39,8 @@ public:
             int totalPlayers,
             string* playerNames
             );
-    ~Process() = default;
+
+    ~Process();
     void mainLoop();
     void checkSnakeConflicts(int currSnake);
 
