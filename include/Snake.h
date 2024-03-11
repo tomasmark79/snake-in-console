@@ -12,13 +12,12 @@ static const int stepDivider = 1;
 
 class Snake
 {
-    std::shared_ptr<std::vector<std::shared_ptr<Snake>>> snakes;
-    int totalSnakes;
+    // std::shared_ptr<std::vector<std::shared_ptr<Snake>>> snakes;
+    // int totalSnakes;
     int id;
     std::shared_ptr<Field> fie; // Field* fie;
-    int snakeLength;
+    int length;
     bool isDie;
-    int dieReason;
     int snakeDirection;
     int snakeCoosX[MAX_SNAKE_LENGTH];
     int snakeCoosY[MAX_SNAKE_LENGTH];
@@ -26,18 +25,17 @@ class Snake
     int backupCoosY[MAX_SNAKE_LENGTH];
 
     void inhumeSnake();
-    void backupSnakeCoordinates();
-    void restoreSnakeCoordinatesShifted();
+    void backupCoordinates();
+    void restoreCoordinatesShifted();
     bool isStepBack(int directionTaken) const;
 
 public:
-    Snake(std::shared_ptr<std::vector<std::shared_ptr<Snake>>> snakes,
-          int totalSnakes, int id, std::shared_ptr<Field> field);
+    Snake(int id, int spawnX, int spawnY);
 
-    void setSnakeDirectionAndShift(int direction);
+    void setMyDirectionAndShift(int direction);
 
-    void setSnakeDie();
-    bool isSnakeDie() const;
+    void setMyDead();
+    bool amIDead() const;
 
     int getElementOfEattenFruit
     (
@@ -52,8 +50,6 @@ public:
 
     int getSnakeLength() const;
     int getSnakeDirection() const;
-    int getSnakeDieReason() const;
-
     int getSnakeXHead() const;
     int getSnakeYHead() const;
 };

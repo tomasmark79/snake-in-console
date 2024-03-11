@@ -6,38 +6,30 @@
 #include <iostream>
 #include <windows.h> // Beep
 
-Snake::Snake(
-    std::shared_ptr<std::vector<std::shared_ptr<Snake>>> snakes,
-    int totalSnakes,
-    int id,
-    std::shared_ptr<Field> field
-)
-    :   snakes(snakes),
-        totalSnakes(totalSnakes),
-        id(id),
-        fie(field),
-        snakeLength(0),
+Snake::Snake(int id, int spawnX, int spawnY)
+    :   id(id),
+        length(0),
         isDie(false),
         snakeDirection((rand() % 4))
 {
 
-    // snake baby will born here
-    snakeCoosX[snakeLength] = fie->getFieldWidth() / 2;
-    snakeCoosY[snakeLength] = fie->getFieldHeight() / 2;
+//    // snake baby will born here
+    snakeCoosX[0] = spawnX;
+    snakeCoosY[0] = spawnY;
 }
 
-void Snake::backupSnakeCoordinates()
+void Snake::backupCoordinates()
 {
-    for (int bodyElement = 0; bodyElement < this->snakeLength; bodyElement ++)
+    for (int bodyElement = 0; bodyElement < this->length; bodyElement ++)
     {
         backupCoosX[bodyElement] = snakeCoosX[bodyElement];
         backupCoosY[bodyElement] = snakeCoosY[bodyElement];
     }
 }
 
-void Snake::restoreSnakeCoordinatesShifted()
+void Snake::restoreCoordinatesShifted()
 {
-    for (int bodyElement = 0; bodyElement < this->snakeLength; bodyElement ++)
+    for (int bodyElement = 0; bodyElement < this->length; bodyElement ++)
     {
         snakeCoosX[bodyElement+1] = backupCoosX[bodyElement];
         snakeCoosY[bodyElement+1] = backupCoosY[bodyElement];
@@ -47,7 +39,7 @@ void Snake::restoreSnakeCoordinatesShifted()
 // step to back? - doesn't allow for Snake ;-)
 bool Snake::isStepBack(int directionTaken) const
 {
-    if (this->snakeLength > 0)
+    if (this->length > 0)
     {
         if (    (this->snakeDirection == 0 && directionTaken == 1) ||      // up can't down
                 (this->snakeDirection == 1 && directionTaken == 0) ||   // down con't up
@@ -62,7 +54,7 @@ bool Snake::isStepBack(int directionTaken) const
     return false;
 }
 
-void Snake::setSnakeDirectionAndShift(int directionTaken)
+void Snake::setMyDirectionAndShift(int directionTaken)
 {
     if (this->isDie)
         return;
@@ -75,7 +67,7 @@ void Snake::setSnakeDirectionAndShift(int directionTaken)
     if (directionTaken >= 0 && directionTaken <= 3) // allowed directions
         this->snakeDirection = directionTaken;
 
-    this->backupSnakeCoordinates();
+    this->backupCoordinates();
 
     if (this->snakeDirection == 0)
         snakeCoosY[0] -=stepDivider; // up
@@ -86,14 +78,14 @@ void Snake::setSnakeDirectionAndShift(int directionTaken)
     else if (this->snakeDirection == 3)
         snakeCoosX[0] +=stepDivider; // right
 
-    this->restoreSnakeCoordinatesShifted();
+    this->restoreCoordinatesShifted();
 }
 
-void Snake::setSnakeDie()
+void Snake::setMyDead()
 {
     this->isDie = true;
 }
-bool Snake::isSnakeDie() const
+bool Snake::amIDead() const
 {
     return this->isDie;
 }
@@ -110,7 +102,7 @@ int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fru
 
 void Snake::growUpSnake()
 {
-    this->snakeLength+=1;
+    this->length+=1;
 }
 
 const int* Snake::getSnakeX() const
@@ -125,17 +117,12 @@ const int* Snake::getSnakeY()  const
 
 int Snake::getSnakeLength() const
 {
-    return this->snakeLength;
+    return this->length;
 }
 
 int Snake::getSnakeDirection() const
 {
     return this->snakeDirection;
-}
-
-int Snake::getSnakeDieReason() const
-{
-    return this->dieReason;
 }
 
 int Snake::getSnakeXHead() const

@@ -12,10 +12,12 @@
 #include <chrono>
 #include <string>
 #include <vector>
+#include <map>
 
 static const short SCORE_MULTIPLIER = 11;
 class Process
 {
+    const std::map<int, std::string> deads { {1, "wall"}, {2, "self"}, {3, "another Snake"} };
     Keyboard keyboard;
     int totalPlayers;
 
@@ -41,5 +43,6 @@ public:
             );
     ~Process() = default;
     void mainLoop();
+    int isSnakeInConflict(int currSnake);
     bool isGaming() const;
 };
