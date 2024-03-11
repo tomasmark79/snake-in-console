@@ -118,16 +118,16 @@ int Snake::isSnakeInConflict()
                 snakeHeadY == backupCoosY[tail]) )
             return dieReason = 2;
     }
-    // eats each other
-    for (int snakeId = 0 /* +1 = ignore self conflict*/; snakeId < this->totalSnakes; snakeId++)
-    {
-        for (int tail = 0; tail < (*snakes)[snakeId]->snakeLength; tail++)
-        {
-            if ( (snakeHeadX == (*snakes)[snakeId]->backupCoosX[tail] &&
-                    snakeHeadY == (*snakes)[snakeId]->backupCoosY[tail]) )
-                return dieReason = 3;
-        }
-    }
+//    // eats each other
+//    for (int snakeId = 0 /* +1 = ignore self conflict*/; snakeId < this->totalSnakes; snakeId++)
+//    {
+//        for (int tail = 0; tail < (*snakes)[snakeId]->snakeLength; tail++)
+//        {
+//            if ( (snakeHeadX == (*snakes)[snakeId]->backupCoosX[tail] &&
+//                    snakeHeadY == (*snakes)[snakeId]->backupCoosY[tail]) )
+//                return dieReason = 3;
+//        }
+//    }
 
     return dieReason = 0; // free way
 }

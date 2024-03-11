@@ -23,8 +23,9 @@ class Process
     std::unique_ptr<Fruit> fruit;
     std::unique_ptr<Graphic> graphic; // Graphic* Graphic
     std::unique_ptr<std::unique_ptr<Player>[]> players; // Player** players
-    // std::shared_ptr<std::shared_ptr<Snake>[]> snakes; // Snake** snakes
-    std::shared_ptr<std::vector<std::shared_ptr<Snake>>> snakes; // Snake*(vector*) snakes
+    std::unique_ptr<std::shared_ptr<Snake>[]> snakes;
+    // std::shared_ptr<std::vector<std::shared_ptr<Snake>>> snakes; // Snake*(vector*) snakes
+    // std::shared_ptr<std::shared_ptr<Snake>[]> snakesNew; // Snake*(vector*) snakes
 
     std::string msg;
     bool isGamingContinue;

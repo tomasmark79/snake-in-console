@@ -15,28 +15,21 @@ Process::Process(int width, int height, double fruitEmptiness,
                  int totalPlayers, std::string* playerNames)
     : totalPlayers(totalPlayers), isGamingContinue(true)
 {
+    field       = std::make_shared  <Field>   (width, height);
+    fruit       = std::make_unique  <Fruit>   (fruitEmptiness, field);
+    graphic     = std::make_unique  <Graphic> (field);
 
-    try
+    players     = std::make_unique<std::unique_ptr<Player> []> (totalPlayers+1);
+//    snakes      = std::make_shared<std::vector<std::shared_ptr<Snake>>>(totalPlayers+1);
+    snakes  = std::make_unique<std::shared_ptr<Snake> []> (totalPlayers+1);
+
+    // spawn player's id and names
+    for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
-        field       = std::make_shared  <Field>   (width, height);
-        fruit       = std::make_unique  <Fruit>   (fruitEmptiness, field);
-        graphic     = std::make_unique  <Graphic> (field);
-
-        players     = std::make_unique<std::unique_ptr<Player> []> (totalPlayers+1);
-        // snakes      = std::make_unique  <std::unique_ptr  <Snake>  []>    (totalPlayers+1); // snakes = new Snake*[totalPlayers+1];
-        // snakes      = std::make_shared<std::shared_ptr<Snake>  []> (totalPlayers+1); // snakes = new Snake*[totalPlayers+1];
-        snakes      = std::make_shared<std::vector<std::shared_ptr<Snake>>>(totalPlayers+1);
-
-        // spawn player's id and names
-        for (int playerId = 0; playerId < totalPlayers; playerId++)
-        {
-            players[playerId] = std::make_unique<Player>(playerId, playerNames[playerId]);
-            // (*snakes) - dereferuje, takže získáme pristup k obsahu
-            (*snakes)[playerId] = std::make_shared<Snake>(snakes, totalPlayers, playerId, field); // snakes[playerId] = new Snake(playerId, *field);
-        }
-    }
-    catch (std::exception &e)
-    {
+        players[playerId] = std::make_unique<Player>(playerId, playerNames[playerId]);
+        snakes[playerId] = std::make_unique<Snake>(nullptr, totalPlayers, playerId, field); // snakes[playerId] = new Snake(playerId, *field);
+        // (*snakes) - dereferuje, takže získáme pristup k obsahu
+//        (*snakes)[playerId] = std::make_shared<Snake>(snakes, totalPlayers, playerId, field); // snakes[playerId] = new Snake(playerId, *field);
 
     }
 
@@ -84,58 +77,52 @@ void Process::mainLoop()
         for (int i = 0; i < this->totalPlayers; i ++)
         {
 
-            if (!(*snakes)[i]->isSnakeDie())
-                (*snakes)[i]->setSnakeDirectionAndShift(playerInput[i]);
+            if (!snakes[i]->isSnakeDie())
+                snakes[i]->setSnakeDirectionAndShift(playerInput[i]);
 
             graphic->addSnakeToVideoBuffer(i,
-                                           (*snakes)[i]->getSnakeX(),
-                                           (*snakes)[i]->getSnakeY(),
-                                           (*snakes)[i]->getSnakeLength(),
-                                           (*snakes)[i]->isSnakeDie());
+                                           snakes[i]->getSnakeX(),
+                                           snakes[i]->getSnakeY(),
+                                           snakes[i]->getSnakeLength(),
+                                           snakes[i]->isSnakeDie());
 
 
-            if ( (eattenFruitElement = (*snakes)[i]->getElementOfEattenFruit(
+            if ( (eattenFruitElement = snakes[i]->getElementOfEattenFruit(
                                            fruit->getFruitX(),
                                            fruit->getFruitY(),
                                            fruit->getTotalFruit())) > 0)
             {
-                (*snakes)[i]->growUpSnake();
+                snakes[i]->growUpSnake();
                 fruit->refreshFruit(eattenFruitElement-1);
                 Beep(5300, 10);
             }
 
             // conflict check
-            if (!(*snakes)[i]->isSnakeDie())
+            if (!snakes[i]->isSnakeDie())
             {
-
-                playerGameOverReason[i] = (*snakes)[i]->isSnakeInConflict();
-                if (   playerGameOverReason[i] == 1
-                        || playerGameOverReason[i] == 2
-                        || playerGameOverReason[i] == 3)
+                playerGameOverReason[i] = snakes[i]->isSnakeInConflict();
+                if (       playerGameOverReason[i] == 1
+                           || playerGameOverReason[i] == 2
+                           || playerGameOverReason[i] == 3)
                 {
-                    (*snakes)[i]->setSnakeDie();
+                    snakes[i]->setSnakeDie();
                     // Graphic->coutGOver(gameOverReason);
                     // break;
-
-
-// TODO (tomas#1#): Conflix for of each other
-// TODO (tomas#1#): Stop Time if game over
-
 
                 }
             }
 
             std::string dieBye;
-            if ((*snakes)[i]->getSnakeDieReason() == 1 )
+            if (snakes[i]->getSnakeDieReason() == 1 )
                 dieBye = "wall";
-            else if ((*snakes)[i]->getSnakeDieReason() == 2 )
+            else if (snakes[i]->getSnakeDieReason() == 2 )
                 dieBye = "self";
-            else if ((*snakes)[i]->getSnakeDieReason() == 3)
-                dieBye = "colleague";
+            else if (snakes[i]->getSnakeDieReason() == 3)
+                dieBye = "another Snake";
 
-            playerPoints[i] = (*snakes)[i]->getSnakeLength() * SCORE_MULTIPLIER;
+            playerPoints[i] = snakes[i]->getSnakeLength() * SCORE_MULTIPLIER;
             playerStats[i] = "Player " + players[i]->getPlayerName() + " Points: " + std::to_string(playerPoints[i]) +
-                             ((*snakes)[i]->isSnakeDie() ? " Dead by " + dieBye : "");
+                             (snakes[i]->isSnakeDie() ? " Dead by " + dieBye : "");
         }
 
         graphic->redrawVideoBuffer();
