@@ -25,7 +25,7 @@ Process::Process(int width, int height, double fruitEmptiness,
     for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
         players[playerId] = std::make_unique<Player>(playerId, playerNames[playerId]);
-        snakes[playerId] = std::make_unique<Snake>(playerId, field->getFieldWidth()/2, field->getFieldHeight()/2); // snakes[playerId] = new Snake(playerId, *field);
+        snakes[playerId] = std::make_unique<Snake>(playerId, 1, field->getFieldWidth()/2, field->getFieldHeight()/2); // snakes[playerId] = new Snake(playerId, *field);
     }
 
     this->mainLoop();
@@ -36,7 +36,7 @@ void Process::mainLoop()
     int eattenFruitElement = 0;
     // int snakeDiedReason[4] = {0,0,0,0};
     int playerPoints[4] = {0,0,0,0};
-    bool isAllDead = false;
+    // bool isAllDead = false;
     std::string playerStats[4] = {"","","",""};
 
     this->start_time =
@@ -101,7 +101,7 @@ void Process::mainLoop()
 
             playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
             playerStats[currSnake] = "Player " + players[currSnake]->getPlayerName() + " Points: " + std::to_string(playerPoints[currSnake]) +
-                                     (snakes[currSnake]->amIDead() ? " Dead by " + deads.at(snakes[currSnake]->getDeadReason()) : "");
+                                     (snakes[currSnake]->amIDead() ? " Dead by " /*+ deads.at(snakes[currSnake]->getDeadReason())*/  : "");
 
         } // current snake
 

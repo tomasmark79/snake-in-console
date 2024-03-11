@@ -6,11 +6,8 @@
 #include <iostream>
 #include <windows.h> // Beep
 
-Snake::Snake(int id, int spawnX, int spawnY)
-    :   id(id),
-        length(0),
-        isDead(false),
-        snakeDirection((rand() % 4))
+Snake::Snake(int id, int stepDivider, int spawnX, int spawnY):
+    id(id), stepDivider(1), length(0),snakeDirection((rand() % 4)),isDead(false),deadCode(0)
 {
     // snake baby will born here
     snakeCoosX[0] = spawnX;
@@ -88,14 +85,14 @@ void Snake::setMeDead()
     this->isDead = true;
 }
 
-void Snake::setDeadReason(int deadReason)
+void Snake::setDeadReason(int deadCode)
 {
-    this->deadReason = deadReason;
+    this->deadCode = deadCode;
 }
 
 int Snake::getDeadReason() const
 {
-    return this->deadReason;
+    return this->deadCode;
 }
 
 bool Snake::amIDead() const

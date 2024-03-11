@@ -17,7 +17,7 @@
 static const short SCORE_MULTIPLIER = 11;
 class Process
 {
-    const std::map<int, std::string> deads { {1, "wall"}, {2, "self"}, {3, "another Snake"} };
+
     Keyboard keyboard;
     int totalPlayers;
 
