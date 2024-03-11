@@ -6,17 +6,18 @@
 #include "Field.h"
 #include <memory>
 
-static const int MAX_FRUITS = 1050;
+using std::shared_ptr;
+using std::make_unique;
 
 class Fruit
 {
-    std::shared_ptr<Field> fie; // Field* fie;
+    int totalW;
+    int totalH;
+    shared_ptr<int[]> fruitXArr;
+    shared_ptr<int[]> fruitYArr;
     int totalFruits;
-    int* fruitXArr;// [MAX_FRUITS+1];
-    int* fruitYArr;// [MAX_FRUITS+1];
 public:
-
-    Fruit(double fruitEmptiness, std::shared_ptr<Field> field);
+    Fruit(double fruitEmptiness, int totalW, int totalH);
     Fruit(const Fruit& fruit);
     Fruit& operator=(const Fruit& fruit);
     ~Fruit();

@@ -13,7 +13,7 @@ Process::Process(int width, int height, double fruitEmptiness,
     : totalPlayers(totalPlayers), isGameGoingOn(true)
 {
     field       = make_shared  <Field>   (width, height);
-    fruit       = make_unique  <Fruit>   (fruitEmptiness, field);
+    fruit       = make_unique  <Fruit>   (fruitEmptiness, field->getFieldWidth(), field->getFieldHeight());
     graphic     = make_unique  <Graphic> (field);
     players     = make_unique  <unique_ptr <Player> []> (totalPlayers+1);
     snakes      = make_unique  <shared_ptr <Snake>  []> (totalPlayers+1);
@@ -22,7 +22,7 @@ Process::Process(int width, int height, double fruitEmptiness,
     for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
         players[playerId] = make_unique<Player>(playerId, playerNames[playerId]);
-        snakes[playerId] = make_unique<Snake>(playerId, SNAKE_SPEED, field->getFieldWidth()/2, field->getFieldHeight()/2, field->getAreaElements()); // snakes[playerId] = new Snake(playerId, *field);
+        snakes[playerId] = make_unique<Snake>(playerId, SNAKE_SPEED, field->getFieldWidth(), field->getFieldHeight(), field->getFieldWidth()/2, field->getFieldHeight()/2);
     }
 
     this->mainLoop();

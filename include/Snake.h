@@ -18,6 +18,13 @@ static const short MAX_SNAKE_LENGTH = 256+1;
 
 class Snake
 {
+    int totalW;
+    int totalH;
+    shared_ptr<int[]> snakeCoosX;
+    shared_ptr<int[]> snakeCoosY;
+    shared_ptr<int[]> backupCoosX;
+    shared_ptr<int[]> backupCoosY;
+
     int id;
     int stepDivider;
     int length;
@@ -30,18 +37,13 @@ class Snake
         {0, "is living"}, {1, "wall"}, {2, "self"}, {3, "another Snake"}
     };
 
-    shared_ptr<int[]> snakeCoosX;
-    shared_ptr<int[]> snakeCoosY;
-    shared_ptr<int[]> backupCoosX;
-    shared_ptr<int[]> backupCoosY;
-
     void inhumeSnake();
     void backupCoordinates();
     void restoreCoordinatesShifted();
     bool isStepBack(int directionPassed) const;
 
 public:
-    Snake(int id, int stepDivider, int spawnX, int spawnY, int totalElements);
+    Snake(int id, int stepDivider, int totalW, int totalH, int spawnX, int spawnY);
     ~Snake();
     void setMyDirectionAndShift(int directionPassed);
 

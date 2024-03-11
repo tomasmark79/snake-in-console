@@ -4,14 +4,13 @@
 //
 #include "Snake.h"
 
-Snake::Snake(int id, int stepDivider, int spawnX, int spawnY, int totalElements):
-    id(id), stepDivider(stepDivider), length(0), direction((rand() % 4)),isDead(false),deadCode(0)
+Snake::Snake(int id, int stepDivider, int totalW, int totalH, int spawnX, int spawnY):
+    totalW(totalW), totalH(totalH), id(id), stepDivider(stepDivider), length(0), direction((rand() % 4)), isDead(false), deadCode(0)
 {
-    int reallyNotImpossibleHugeSnakeLength = totalElements / 2;
-    snakeCoosX =  std::make_unique <int[]> (reallyNotImpossibleHugeSnakeLength);
-    snakeCoosY =  std::make_unique <int[]> (reallyNotImpossibleHugeSnakeLength);
-    backupCoosX = std::make_unique <int[]> (reallyNotImpossibleHugeSnakeLength);
-    backupCoosY = std::make_unique <int[]> (reallyNotImpossibleHugeSnakeLength);
+    snakeCoosX =  std::make_unique <int[]> (totalW*totalH);
+    snakeCoosY =  std::make_unique <int[]> (totalW*totalH);
+    backupCoosX = std::make_unique <int[]> (totalW*totalH);
+    backupCoosY = std::make_unique <int[]> (totalW*totalH);
 
     // snake baby will born here
     snakeCoosX[0] = spawnX;

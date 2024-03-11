@@ -4,18 +4,14 @@
 //
 #include "Fruit.h"
 
-Fruit::Fruit(double fruitEmptiness, std::shared_ptr<Field> field)
-    :fie(field), totalFruits(0),
-    fruitXArr(new int [fie->getAreaElements()]),
-    fruitYArr(new int [fie->getAreaElements()])
+Fruit::Fruit(double fruitEmptiness, int totalW, int totalH)
+    :totalW(totalW), totalH(totalH), totalFruits(0)
 {
-    // count with double precission for fruit emptiness
-    int smartAlocMemory =
-        static_cast<double>(fie->getFieldWidth())
-        * static_cast<double>(fie->getFieldHeight()) / fruitEmptiness;
+     // contain coords in array of int which mean ammount of fruits
+     fruitXArr = make_unique <int[]> (totalW*totalH);
+     fruitYArr = make_unique <int[]> (totalW*totalH);
 
-//    fruitXArr = new int[smartAlocMemory];
-//    fruitYArr = new int[smartAlocMemory];
+    int smartAlocMemory = totalW*totalH/fruitEmptiness;
 
     // seed fruit
     for (int i = 0; i < smartAlocMemory; i ++)
@@ -24,18 +20,18 @@ Fruit::Fruit(double fruitEmptiness, std::shared_ptr<Field> field)
 
 Fruit::~Fruit()
 {
-    delete [] fruitYArr;
-    delete [] fruitXArr;
+    fruitXArr.reset();
+    fruitYArr.reset();
 }
 
 const int* Fruit::getFruitX() const
 {
-    return /*(int*)*/fruitXArr;
+    return fruitXArr.get();
 }
 
 const int* Fruit::getFruitY() const
 {
-    return /*(int*)*/fruitYArr;
+    return fruitYArr.get();
 }
 
 int Fruit::getTotalFruit() const
@@ -45,12 +41,12 @@ int Fruit::getTotalFruit() const
 
 int Fruit::getRandomFruitX() const
 {
-    return (rand() % (this->fie->getFieldWidth()-2) ) + 1;
+    return (rand() % (totalW-2) ) + 1;
 }
 
 int Fruit::getRandomFruitY() const
 {
-    return (rand() % (this->fie->getFieldHeight()-2) ) + 1;
+    return (rand() % (totalH-2) ) + 1;
 }
 
 void Fruit::addFruitItem()
