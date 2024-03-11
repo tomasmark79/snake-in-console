@@ -9,13 +9,12 @@
 #include <memory>
 #include <exception>
 
-using namespace std::chrono_literals;
 
 Process::Process(int width, int height, double fruitEmptiness,
-                 int totalPlayers, std::string* playerNames)
+                 int totalPlayers, string* playerNames)
     : totalPlayers(totalPlayers), isGameGoingOn(true)
 {
-    field       = std::make_shared  <Field>   (width, height);
+    field       = make_shared  <Field>   (width, height);
     fruit       = std::make_unique  <Fruit>   (fruitEmptiness, field);
     graphic     = std::make_unique  <Graphic> (field);
     players     = std::make_unique<std::unique_ptr<Player> []> (totalPlayers+1);
@@ -99,26 +98,26 @@ void Process::mainLoop()
 
             // TODO (tomas#1#): If all snakes Die, stop time
 
-        } // current snake
+        } // go through snakes end
 
         graphic->redrawVideoBuffer();
 
-        // print player stats
+        // print elapsed time
+        this->end_time = std::chrono::high_resolution_clock::now();
+        this->elapsed_time= (this->end_time - this->start_time) / 1000;
+
+        // print stats
         for (int i = 0; i < 4; i++)
             graphic->coutVCentered(playerStats[i]);
-
-        // print elapsed time
-        this->end_time =
-            std::chrono::high_resolution_clock::now();
-        this->elapsed_time=
-            (this->end_time - this->start_time) / 1000;
-
-        graphic->coutVCentered("Duration: "
-                               + std::to_string((int)this->elapsed_time.count()) + "s");
-
+        graphic->coutVCentered("Duration: " +
+            std::to_string((int)this->elapsed_time.count()) + "s");
         graphic->coutVCentered("(H)elp | (R)estart | e(X)it");
 
-        // exit game
+
+        // restart game
+        if (keyboardCode == 6)
+            break;
+
         if (keyboardCode == 4)
         {
             this->isGameGoingOn = false;
@@ -129,12 +128,8 @@ void Process::mainLoop()
         if (keyboardCode == 5)
             graphic->coutHelp();
 
-        // restart game
-        if (keyboardCode == 6)
-            break;
-
-        // retarder
-        std::this_thread::sleep_for(150ms);
+        // sleep interval in ms
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
     }
 }
 

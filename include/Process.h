@@ -14,6 +14,8 @@
 #include <vector>
 #include <map>
 
+using std::make_shared;
+
 static const short SCORE_MULTIPLIER = 11;
 static const short SNAKE_SPEED = 1;
 
