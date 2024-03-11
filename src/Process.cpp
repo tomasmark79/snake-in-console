@@ -75,9 +75,9 @@ void Process::mainLoop()
             snakes[currSnake]->setMyDirectionAndShift(playerInput[currSnake]);
 
             graphic->addSnakeToVideoBuffer(currSnake,
-                                           snakes[currSnake]->getSnakeX(),
-                                           snakes[currSnake]->getSnakeY(),
-                                           snakes[currSnake]->getSnakeLength(),
+                                           snakes[currSnake]->getX(),
+                                           snakes[currSnake]->getY(),
+                                           snakes[currSnake]->getLength(),
                                            snakes[currSnake]->amIDead());
 
 
@@ -86,7 +86,7 @@ void Process::mainLoop()
                                            fruit->getFruitY(),
                                            fruit->getTotalFruit())) > 0)
             {
-                snakes[currSnake]->growUpSnake();
+                snakes[currSnake]->growUp();
                 fruit->refreshFruit(eattenFruitElement-1);
                 Beep(5300, 10);
             }
@@ -99,7 +99,7 @@ void Process::mainLoop()
 
             // TODO (tomas#1#): If all snakes Die, stop time
 
-            playerPoints[currSnake] = snakes[currSnake]->getSnakeLength() * SCORE_MULTIPLIER;
+            playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
             playerStats[currSnake] = "Player " + players[currSnake]->getPlayerName() + " Points: " + std::to_string(playerPoints[currSnake]) +
                                      (snakes[currSnake]->amIDead() ? " Dead by " + deads.at(snakeDiedReason[currSnake]) : "");
 
@@ -151,20 +151,20 @@ void Process::mainLoop()
 int Process::isSnakeInConflict(int currSnake)
 {
     // hitting wall check
-    if ( snakes[currSnake]->getSnakeXHead() == 0 ||
-            snakes[currSnake]->getSnakeXHead() == field->getFieldWidth()-1 ||
-            snakes[currSnake]->getSnakeYHead() == 0 ||
-            snakes[currSnake]->getSnakeYHead() == field->getFieldHeight()-1
+    if ( snakes[currSnake]->getXHead() == 0 ||
+            snakes[currSnake]->getXHead() == field->getFieldWidth()-1 ||
+            snakes[currSnake]->getYHead() == 0 ||
+            snakes[currSnake]->getYHead() == field->getFieldHeight()-1
        )
     {
         return 1;
     }
 
     // hitting itsefl check
-    for (int tail = 1; tail < snakes[currSnake]->getSnakeLength(); tail++)
+    for (int tail = 1; tail < snakes[currSnake]->getLength(); tail++)
     {
-        if (snakes[currSnake]->getSnakeXHead() == snakes[currSnake]->getSnakeX()[tail] &&
-                snakes[currSnake]->getSnakeYHead() == snakes[currSnake]->getSnakeY()[tail]
+        if (snakes[currSnake]->getXHead() == snakes[currSnake]->getX()[tail] &&
+                snakes[currSnake]->getYHead() == snakes[currSnake]->getY()[tail]
            )
         {
             return 2;
@@ -175,12 +175,12 @@ int Process::isSnakeInConflict(int currSnake)
     for (int foreignSnake = 0; foreignSnake < totalPlayers; foreignSnake++)
     {
         // looking for foreign snake tail
-        for (int tail = 0; tail < snakes[foreignSnake]->getSnakeLength(); tail++)
+        for (int tail = 0; tail < snakes[foreignSnake]->getLength(); tail++)
         {
             if (currSnake != foreignSnake) // if not the same Snake
             {
-                if (    snakes[currSnake]->getSnakeXHead() == snakes[foreignSnake]->getSnakeX()[tail] &&
-                        snakes[currSnake]->getSnakeYHead() == snakes[foreignSnake]->getSnakeY()[tail] )
+                if (    snakes[currSnake]->getXHead() == snakes[foreignSnake]->getX()[tail] &&
+                        snakes[currSnake]->getYHead() == snakes[foreignSnake]->getY()[tail] )
                 {
                     // eats each other
                     return 3;

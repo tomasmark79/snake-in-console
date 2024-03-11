@@ -43,14 +43,14 @@ public:
         const int* FruitY,
         int fruitCount
     ) const;
-    void growUpSnake();
+    void growUp();
 
-    const int* getSnakeX() const;
-    const int* getSnakeY() const;
+    const int* getX() const;
+    const int* getY() const;
 
-    int getSnakeLength() const;
-    int getSnakeDirection() const;
-    int getSnakeXHead() const;
-    int getSnakeYHead() const;
+    int getLength() const;
+    int getDirection() const;
+    int getXHead() const;
+    int getYHead() const;
 };
 

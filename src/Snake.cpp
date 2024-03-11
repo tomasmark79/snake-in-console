@@ -99,37 +99,37 @@ int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fru
     return 0;
 }
 
-void Snake::growUpSnake()
+void Snake::growUp()
 {
     this->length+=1;
 }
 
-const int* Snake::getSnakeX() const
+const int* Snake::getX() const
 {
     return this->snakeCoosX;
 }
 
-const int* Snake::getSnakeY()  const
+const int* Snake::getY()  const
 {
     return this->snakeCoosY;
 }
 
-int Snake::getSnakeLength() const
+int Snake::getLength() const
 {
     return this->length;
 }
 
-int Snake::getSnakeDirection() const
+int Snake::getDirection() const
 {
     return this->snakeDirection;
 }
 
-int Snake::getSnakeXHead() const
+int Snake::getXHead() const
 {
     return this->snakeCoosX[0];
 }
 
-int Snake::getSnakeYHead() const
+int Snake::getYHead() const
 {
     return this->snakeCoosY[0];
 }
