@@ -31,9 +31,7 @@ Process::Process(int width, int height, double fruitEmptiness,
 void Process::mainLoop()
 {
     int eattenFruitElement = 0;
-    // int snakeDiedReason[4] = {0,0,0,0};
     int playerPoints[4] = {0,0,0,0};
-    // bool isAllDead = false;
     std::string playerStats[4] = {"","","",""};
 
     this->start_time =

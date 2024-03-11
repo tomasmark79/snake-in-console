@@ -4,16 +4,21 @@
 //
 #pragma once
 #include <string>
+using std::string;
 
 class Player
 {
     int playerId;
-    std::string playerName;
-
+    string playerName;
 public:
-    Player(int playerId, std::string playerName);
-    virtual ~Player() = default;
-    void setPlayerName(std::string playerName);
-    std::string getPlayerName() const;
+    Player(int playerId, string playerName)
+        : playerId(playerId), playerName(playerName) {};
+    void setPlayerName(string playerName)
+    {
+        this->playerName = playerName;
+    };
+    string getPlayerName() const{
+    return this->playerName;
+    };
 };
 
