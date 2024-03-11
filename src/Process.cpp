@@ -168,15 +168,13 @@ void Process::checkSnakeConflicts(int currSnake)
         }
     }
 
-// TODO (tomas#1#): You have not to die if foreign snake is already dead ...
-
     // looking for foreign snake instance
     for (int foreignSnake = 0; foreignSnake < totalPlayers; foreignSnake++)
     {
         // looking for foreign snake tail
         for (int tail = 0; tail < snakes[foreignSnake]->getLength(); tail++)
         {
-            if (currSnake != foreignSnake) // if not the same Snake
+            if (currSnake != foreignSnake && !snakes[foreignSnake]->getIsDead()) // if not the same Snake and isNotDead
             {
                 if (    snakes[currSnake]->getXHead() == snakes[foreignSnake]->getBackupX()[tail] &&
                         snakes[currSnake]->getYHead() == snakes[foreignSnake]->getBackupY()[tail] )
