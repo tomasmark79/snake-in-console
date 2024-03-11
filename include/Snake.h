@@ -30,11 +30,6 @@ class Snake
         {0, "is living"}, {1, "wall"}, {2, "self"}, {3, "another Snake"}
     };
 
-//    int snakeCoosX[MAX_SNAKE_LENGTH];
-//    int snakeCoosY[MAX_SNAKE_LENGTH];
-//    int backupCoosX[MAX_SNAKE_LENGTH];
-//    int backupCoosY[MAX_SNAKE_LENGTH];
-
     shared_ptr<int[]> snakeCoosX;
     shared_ptr<int[]> snakeCoosY;
     shared_ptr<int[]> backupCoosX;
@@ -96,12 +91,12 @@ public:
 
     int getXHead() const
     {
-        return this->snakeCoosX.get()[0];
+        return this->snakeCoosX[0];
     };
 
     int getYHead() const
     {
-        return this->snakeCoosY.get()[0];
+        return this->snakeCoosY[0];
     }
 
     const int* getX() const

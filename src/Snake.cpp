@@ -14,8 +14,8 @@ Snake::Snake(int id, int stepDivider, int spawnX, int spawnY, int totalElements)
     backupCoosY = std::make_unique <int[]> (possibleSnakeLength);
 
     // snake baby will born here
-    snakeCoosX.get()[0] = spawnX;
-    snakeCoosY.get()[0] = spawnY;
+    snakeCoosX[0] = spawnX;
+    snakeCoosY[0] = spawnY;
 
 // TODO (tomas#1#): Direction must be fot every snake different
 }
@@ -29,8 +29,8 @@ void Snake::backupCoordinates()
 {
     for (int bodyElement = 0; bodyElement < this->length; bodyElement ++)
     {
-        backupCoosX.get()[bodyElement] = snakeCoosX.get()[bodyElement];
-        backupCoosY.get()[bodyElement] = snakeCoosY.get()[bodyElement];
+        backupCoosX[bodyElement] = snakeCoosX[bodyElement];
+        backupCoosY[bodyElement] = snakeCoosY[bodyElement];
     }
 }
 
@@ -38,8 +38,8 @@ void Snake::restoreCoordinatesShifted()
 {
     for (int bodyElement = 0; bodyElement < this->length; bodyElement ++)
     {
-        snakeCoosX.get()[bodyElement+1] = backupCoosX.get()[bodyElement];
-        snakeCoosY.get()[bodyElement+1] = backupCoosY.get()[bodyElement];
+        snakeCoosX[bodyElement+1] = backupCoosX[bodyElement];
+        snakeCoosY[bodyElement+1] = backupCoosY[bodyElement];
     }
 }
 
@@ -76,13 +76,13 @@ void Snake::setMyDirectionAndShift(int directionPassed)
     this->backupCoordinates();
 
     if (this->direction == 0)
-        this->snakeCoosY.get()[0] -= this->stepDivider; // up
+        this->snakeCoosY[0] -= this->stepDivider; // up
     else if (this->direction == 1)
-        this->snakeCoosY.get()[0] +=this->stepDivider; // down
+        this->snakeCoosY[0] +=this->stepDivider; // down
     else if (this->direction == 2)
-        this->snakeCoosX.get()[0] -=this->stepDivider; // left
+        this->snakeCoosX[0] -=this->stepDivider; // left
     else if (this->direction == 3)
-        this->snakeCoosX.get()[0] +=this->stepDivider; // right
+        this->snakeCoosX[0] +=this->stepDivider; // right
 
     this->restoreCoordinatesShifted();
 }
@@ -94,7 +94,7 @@ int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fru
 
     for (int fruitIndex = 0; fruitIndex < fruitCount; fruitIndex ++)
     {
-        if (this->snakeCoosX.get()[0] ==  FruitX[fruitIndex] && this->snakeCoosY.get()[0] == FruitY[fruitIndex])
+        if (this->snakeCoosX[0] ==  FruitX[fruitIndex] && this->snakeCoosY[0] == FruitY[fruitIndex])
             return fruitIndex + 1;
     }
     return 0;
