@@ -3,7 +3,6 @@
 //Copyright (c) 2024 Tomas Mark
 //
 #pragma once
-#include "Animal.h"
 #include "Field.h"
 #include <memory>
 #include <vector>
@@ -11,7 +10,7 @@
 static const short MAX_SNAKE_LENGTH = 256+1;
 static const int stepDivider = 1;
 
-class Snake : public Animal
+class Snake
 {
     std::shared_ptr<std::vector<std::shared_ptr<Snake>>> snakes;
     int totalSnakes;
@@ -55,8 +54,5 @@ public:
     int getSnakeLength() const;
     int getSnakeDirection() const;
     int getSnakeDieReason() const;
-
-
-
 };
 
