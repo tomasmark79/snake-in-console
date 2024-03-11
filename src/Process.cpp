@@ -79,7 +79,7 @@ void Process::mainLoop()
                                            snakes[currSnake]->getX(),
                                            snakes[currSnake]->getY(),
                                            snakes[currSnake]->getLength(),
-                                           snakes[currSnake]->amIDead());
+                                           snakes[currSnake]->isJustDead());
 
             if ( (eattenFruitElement     = snakes[currSnake]->getElementOfEattenFruit(
                                                fruit->getFruitX(),
@@ -97,7 +97,7 @@ void Process::mainLoop()
 
             playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
             playerStats[currSnake] = "Player " + players[currSnake]->getPlayerName() + " Points: " + std::to_string(playerPoints[currSnake]) +
-                                     (snakes[currSnake]->amIDead() ? " Dead by " + snakes[currSnake]->getDeadDescripion()/*+ deads.at(snakes[currSnake]->getDeadReason())*/  : "");
+                                     (snakes[currSnake]->isJustDead() ? " Dead by " + snakes[currSnake]->getDeadDescripion()/*+ deads.at(snakes[currSnake]->getDeadReason())*/  : "");
 
         } // current snake
 
@@ -144,29 +144,34 @@ void Process::mainLoop()
 //! \return 1 wall, 2 itself, 3 foreign snake conflict
 //!
 //!
+
+// TODO (tomas#1#): Required remove returns, but mixed condition can occur
+
 void Process::checkSnakeConflicts(int currSnake)
 {
-    if (snakes[currSnake]->amIDead())
+    if (snakes[currSnake]->isJustDead())
         return;
 
     // hitting wall check
-    if ( snakes[currSnake]->getXHead() == 0 ||
+    if (    snakes[currSnake]->getXHead() == 0 ||
             snakes[currSnake]->getXHead() == field->getFieldWidth()-1 ||
             snakes[currSnake]->getYHead() == 0 ||
             snakes[currSnake]->getYHead() == field->getFieldHeight()-1
        )
     {
-        snakes[currSnake]->setDeadCode(1);
+        snakes[currSnake]->setDeadAndCode(1);
+        return;
     }
 
     // hitting itsefl check
     for (int tail = 1; tail < snakes[currSnake]->getLength(); tail++)
     {
-        if (snakes[currSnake]->getXHead() == snakes[currSnake]->getX()[tail] &&
-                snakes[currSnake]->getYHead() == snakes[currSnake]->getY()[tail]
+        if (    snakes[currSnake]->getXHead() == snakes[currSnake]->getBackupX()[tail] &&
+                snakes[currSnake]->getYHead() == snakes[currSnake]->getBackupY()[tail]
            )
         {
-            snakes[currSnake]->setDeadCode(2);
+            snakes[currSnake]->setDeadAndCode(2);
+            return;
         }
     }
 
@@ -178,11 +183,12 @@ void Process::checkSnakeConflicts(int currSnake)
         {
             if (currSnake != foreignSnake) // if not the same Snake
             {
-                if (    snakes[currSnake]->getXHead() == snakes[foreignSnake]->getX()[tail] &&
-                        snakes[currSnake]->getYHead() == snakes[foreignSnake]->getY()[tail] )
+                if (    snakes[currSnake]->getXHead() == snakes[foreignSnake]->getBackupX()[tail] &&
+                        snakes[currSnake]->getYHead() == snakes[foreignSnake]->getBackupY()[tail] )
                 {
                     // eats each other
-                    snakes[currSnake]->setDeadCode(3);
+                    snakes[currSnake]->setDeadAndCode(3);
+                    return;
                 }
             }
         }

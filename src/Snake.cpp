@@ -32,17 +32,17 @@ void Snake::restoreCoordinatesShifted()
 }
 
 // step to back? - doesn't allow for Snake ;-)
-bool Snake::isStepBack(int direction) const
+bool Snake::isStepBack(int directionPassed) const
 {
-    if (isDead)
+    if (this->isDead)
         return false;
 
     if (this->length > 0)
     {
-        if (    (this->direction == 0 && direction == 1) ||   // up can't down
-                (this->direction == 1 && direction == 0) ||   // down con't up
-                (this->direction == 2 && direction == 3) ||   // left can't right
-                (this->direction == 3 && direction == 2) )    // and vice versa
+        if (    (this->direction == 0 && directionPassed == 1) ||   // up can't down
+                (this->direction == 1 && directionPassed == 0) ||   // down con't up
+                (this->direction == 2 && directionPassed == 3) ||   // left can't right
+                (this->direction == 3 && directionPassed == 2) )    // and vice versa
         {
             return true;
         }
@@ -50,16 +50,16 @@ bool Snake::isStepBack(int direction) const
     return false;
 }
 
-void Snake::setMyDirectionAndShift(int directionTaken)
+void Snake::setMyDirectionAndShift(int directionPassed)
 {
-    if (isDead)
+    if (this->isDead)
         return;
 
-    if(this->isStepBack(directionTaken))
+    if(this->isStepBack(directionPassed))
         return;
 
-    if (directionTaken >= 0 && directionTaken <= 3) // allowed directions
-        this->direction = directionTaken;
+    if (directionPassed >= 0 && directionPassed <= 3) // allowed directions
+        this->direction = directionPassed;
 
     this->backupCoordinates();
 

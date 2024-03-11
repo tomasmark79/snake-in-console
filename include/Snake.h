@@ -28,37 +28,32 @@ class Snake
     void inhumeSnake();
     void backupCoordinates();
     void restoreCoordinatesShifted();
-    bool isStepBack(int direction) const;
+    bool isStepBack(int directionPassed) const;
 
 public:
     Snake(int id, int stepDivider, int spawnX, int spawnY);
 
+    void setMyDirectionAndShift(int directionPassed);
 
-    void setMyDirectionAndShift(int directionTaken);
     int getDirection() const
     {
-        return direction;
+        return this->direction;
     };
 
-    void setMeDead()
+    void setDeadAndCode(int deadCode)
     {
-        isDead = true;
-    };
-
-    void setDeadCode(int deadCode)
-    {
-        deadCode = deadCode;
-        this->setMeDead();
+        this->deadCode = deadCode;
+        this->isDead = true;
     };
 
     int getDeadCode() const
     {
-        return deadCode;
+        return this->deadCode;
     };
 
-    bool amIDead() const
+    bool isJustDead() const
     {
-        return isDead;
+        return this->isDead;
     };
 
     string getDeadDescripion() const
@@ -81,27 +76,39 @@ public:
 
     int getLength() const
     {
-        return length;
+        return this->length;
     };
 
     int getXHead() const
     {
-        return snakeCoosX[0];
+        return this->snakeCoosX[0];
     };
 
     int getYHead() const
     {
-        return snakeCoosY[0];
+        return this->snakeCoosY[0];
     }
 
     const int* getX() const
     {
-        return snakeCoosX;
+        return this->snakeCoosX;
     };
 
     const int* getY() const
     {
-        return snakeCoosY;
+        return this->snakeCoosY;
     };
+
+    const int* getBackupX() const
+    {
+        return this->backupCoosX;
+    };
+
+    const int* getBackupY() const
+    {
+        return this->backupCoosY;
+    };
+
+
 };
 
