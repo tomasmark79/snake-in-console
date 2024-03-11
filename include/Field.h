@@ -5,26 +5,24 @@
 #pragma once
 class Field
 {
-    short width;
-    short height;
+    int width;
+    int height;
 public:
     Field(short width, short height)
-    : width(width), height(height)
-{}
-;
+        : width(width), height(height) {};
 
-
-    short getFieldWidth() const
+    int  getFieldWidth() const
     {
         return this->width;
     };
-    short getFieldHeight() const
+
+    int getFieldHeight() const
     {
         return this->height;
     };
 
     int getAreaElements() const
     {
-    return  this->width * this->height;
+        return this->width * this->height;
     };
 };

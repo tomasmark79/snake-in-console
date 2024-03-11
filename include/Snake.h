@@ -5,9 +5,14 @@
 #pragma once
 #include <map>
 #include <string>
+#include <memory>
 
 using std::map;
 using std::string;
+using std::unique_ptr;
+using std::shared_ptr;
+using std::make_shared;
+using std::make_unique;
 
 static const short MAX_SNAKE_LENGTH = 256+1;
 
@@ -29,6 +34,11 @@ class Snake
     int snakeCoosY[MAX_SNAKE_LENGTH];
     int backupCoosX[MAX_SNAKE_LENGTH];
     int backupCoosY[MAX_SNAKE_LENGTH];
+
+    shared_ptr<int> u_snakeCoosX;
+    shared_ptr<int> u_snakeCoosY;
+    shared_ptr<int> u_backupCoosX;
+    shared_ptr<int> u_backupCoosY;
 
     void inhumeSnake();
     void backupCoordinates();

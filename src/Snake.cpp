@@ -7,6 +7,11 @@
 Snake::Snake(int id, int stepDivider, int spawnX, int spawnY):
     id(id), stepDivider(stepDivider), length(0), direction((rand() % 4)),isDead(false),deadCode(0)
 {
+    u_snakeCoosX = make_shared <int> (65535);
+        u_snakeCoosY = make_shared <int> (65535);
+            u_backupCoosX = make_shared <int> (65535);
+                u_backupCoosY = make_shared <int> (65535);
+
     // snake baby will born here
     snakeCoosX[0] = spawnX;
     snakeCoosY[0] = spawnY;
