@@ -54,5 +54,8 @@ public:
     int getSnakeLength() const;
     int getSnakeDirection() const;
     int getSnakeDieReason() const;
+
+    int getSnakeXHead() const;
+    int getSnakeYHead() const;
 };
 

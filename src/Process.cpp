@@ -69,38 +69,49 @@ void Process::mainLoop()
             fruit->getTotalFruit());
 
         // go through sneakes
-        for (int i = 0; i < this->totalPlayers; i ++)
+        for (int snInst = 0; snInst < this->totalPlayers; snInst ++)
         {
 
-            if (!snakes[i]->isSnakeDie())
-                snakes[i]->setSnakeDirectionAndShift(playerInput[i]);
+            if (!snakes[snInst]->isSnakeDie())
+                snakes[snInst]->setSnakeDirectionAndShift(playerInput[snInst]);
 
-            graphic->addSnakeToVideoBuffer(i,
-                                           snakes[i]->getSnakeX(),
-                                           snakes[i]->getSnakeY(),
-                                           snakes[i]->getSnakeLength(),
-                                           snakes[i]->isSnakeDie());
+            graphic->addSnakeToVideoBuffer(snInst,
+                                           snakes[snInst]->getSnakeX(),
+                                           snakes[snInst]->getSnakeY(),
+                                           snakes[snInst]->getSnakeLength(),
+                                           snakes[snInst]->isSnakeDie());
 
 
-            if ( (eattenFruitElement = snakes[i]->getElementOfEattenFruit(
+            if ( (eattenFruitElement = snakes[snInst]->getElementOfEattenFruit(
                                            fruit->getFruitX(),
                                            fruit->getFruitY(),
                                            fruit->getTotalFruit())) > 0)
             {
-                snakes[i]->growUpSnake();
+                snakes[snInst]->growUpSnake();
                 fruit->refreshFruit(eattenFruitElement-1);
                 Beep(5300, 10);
             }
 
+
             // conflict check
-            if (!snakes[i]->isSnakeDie())
+            if (!snakes[snInst]->isSnakeDie())
             {
-                playerGameOverReason[i] = snakes[i]->isSnakeInConflict();
-                if (       playerGameOverReason[i] == 1
-                           || playerGameOverReason[i] == 2
-                           || playerGameOverReason[i] == 3)
+                playerGameOverReason[snInst] = snakes[snInst]->isSnakeInConflict();
+
+                for (int tail = 0; tail < snakes[snInst]->getSnakeLength(); tail++)
                 {
-                    snakes[i]->setSnakeDie();
+
+//                    if ( (getSnakeX()[0] == snakes[snInst]->backupCoosX[tail] &&
+//                            snakeHeadY == snakes[snInst]->backupCoosY[tail]) )
+//                        playerGameOverReason = 3;
+
+                }
+
+                if ( playerGameOverReason[snInst] == 1
+                        || playerGameOverReason[snInst] == 2
+                        || playerGameOverReason[snInst] == 3)
+                {
+                    snakes[snInst]->setSnakeDie();
                     // Graphic->coutGOver(gameOverReason);
                     // break;
 
@@ -108,16 +119,16 @@ void Process::mainLoop()
             }
 
             std::string dieBye;
-            if (snakes[i]->getSnakeDieReason() == 1 )
+            if (snakes[snInst]->getSnakeDieReason() == 1 )
                 dieBye = "wall";
-            else if (snakes[i]->getSnakeDieReason() == 2 )
+            else if (snakes[snInst]->getSnakeDieReason() == 2 )
                 dieBye = "self";
-            else if (snakes[i]->getSnakeDieReason() == 3)
+            else if (snakes[snInst]->getSnakeDieReason() == 3)
                 dieBye = "another Snake";
 
-            playerPoints[i] = snakes[i]->getSnakeLength() * SCORE_MULTIPLIER;
-            playerStats[i] = "Player " + players[i]->getPlayerName() + " Points: " + std::to_string(playerPoints[i]) +
-                             (snakes[i]->isSnakeDie() ? " Dead by " + dieBye : "");
+            playerPoints[snInst] = snakes[snInst]->getSnakeLength() * SCORE_MULTIPLIER;
+            playerStats[snInst] = "Player " + players[snInst]->getPlayerName() + " Points: " + std::to_string(playerPoints[snInst]) +
+                             (snakes[snInst]->isSnakeDie() ? " Dead by " + dieBye : "");
         }
 
         graphic->redrawVideoBuffer();

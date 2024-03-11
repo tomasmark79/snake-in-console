@@ -172,3 +172,13 @@ int Snake::getSnakeDieReason() const
     return this->dieReason;
 }
 
+int Snake::getSnakeXHead() const
+{
+    return this->snakeCoosX[0];
+}
+
+int Snake::getSnakeYHead() const
+{
+    return this->snakeCoosY[0];
+}
+
