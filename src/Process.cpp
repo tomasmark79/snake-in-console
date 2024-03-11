@@ -91,17 +91,13 @@ void Process::mainLoop()
                 Beep(5300, 10);
             }
 
-
-
-            if (!snakes[currSnake]->amIDead())
-                if (this->isSnakeInConflict(currSnake) > 0)
-                    snakes[currSnake]->setMeDead();
+            this->checkSnakeConflicts(currSnake);
 
             // TODO (tomas#1#): If all snakes Die, stop time
 
             playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
             playerStats[currSnake] = "Player " + players[currSnake]->getPlayerName() + " Points: " + std::to_string(playerPoints[currSnake]) +
-                                     (snakes[currSnake]->amIDead() ? " Dead by " /*+ deads.at(snakes[currSnake]->getDeadReason())*/  : "");
+                                     (snakes[currSnake]->amIDead() ? " Dead by " + snakes[currSnake]->getDeadDescripion()/*+ deads.at(snakes[currSnake]->getDeadReason())*/  : "");
 
         } // current snake
 
@@ -148,10 +144,10 @@ void Process::mainLoop()
 //! \return 1 wall, 2 itself, 3 foreign snake conflict
 //!
 //!
-int Process::isSnakeInConflict(int currSnake)
+void Process::checkSnakeConflicts(int currSnake)
 {
-//    if (snakes[currSnake]->amIDead())
-//        return snakes[currSnake]->amIDead();
+    if (snakes[currSnake]->amIDead())
+        return;
 
     // hitting wall check
     if ( snakes[currSnake]->getXHead() == 0 ||
@@ -160,8 +156,7 @@ int Process::isSnakeInConflict(int currSnake)
             snakes[currSnake]->getYHead() == field->getFieldHeight()-1
        )
     {
-        snakes[currSnake]->setDeadReason(1);
-        return 1;
+        snakes[currSnake]->setDeadCode(1);
     }
 
     // hitting itsefl check
@@ -171,8 +166,7 @@ int Process::isSnakeInConflict(int currSnake)
                 snakes[currSnake]->getYHead() == snakes[currSnake]->getY()[tail]
            )
         {
-            snakes[currSnake]->setDeadReason(2);
-            return 2;
+            snakes[currSnake]->setDeadCode(2);
         }
     }
 
@@ -188,15 +182,11 @@ int Process::isSnakeInConflict(int currSnake)
                         snakes[currSnake]->getYHead() == snakes[foreignSnake]->getY()[tail] )
                 {
                     // eats each other
-                    snakes[currSnake]->setDeadReason(3);
-                    return 3;
+                    snakes[currSnake]->setDeadCode(3);
                 }
             }
         }
     }
-
-    // no conflict
-    return 0;
 }
 
 

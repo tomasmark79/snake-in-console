@@ -4,10 +4,9 @@
 //
 #include "Snake.h"
 #include <iostream>
-#include <windows.h> // Beep
 
 Snake::Snake(int id, int stepDivider, int spawnX, int spawnY):
-    id(id), stepDivider(1), length(0),snakeDirection((rand() % 4)),isDead(false),deadCode(0)
+    id(id), stepDivider(1), length(0), direction((rand() % 4)),isDead(false),deadCode(0)
 {
     // snake baby will born here
     snakeCoosX[0] = spawnX;
@@ -40,13 +39,11 @@ bool Snake::isStepBack(int direction) const
 
     if (this->length > 0)
     {
-        if (    (this->snakeDirection == 0 && direction == 1) ||   // up can't down
-                (this->snakeDirection == 1 && direction == 0) ||   // down con't up
-                (this->snakeDirection == 2 && direction == 3) ||   // left can't right
-                (this->snakeDirection == 3 && direction == 2) )    // and vice versa
+        if (    (this->direction == 0 && direction == 1) ||   // up can't down
+                (this->direction == 1 && direction == 0) ||   // down con't up
+                (this->direction == 2 && direction == 3) ||   // left can't right
+                (this->direction == 3 && direction == 2) )    // and vice versa
         {
-            Beep(1700,20);
-            Beep(1400,14);
             return true;
         }
     }
@@ -58,46 +55,24 @@ void Snake::setMyDirectionAndShift(int directionTaken)
     if (isDead)
         return;
 
-    Beep(500,2);
-
     if(this->isStepBack(directionTaken))
         return;
 
     if (directionTaken >= 0 && directionTaken <= 3) // allowed directions
-        this->snakeDirection = directionTaken;
+        this->direction = directionTaken;
 
     this->backupCoordinates();
 
-    if (this->snakeDirection == 0)
+    if (this->direction == 0)
         snakeCoosY[0] -=stepDivider; // up
-    else if (this->snakeDirection == 1)
+    else if (this->direction == 1)
         snakeCoosY[0] +=stepDivider; // down
-    else if (this->snakeDirection == 2)
+    else if (this->direction == 2)
         snakeCoosX[0] -=stepDivider; // left
-    else if (this->snakeDirection == 3)
+    else if (this->direction == 3)
         snakeCoosX[0] +=stepDivider; // right
 
     this->restoreCoordinatesShifted();
-}
-
-void Snake::setMeDead()
-{
-    this->isDead = true;
-}
-
-void Snake::setDeadReason(int deadCode)
-{
-    this->deadCode = deadCode;
-}
-
-int Snake::getDeadReason() const
-{
-    return this->deadCode;
-}
-
-bool Snake::amIDead() const
-{
-    return this->isDead;
 }
 
 int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fruitCount ) const
@@ -111,40 +86,5 @@ int Snake::getElementOfEattenFruit(const int* FruitX, const int* FruitY, int fru
             return fruitIndex + 1;
     }
     return 0;
-}
-
-void Snake::growUp()
-{
-    this->length+=1;
-}
-
-const int* Snake::getX() const
-{
-    return this->snakeCoosX;
-}
-
-const int* Snake::getY()  const
-{
-    return this->snakeCoosY;
-}
-
-int Snake::getLength() const
-{
-    return this->length;
-}
-
-int Snake::getDirection() const
-{
-    return this->snakeDirection;
-}
-
-int Snake::getXHead() const
-{
-    return this->snakeCoosX[0];
-}
-
-int Snake::getYHead() const
-{
-    return this->snakeCoosY[0];
 }
 

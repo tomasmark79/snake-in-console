@@ -43,6 +43,6 @@ public:
             );
     ~Process() = default;
     void mainLoop();
-    int isSnakeInConflict(int currSnake);
+    void checkSnakeConflicts(int currSnake);
     bool isGaming() const;
 };
