@@ -6,25 +6,23 @@
 #include <thread>   // std::this_thread::sleep_for
 #include <iomanip>  // std::setprecision
 #include <sstream>  // sstreamstring
-#include <memory>
 #include <exception>
-
 
 Process::Process(int width, int height, double fruitEmptiness,
                  int totalPlayers, string* playerNames)
     : totalPlayers(totalPlayers), isGameGoingOn(true)
 {
     field       = make_shared  <Field>   (width, height);
-    fruit       = std::make_unique  <Fruit>   (fruitEmptiness, field);
-    graphic     = std::make_unique  <Graphic> (field);
-    players     = std::make_unique<std::unique_ptr<Player> []> (totalPlayers+1);
-    snakes      = std::make_unique<std::shared_ptr<Snake>  []> (totalPlayers+1);
+    fruit       = make_unique  <Fruit>   (fruitEmptiness, field);
+    graphic     = make_unique  <Graphic> (field);
+    players     = make_unique  <unique_ptr <Player> []> (totalPlayers+1);
+    snakes      = make_unique  <shared_ptr <Snake>  []> (totalPlayers+1);
 
     // spawn player's id and names
     for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
-        players[playerId] = std::make_unique<Player>(playerId, playerNames[playerId]);
-        snakes[playerId] = std::make_unique<Snake>(playerId, SNAKE_SPEED, field->getFieldWidth()/2, field->getFieldHeight()/2); // snakes[playerId] = new Snake(playerId, *field);
+        players[playerId] = make_unique<Player>(playerId, playerNames[playerId]);
+        snakes[playerId] = make_unique<Snake>(playerId, SNAKE_SPEED, field->getFieldWidth()/2, field->getFieldHeight()/2); // snakes[playerId] = new Snake(playerId, *field);
     }
 
     this->mainLoop();
@@ -93,8 +91,12 @@ void Process::mainLoop()
             this->checkSnakeConflicts(currSnake);
 
             playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
-            playerStats[currSnake] = "Player " + players[currSnake]->getPlayerName() + " Points: " + std::to_string(playerPoints[currSnake]) +
-                                     (snakes[currSnake]->getIsDead() ? " Dead by " + snakes[currSnake]->getDeadDescripion()/*+ deads.at(snakes[currSnake]->getDeadReason())*/  : "");
+            playerStats[currSnake] = "Player with Snake "
+                + players[currSnake]->getPlayerName()
+                + " Points: " + std::to_string(playerPoints[currSnake])
+                + (snakes[currSnake]->getIsDead()
+                   ? " was killed by " + snakes[currSnake]->getDeadDescripion()
+                   : " lives");
 
             // TODO (tomas#1#): If all snakes Die, stop time
 

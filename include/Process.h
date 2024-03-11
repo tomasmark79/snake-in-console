@@ -14,7 +14,11 @@
 #include <vector>
 #include <map>
 
+using std::unique_ptr;
+using std::shared_ptr;
 using std::make_shared;
+using std::make_unique;
+using std::string;
 
 static const short SCORE_MULTIPLIER = 11;
 static const short SNAKE_SPEED = 1;
@@ -25,11 +29,11 @@ class Process
     Keyboard keyboard;
     int totalPlayers;
 
-    std::shared_ptr<Field> field;
-    std::unique_ptr<Fruit> fruit;
-    std::unique_ptr<Graphic> graphic; // Graphic* Graphic
-    std::unique_ptr<std::unique_ptr<Player>[]> players; // Player** players
-    std::unique_ptr<std::shared_ptr<Snake>[]> snakes; // Snakes**
+    shared_ptr<Field> field;
+    unique_ptr<Fruit> fruit;
+    unique_ptr<Graphic> graphic; // Graphic* Graphic
+    unique_ptr<unique_ptr<Player>[]> players; // Player** players
+    unique_ptr<shared_ptr<Snake>[]> snakes; // Snakes**
 
     std::chrono::time_point<std::chrono::system_clock> start_time;
     std::chrono::time_point<std::chrono::system_clock> end_time;
@@ -40,7 +44,7 @@ public:
             int height,
             double fruitEmptiness,
             int totalPlayers,
-            std::string* playerNames
+            string* playerNames
             );
     ~Process() = default;
     void mainLoop();

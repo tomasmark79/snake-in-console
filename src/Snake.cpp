@@ -10,6 +10,9 @@ Snake::Snake(int id, int stepDivider, int spawnX, int spawnY):
     // snake baby will born here
     snakeCoosX[0] = spawnX;
     snakeCoosY[0] = spawnY;
+
+// TODO (tomas#1#): Direction must be fot every snake different
+
 }
 
 void Snake::backupCoordinates()

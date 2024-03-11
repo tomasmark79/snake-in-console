@@ -126,6 +126,6 @@ void printHead()
     std::cout << "Copyright (c) 2024 Tomas Mark" << std::endl;
     std::cout << "tomas@digitalspace.name" << std::endl;
     std::cout << "Enjoy this example of OOP " << cpp.getCppV() << " code!" << std::endl;
-    std::cout << "build v0.0.2 - " << cpp.getCppV() << std::endl;
+    std::cout << "build v0.0.3 - " << cpp.getCppV() << std::endl;
     std::cout << std::endl;
 }
