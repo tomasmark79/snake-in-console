@@ -8,6 +8,7 @@
 #include <cctype> // tolower
 #include <iostream>
 #include <random>
+#include <ctime>
 
 constexpr int               MAX_PLAYERS = 4;
 constexpr int               PLAYER_ANSWER_TRESHHOLD = 5; // give 5 attempts for user to enter right values
@@ -80,6 +81,8 @@ int main()
     int fieldHeight     = 35;
     int fruitEmptiness  = 3.5;  // more is less fruit
 
+    int networkPlayers  = 0;
+
     Network net; // isNetworkActive false by default
 
     string isUDPMultiplayer = getStringAnswerFromPlayer("Do you want to play multiplayer game over network? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
@@ -102,10 +105,16 @@ int main()
             net.initENet();
             net.initServer();
 
-            // waiting for players connection
-            while (net.hostService() != 1)
-            {}
-            return 0;
+            cout << endl << "Waiting for other players 5 sec..." << endl;
+            const time_t startTime = time(nullptr);
+            while (time(nullptr) - startTime < 5)
+            {
+                if (net.hostService() == 1)
+                    networkPlayers++;
+            }
+            std::cout << "Connected " << networkPlayers << " players." << endl;
+            if (networkPlayers == 0)
+                return 0;
         }
         else
         {
@@ -229,7 +238,7 @@ int main()
 //        fruitEmptiness = getNumericAnswerFromPlayer<double>("Enter fruit emptiness (min 1 recomended 2.5) ? ", 1, 10, PLAYER_ANSWER_TRESHHOLD);
 //    }
 
-    // Start Game
+// Start Game
 }
 
 
