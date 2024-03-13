@@ -70,14 +70,26 @@ void Process::mainLoop()
 
             // Server does
             net.hostService();
-            net.sendPacketToPeerClient("Hi from Server!" + std::to_string(elapsed_time.count()));
+            net.sendPacketToPeerClient
+            (
+                "Server Snake X:"
+                + std::to_string(snakes[0]->getXHead())
+                + " Y: " + std::to_string(snakes[0]->getYHead())
+                + " Len: " + std::to_string(snakes[0]->getLength())
+            );
         }
         else
         {
             // Client does
             // For send must be called hostservice too
             net.hostServiceOnClient();
-            net.sendPacketToPeer("Hi from Client" + std::to_string(elapsed_time.count()));
+            net.sendPacketToPeer
+            (
+                "Client Snake X:"
+                + std::to_string(snakes[0]->getXHead())
+                + " Y: " + std::to_string(snakes[0]->getYHead())
+                + " Len: " + std::to_string(snakes[0]->getLength())
+            );
 
         }
 

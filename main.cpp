@@ -107,11 +107,15 @@ int main()
 
             cout << endl << "Waiting for other players ..." << endl;
             const time_t startTime = time(nullptr);
-            while (time(nullptr) - startTime < 5)
+            while (time(nullptr) - startTime < 20)
             {
                 //! Server listen clients
                 if (net.listenForNewClient() == 0)
-                    networkPlayers++;
+                    {
+                        // Now only one client
+                        networkPlayers++;
+                        break;
+                    }
             }
             std::cout << "Connected " << networkPlayers << " players." << endl;
             if (networkPlayers == 0)

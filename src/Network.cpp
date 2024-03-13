@@ -127,7 +127,7 @@ int Network::listenForNewClient()
                 return 0;
             case ENET_EVENT_TYPE_RECEIVE:
                 //sprintf ((char*)stream, "A packet of length %u containing %s was received from %s on channel %u.\n",
-                sprintf ((char*)stream, "len %u str %s from %s on channel %u.\n",
+                sprintf ((char*)stream, "l%u s %s from %s ch. %u.\n",
                          event.packet -> dataLength,
                          event.packet -> data,
                          event.peer -> data,
@@ -166,7 +166,7 @@ int Network::listenForNewClient()
                 // break;
                 return 0;
             case ENET_EVENT_TYPE_RECEIVE:
-                sprintf ((char*)stream, "len %u str %s from %s on channel %u.\n",
+                sprintf ((char*)stream, "l%u s %s from %s ch. %u.\n",
                          event.packet -> dataLength,
                          event.packet -> data,
                          event.peer -> data,
