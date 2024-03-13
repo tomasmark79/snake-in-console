@@ -4,6 +4,7 @@
 //
 #include "Process.h"
 #include "Graphic.h"
+#include "Network.h"
 #include <iostream>
 #include <random>
 
@@ -32,6 +33,15 @@ int main()
     playerNames[2] = "C++";
     playerNames[3] = "Snake";
 
+    Network net;
+    if ( net.init() != 0)
+    {
+        // fprintf (stderr, "An error occurred while initializing ENet.\n");
+        std::cout << "An error occurred while initializing ENet.\n" << std::endl;
+        return EXIT_FAILURE;
+    }
+    atexit (enet_deinitialize);
+
     // Question 0
     std::string yesOrNo = getStringAnswerFromPlayer("Start immediately with default settings yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
 
@@ -58,6 +68,15 @@ int main()
         // quesrion 5
         fruitEmptiness = getNumericAnswerFromPlayer<double>("Enter fruit emptiness (min 1 recomended 2.5) ? ", 1, 10, PLAYER_ANSWER_TRESHHOLD);
     }
+
+
+
+
+
+
+
+
+
 
     // Start Game
     while(true)
