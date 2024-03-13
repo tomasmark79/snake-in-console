@@ -50,10 +50,10 @@ void Process::mainLoop()
     Keyboard keyboard;
     while (true)
     {
-        net.hostService();
+        // net.hostService();
 
-        if(!net.getIsServerActive())
-            net.sendPacketToHost();
+//        if(!net.getIsServerActive())
+//            net.sendPacketToHost();
 
         int playerInput[4] = {-1,-1,-1,-1};
         int keyboardCode = keyboard.getMyKeyboardCode();

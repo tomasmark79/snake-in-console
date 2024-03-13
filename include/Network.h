@@ -10,17 +10,16 @@ using std::string;
 
 class Network
 {
+    bool    isNetworkActive;
+    bool    isServerActive;
 
-    ENetHost* server;
-    ENetHost* client;
-    ENetPeer* peer;
-    ENetEvent event;
+    ENetHost*   server;
+    ENetHost*   client;
+    ENetPeer*   peer;
     ENetAddress address;
-
-    bool isServerActive;
+    ENetEvent   event;
 
     string hostName;
-
     int port;
     int clients;
     int channels;
@@ -29,33 +28,35 @@ class Network
     int outConnections;
 
 public:
-    Network();
+    Network() :
+        isNetworkActive(false), server(nullptr), client(nullptr)
+    {};
+
+    ~Network()
+    {
+        if (server != nullptr)
+            enet_host_destroy(server);
+        if (client != nullptr)
+            enet_host_destroy(client);
+    };
+
     Network (Network& network);
     Network operator= (Network& network);
-    virtual ~Network();
 
-    int initENet();
+    int initENet()
+    {
+        return enet_initialize();
+    };
 
-    int initServer(string hostName,
-                   int port,
-                   int clients,
-                   int channels,
-                   int amountIn,
-                   int amountOut);
+    int initServer();
 
-    int initClient(string hostName,
-                   int port,
-                   int outConnections,
-                   int channels,
-                   int amountIn,
-                   int amountOut);
+    int initClient();
 
     int connectToHost();
 
     int sendPacketToHost();
 
     int hostService();
-
 
     string getHostName() const
     {
@@ -121,6 +122,15 @@ public:
     {
         this->isServerActive = isServerActive;
     }
+    bool getIsNetworkActive() const
+    {
+        return this->isNetworkActive;
+    }
+    void setIsNetworkActive(bool isNetworkActive)
+    {
+        this->isNetworkActive = isNetworkActive;
+    }
+
 
 
 
