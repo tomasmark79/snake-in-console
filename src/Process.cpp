@@ -9,7 +9,7 @@
 #include <exception>
 
 Process::Process(int width, int height, double fruitEmptiness,
-                 int totalPlayers, string* playerNames)
+                 int totalPlayers, string* playerNames, Network& net)
     : totalPlayers(totalPlayers),
       totalDeadPlayers(0),
       field(make_shared    <Field>   (width, height)),
@@ -17,7 +17,8 @@ Process::Process(int width, int height, double fruitEmptiness,
       graphic(make_unique  <Graphic> (width, height)),
       players(make_unique  <unique_ptr <Player> []> (totalPlayers + 1)),
       snakes(make_unique   <shared_ptr <Snake>  []> (totalPlayers + 1)),
-      isGameGoingOn(true)
+      isGameGoingOn(true),
+      net(net)
 {
     // spawn player's id and names
     for (int playerId = 0; playerId < totalPlayers; playerId++)
@@ -49,6 +50,11 @@ void Process::mainLoop()
     Keyboard keyboard;
     while (true)
     {
+        net.hostService();
+
+        if(!net.getIsServerActive())
+            net.sendPacketToHost();
+
         int playerInput[4] = {-1,-1,-1,-1};
         int keyboardCode = keyboard.getMyKeyboardCode();
 
@@ -127,8 +133,8 @@ void Process::mainLoop()
         // all players dead
         if (totalDeadPlayers == totalPlayers)
         {
-            graphic->coutGameOver();
-            break;
+            //graphic->coutGameOver();
+            //break;
         }
 
         // restart game

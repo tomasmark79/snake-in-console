@@ -12,6 +12,7 @@
 #include <chrono>
 #include <string>
 #include <vector>
+#include "Network.h"
 #include <map>
 
 using std::unique_ptr;
@@ -33,12 +34,15 @@ class Process
     unique_ptr<unique_ptr<Player>[]> players;
     unique_ptr<shared_ptr<Snake> []> snakes;
 
+    Network& net;
+
 public:
     Process(int width,
             int height,
             double fruitEmptiness,
             int totalPlayers,
-            string* playerNames
+            string* playerNames,
+            Network& net
             );
 
     ~Process();

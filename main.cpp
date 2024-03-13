@@ -21,8 +21,37 @@ T1 getNumericAnswerFromPlayer(std::string_view question, int min, int max, int a
 std::string getStringAnswerFromPlayer(std::string_view question, int min, int max, int attemptTreshold);
 void printHead();
 
+bool isGameInServerMode = false;
 int main()
 {
+    Network net;
+    if ( net.initENet() != 0)
+    {
+        // fprintf (stderr, "An error occurred while initializing ENet.\n");
+        cout << "An error occurred while initializing ENet.\n" << std::endl;
+        return EXIT_FAILURE;
+    }
+    atexit (enet_deinitialize);
+
+
+    // Server/Client
+    string serverOrClient = getStringAnswerFromPlayer("Host game? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
+    if (serverOrClient.compare(0, 3, "yes") == 0 || serverOrClient.compare(0, 2, "ye") == 0 || serverOrClient.compare(0, 1, "y") == 0)
+    {
+        // Server
+        net.setIsServerActive(true);
+        isGameInServerMode = true;
+        net.initServer("192.168.79.101", 7999, 4, 2, 0, 0);
+    }
+    else
+    {
+        net.setIsServerActive(false);
+        net.initClient("192.168.79.101", 7999, 1,2,0,0);
+    }
+
+    // cout << res << endl;
+
+
     std::random_device rd;
     std::mt19937 gen(rd());
 
@@ -32,15 +61,6 @@ int main()
     playerNames[1] = "writed";
     playerNames[2] = "C++";
     playerNames[3] = "Snake";
-
-    Network net;
-    if ( net.init() != 0)
-    {
-        // fprintf (stderr, "An error occurred while initializing ENet.\n");
-        std::cout << "An error occurred while initializing ENet.\n" << std::endl;
-        return EXIT_FAILURE;
-    }
-    atexit (enet_deinitialize);
 
     // Question 0
     std::string yesOrNo = getStringAnswerFromPlayer("Start immediately with default settings yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
@@ -69,20 +89,13 @@ int main()
         fruitEmptiness = getNumericAnswerFromPlayer<double>("Enter fruit emptiness (min 1 recomended 2.5) ? ", 1, 10, PLAYER_ANSWER_TRESHHOLD);
     }
 
-
-
-
-
-
-
-
-
-
     // Start Game
     while(true)
     {
-        Process gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames);
+        if (!net.getIsServerActive())
+            net.connectToHost();
 
+        Process gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames, net);
         if (!gameSnake.getIsGameGoingOn())
             break;
     }
