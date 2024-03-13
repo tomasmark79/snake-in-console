@@ -64,7 +64,7 @@ int Network::connectToHost()
     {
         fprintf (stderr,
                  "No available peers for initiating an ENet connection.\n");
-        exit (EXIT_FAILURE);
+        return 1;
     }
 
     /* Wait up to 10 seconds for the connection attempt to succeed. */
@@ -82,6 +82,7 @@ int Network::connectToHost()
         enet_peer_reset (peer);
         // puts ("Connection to some.server.net:1234 failed.");
         cout << "Connection to " << this->hostName << ":" << this->port << " failed." << endl;
+        return 1;
     }
 
     return 0;
@@ -106,11 +107,11 @@ int Network::sendPacketToHost()
 }
 
 
-
 // 0 - no event
 // 1 -
 int Network::hostService()
 {
+    // Server Session
     if (isNetworkActive && isServerActive)
     {
         /* Wait up to 1000 milliseconds for an event. */
@@ -146,9 +147,12 @@ int Network::hostService()
                 return 3;
             }
         }
+
     }
     else
     {
+
+        // Client Session
         /* Wait up to 1000 milliseconds for an event. */
         while (enet_host_service (client, &event, 1000) > 0)
         {

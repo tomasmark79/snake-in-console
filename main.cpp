@@ -107,7 +107,7 @@ int main()
 
             cout << endl << "Waiting for other players 5 sec..." << endl;
             const time_t startTime = time(nullptr);
-            while (time(nullptr) - startTime < 5)
+            while (time(nullptr) - startTime < 10)
             {
                 if (net.hostService() == 1)
                     networkPlayers++;
@@ -115,6 +115,10 @@ int main()
             std::cout << "Connected " << networkPlayers << " players." << endl;
             if (networkPlayers == 0)
                 return 0;
+
+            // how many networkPlayer how many Snakes
+            totalPlayers = networkPlayers + 1 /* +1 player is server */;
+            // Run Server and takes client to the game
         }
         else
         {
@@ -130,15 +134,14 @@ int main()
             net.initENet();
             net.initClient();
 
-            // trying to connect to the host
-            net.connectToHost() != 1;
-
-            while (net.hostService() != 1)
-            {}
-
-            cout << "Connected to host" << endl;
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            return 0;
+            cout << endl << "Connecting to host ..." << endl;
+            const time_t startTime = time(nullptr);
+            while (time(nullptr) - startTime < 20)
+            {
+                if (net.connectToHost() == 0)
+                    break;
+            }
+            cout << "Connected to host " << net.getHostName() << ":" << net.getPort() << "." << endl;
         }
     }
     else

@@ -50,7 +50,18 @@ void Process::mainLoop()
     Keyboard keyboard;
     while (true)
     {
-        // net.hostService();
+        //! Server instance has only one player physically
+        //! Server is requiring coords of clients (foreign snakes)
+        //! Snakes[0] = Server standalone player
+        //! Snakes[1] = Client virtual player
+        //! Snakes[2] = Client virtual player
+        //! Snakes[3] = Client virtual player
+
+        //! Client instance has only one player physically
+        //! Client has to send current coords to the server
+        //! Snakes[0] = Client player
+
+        net.hostService();
 
 //        if(!net.getIsServerActive())
 //            net.sendPacketToHost();
