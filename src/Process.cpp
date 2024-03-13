@@ -48,8 +48,12 @@ void Process::mainLoop()
     std::chrono::time_point<std::chrono::system_clock> start_time = std::chrono::high_resolution_clock::now();
 
     Keyboard keyboard;
+
     while (true)
     {
+        std::chrono::time_point<std::chrono::system_clock> end_time = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> elapsed_time = (end_time - start_time) / 1000;
+
         //! Server instance has only one player physically
         //! Server is requiring coords of clients (foreign snakes)
         //! Snakes[0] = Server standalone player
@@ -61,10 +65,22 @@ void Process::mainLoop()
         //! Client has to send current coords to the server
         //! Snakes[0] = Client player
 
-        net.hostService();
+        if (net.getIsServerActive())
+        {
 
-//        if(!net.getIsServerActive())
-//            net.sendPacketToHost();
+            // Server does
+            net.hostService();
+            net.sendPacketToPeerClient("Hi from Server!" + std::to_string(elapsed_time.count()));
+        }
+        else
+        {
+            // Client does
+            // For send must be called hostservice too
+            net.hostServiceOnClient();
+            net.sendPacketToPeer("Hi from Client" + std::to_string(elapsed_time.count()));
+
+        }
+
 
         int playerInput[4] = {-1,-1,-1,-1};
         int keyboardCode = keyboard.getMyKeyboardCode();
@@ -128,10 +144,6 @@ void Process::mainLoop()
         } // go through snakes end
 
         graphic->redrawVideoBuffer();
-
-        // calc elapsed time
-        std::chrono::time_point<std::chrono::system_clock> end_time = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double, std::milli> elapsed_time = (end_time - start_time) / 1000;
 
         // print stats
         for (int i = 0; i < 4; i++)

@@ -10,7 +10,6 @@ int Network::initServer()
     if (!isNetworkActive)
         return 0;
 
-    // ENetAddress address;
     /* Bind the server to the default localhost.     */
     /* A specific host address can be specified by   */
     /* enet_address_set_host (& address, "x.x.x.x"); */
@@ -36,6 +35,8 @@ int Network::initServer()
 
 int Network::initClient()
 {
+    /* A specific host address can be specified by   */
+    /* enet_address_set_host (& address, "x.x.x.x"); */
     enet_address_set_host(&address, const_cast<char*>(hostName.c_str()));
     address.port = port;
 
@@ -55,12 +56,11 @@ int Network::initClient()
     }
     return 0;
 }
-
-int Network::connectToHost()
+int Network::connectToServer()
 {
     /* Initiate the connection, allocating the two channels 0 and 1. */
-    peer = enet_host_connect (client, &address, 2, 0);
-    if (peer == NULL)
+    peerServer = enet_host_connect (client, &address, 2, 0);
+    if (peerServer == NULL)
     {
         fprintf (stderr,
                  "No available peers for initiating an ENet connection.\n");
@@ -71,7 +71,6 @@ int Network::connectToHost()
     if (enet_host_service (client, & event, 10000) > 0 &&
             event.type == ENET_EVENT_TYPE_CONNECT)
     {
-        // puts ("Connection to some.server.net:1234 succeeded.");
         cout << "Connection to " << this->hostName << ":" << this->port << " succeeded." << endl;
     }
     else
@@ -79,119 +78,155 @@ int Network::connectToHost()
         /* Either the 5 seconds are up or a disconnect event was */
         /* received. Reset the peer in the event the 5 seconds   */
         /* had run out without any significant event.            */
-        enet_peer_reset (peer);
-        // puts ("Connection to some.server.net:1234 failed.");
+        enet_peer_reset (peerServer);
         cout << "Connection to " << this->hostName << ":" << this->port << " failed." << endl;
+        return 2;
+    }
+    return 0;
+}
+
+int Network::listenForNewClient()
+{
+    while (enet_host_service (server, &event, 0) > 0)
+    {
+        switch (event.type)
+        {
+        case ENET_EVENT_TYPE_CONNECT:
+            sprintf ((char*)stream, "A new client connected from %x:%u.\n",
+                     event.peer -> address.host,
+                     event.peer -> address.port);
+            cout << stream << endl;
+
+            /* Store any relevant client information here. */
+            peerClient = event.peer;
+            event.peer -> data = (void*)"Client";
+            return 0;
+        }
         return 1;
     }
-
-    return 0;
-}
-
-int Network::sendPacketToHost()
-{
-    /* Create a reliable packet of size 7 containing "packet\0" */
-    ENetPacket * packet = enet_packet_create ("packet",
-                          strlen ("packet") + 1,
-                          ENET_PACKET_FLAG_RELIABLE);
-    /* Extend the packet so and append the string "foo", so it now */
-    /* contains "packetfoo\0"                                      */
-    enet_packet_resize (packet, strlen ("packetfoo") + 1);
-    strcpy (reinterpret_cast<char*>(&packet->data [strlen ("packet")]), "foo");
-    /* Send the packet to the peer over channel id 0. */
-    /* One could also broadcast the packet by         */
-    /* enet_host_broadcast (host, 0, packet);         */
-    enet_peer_send (peer, 0, packet);
-
-    return 0;
 }
 
 
-// 0 - no event
-// 1 -
-int Network::hostService()
-{
-    // Server Session
-    if (isNetworkActive && isServerActive)
+    int Network::hostService()
     {
         /* Wait up to 1000 milliseconds for an event. */
         while (enet_host_service (server, &event, 1000) > 0)
         {
             switch (event.type)
             {
-            case ENET_EVENT_TYPE_NONE:
-                printf ("%s disconnected.\n", (void*)event.peer -> data);
-                return 0;
             case ENET_EVENT_TYPE_CONNECT:
-                printf ("A new client connected from %x:%u.\n",
-                        event.peer -> address.host,
-                        event.peer -> address.port);
+                sprintf ((char*)stream, "A new client connected from %x:%u.\n",
+                         event.peer -> address.host,
+                         event.peer -> address.port);
+                cout << stream << endl;
                 /* Store any relevant client information here. */
-                event.peer -> data = (void*)"Client information";
+                event.peer -> data = (void*)"Client";
+                peerClient = event.peer;
+
                 // break;
-                return 1;
+                return 0;
             case ENET_EVENT_TYPE_RECEIVE:
-                printf ("A packet of length %u containing %s was received from %s on channel %u.\n",
-                        event.packet -> dataLength,
-                        event.packet -> data,
-                        event.peer -> data,
-                        event.channelID);
+                //sprintf ((char*)stream, "A packet of length %u containing %s was received from %s on channel %u.\n",
+                sprintf ((char*)stream, "len %u str %s from %s on channel %u.\n",
+                         event.packet -> dataLength,
+                         event.packet -> data,
+                         event.peer -> data,
+                         event.channelID);
+                cout << stream << endl;
                 /* Clean up the packet now that we're done using it. */
                 enet_packet_destroy (event.packet);
-                return 2;
+                return 1;
 
             case ENET_EVENT_TYPE_DISCONNECT:
-                printf ("%s disconnected.\n", (void*)event.peer -> data);
+                sprintf ((char*)stream, "%s disconnected.\n", (void*)event.peer -> data);
+                cout << stream << endl;
                 /* Reset the peer's client information. */
                 event.peer -> data = NULL;
-                return 3;
+                return 2;
             }
         }
-
+        return 3;
     }
-    else
-    {
 
-        // Client Session
+    int Network::hostServiceOnClient()
+    {
         /* Wait up to 1000 milliseconds for an event. */
         while (enet_host_service (client, &event, 1000) > 0)
         {
             switch (event.type)
             {
-            case ENET_EVENT_TYPE_NONE:
-                printf ("%s disconnected.\n", (void*)event.peer -> data);
-                return 0;
             case ENET_EVENT_TYPE_CONNECT:
-                printf ("A new client connected from %x:%u.\n",
-                        event.peer -> address.host,
-                        event.peer -> address.port);
+                sprintf ((char*)stream, "Tohle se nikdy nestane - A new client connected from %x:%u.\n",
+                         event.peer -> address.host,
+                         event.peer -> address.port);
+                cout << stream << endl;
                 /* Store any relevant client information here. */
                 event.peer -> data = (void*)"Client information";
-                return 1;
+                // peerClient = event.peer;
+                // break;
+                return 0;
             case ENET_EVENT_TYPE_RECEIVE:
-                printf ("A packet of length %u containing %s was received from %s on channel %u.\n",
-                        event.packet -> dataLength,
-                        event.packet -> data,
-                        event.peer -> data,
-                        event.channelID);
+                sprintf ((char*)stream, "len %u str %s from %s on channel %u.\n",
+                         event.packet -> dataLength,
+                         event.packet -> data,
+                         event.peer -> data,
+                         event.channelID);
+                cout << stream << endl;
                 /* Clean up the packet now that we're done using it. */
                 enet_packet_destroy (event.packet);
-                return 2;
+                return 1;
 
             case ENET_EVENT_TYPE_DISCONNECT:
-                printf ("%s disconnected.\n", (void*)event.peer -> data);
+                sprintf ((char*)stream, "%s disconnected.\n", (void*)event.peer -> data);
+                cout << stream << endl;
                 /* Reset the peer's client information. */
                 event.peer -> data = NULL;
-                return 3;
+                return 2;
             }
         }
+        return 3;
     }
 
-    return 0;
-}
+    int Network::sendPacketToPeer(string strPacket)
+    {
+        /* Create a reliable packet of size 7 containing "packet\0" */
+//    ENetPacket * packet = enet_packet_create ("packet",
+//                          strlen ("packet") + 1,
+//                          ENET_PACKET_FLAG_RELIABLE);
 
+        ENetPacket * packet = enet_packet_create (strPacket.c_str(),
+                              strPacket.length() + 1,
+                              ENET_PACKET_FLAG_RELIABLE);
+        // peer.incomingPeerID
+        /* Extend the packet so and append the string "foo", so it now */
+        /* contains "packetfoo\0"                                      */
+        //enet_packet_resize (packet, strlen ("packetfoo") + 1);
+        //strcpy (reinterpret_cast<char*>(&packet->data [strlen ("packet")]), "foo");
+        /* Send the packet to the peer over channel id 0. */
+        /* One could also broadcast the packet by         */
+        /* enet_host_broadcast (host, 0, packet);         */
+        enet_peer_send (peerServer, 0, packet);
+        return 0;
+    }
 
+    int Network::sendPacketToPeerClient(string strPacket)
+    {
+        /* Create a reliable packet of size 7 containing "packet\0" */
+//    ENetPacket * packet = enet_packet_create ("packet",
+//                          strlen ("packet") + 1,
+//                          ENET_PACKET_FLAG_RELIABLE);
 
-
-
-
+        ENetPacket * packet = enet_packet_create (strPacket.c_str(),
+                              strPacket.length() + 1,
+                              ENET_PACKET_FLAG_RELIABLE);
+        // peer.incomingPeerID
+        /* Extend the packet so and append the string "foo", so it now */
+        /* contains "packetfoo\0"                                      */
+        //enet_packet_resize (packet, strlen ("packetfoo") + 1);
+        //strcpy (reinterpret_cast<char*>(&packet->data [strlen ("packet")]), "foo");
+        /* Send the packet to the peer over channel id 0. */
+        /* One could also broadcast the packet by         */
+        /* enet_host_broadcast (host, 0, packet);         */
+        enet_peer_send (peerClient, 0, packet);
+        return 0;
+    }

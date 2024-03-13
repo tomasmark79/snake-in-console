@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <cstdint>
 #include "enet\enet.h"
 
 using std::cout;
@@ -14,8 +15,11 @@ class Network
     bool    isServerActive;
 
     ENetHost*   server;
+    ENetPeer*   peerServer;
+
     ENetHost*   client;
-    ENetPeer*   peer;
+    ENetPeer*   peerClient;
+
     ENetAddress address;
     ENetEvent   event;
 
@@ -27,6 +31,7 @@ class Network
     int amountOut;
     int outConnections;
 
+    char stream[256];
 public:
     Network() :
         isNetworkActive(false), server(nullptr), client(nullptr)
@@ -48,15 +53,22 @@ public:
         return enet_initialize();
     };
 
+    // server side
     int initServer();
-
-    int initClient();
-
-    int connectToHost();
-
-    int sendPacketToHost();
-
     int hostService();
+
+    // client side
+    int initClient();
+    int hostServiceOnClient();
+
+
+    int listenForNewClient();
+
+    int connectToServer();
+
+    // independent
+    int sendPacketToPeer(string strPacket);
+    int sendPacketToPeerClient(string strPacket);
 
     string getHostName() const
     {

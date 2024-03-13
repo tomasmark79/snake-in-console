@@ -77,8 +77,8 @@ int main()
     playerNames[1] = "Snake 2";
     playerNames[2] = "Snake 3";
     playerNames[3] = "Snake 4";
-    int fieldWidth      = 80;
-    int fieldHeight     = 35;
+    int fieldWidth      = 50;
+    int fieldHeight     = 25;
     int fruitEmptiness  = 3.5;  // more is less fruit
 
     int networkPlayers  = 0;
@@ -105,11 +105,12 @@ int main()
             net.initENet();
             net.initServer();
 
-            cout << endl << "Waiting for other players 5 sec..." << endl;
+            cout << endl << "Waiting for other players ..." << endl;
             const time_t startTime = time(nullptr);
-            while (time(nullptr) - startTime < 10)
+            while (time(nullptr) - startTime < 5)
             {
-                if (net.hostService() == 1)
+                //! Server listen clients
+                if (net.listenForNewClient() == 0)
                     networkPlayers++;
             }
             std::cout << "Connected " << networkPlayers << " players." << endl;
@@ -134,11 +135,13 @@ int main()
             net.initENet();
             net.initClient();
 
-            cout << endl << "Connecting to host ..." << endl;
+            cout << endl << "Connecting to server ..." << endl;
             const time_t startTime = time(nullptr);
             while (time(nullptr) - startTime < 20)
             {
-                if (net.connectToHost() == 0)
+                //! Client is connecting to server
+                //! 0 = success
+                if (net.connectToServer() == 0)
                     break;
             }
             cout << "Connected to host " << net.getHostName() << ":" << net.getPort() << "." << endl;
