@@ -108,6 +108,8 @@ void Process::mainLoop()
 //
 //        }
 
+
+
         int playerInput[4] = {-1,-1,-1,-1};
         int keyboardCode = keyboard.getMyKeyboardCode();
 
@@ -124,10 +126,19 @@ void Process::mainLoop()
         // overload keyboard movement command if multiplayer going on
         if (net.getIsServerActive())
         {
+            int rec = net.receivePacketFromClient();
+            playerInput[1] = rec;
+            cout << rec << endl;
+            // send direction to client snake 2
+            // int a = net.sendPacketToClient(playerInput[0]);
 
         }
         else
         {
+            int rec = net.receivePacketFromServer();
+            cout << rec << endl;
+            // send direction to server snake 2
+            int a = net.sendPacketToServer(playerInput[0]);
 
         }
 

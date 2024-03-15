@@ -76,16 +76,16 @@ public:
     int clientIsConnectingServer();
 
     int sendPacketToClient(int value);
-    int sendPacketToClient(string strPacket);
-    int sendPacketToClient(vector<int> serialized);
-    vector<int> receivePacketFromClient();
+//    int sendPacketToClient(string strPacket);
+//    int sendPacketToClient(vector<int> serialized);
+//    vector<int> receivePacketFromClient();
+    int receivePacketFromServer();
 
     int sendPacketToServer(int value);
-    int sendPacketToServer(string strPacket);
-    int sendPacketToServer(vector<int> serialized);
-    vector<int> receivePacketFromServer();
-
-    int sendPacketToPeerClient(string strPacket);
+//    int sendPacketToServer(string strPacket);
+//    int sendPacketToServer(vector<int> serialized);
+//    vector<int> receivePacketFromServer();
+    int receivePacketFromClient();
 
     string getHostName() const
     {
