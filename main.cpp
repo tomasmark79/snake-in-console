@@ -4,7 +4,7 @@
 //
 #include "Process.h"
 #include "Graphic.h"
-#include "Network.h"
+#include "Network.h" // https://github.com/tomasmark79/server-client
 #include <cctype> // tolower
 #include <iostream>
 #include <random>
@@ -162,8 +162,3 @@ int main()
     return 0;
 
 }
-
-
-
-
-
