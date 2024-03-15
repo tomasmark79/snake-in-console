@@ -126,19 +126,23 @@ void Process::mainLoop()
         // overload keyboard movement command if multiplayer going on
         if (net.getIsServerActive())
         {
-            int rec = net.receivePacketFromClient();
-            playerInput[1] = rec;
-            cout << rec << endl;
-            // send direction to client snake 2
+            vector<int> packetContent;
+            packetContent = net.receivePacketFromClient();
+//            cout << "size: " << packetContent.size();
+//            int command, reserved;
+//            deserialize(packetContent, command, playerInput[0], reserved);
+            //cout << "command: " << command << endl;
+            //cout << std::hex << "direction: " << playerInput[0] << endl;
+
+            // send paket to client snake 2
             // int a = net.sendPacketToClient(playerInput[0]);
 
         }
         else
         {
             int rec = net.receivePacketFromServer();
-            cout << rec << endl;
-            // send direction to server snake 2
-            int a = net.sendPacketToServer(playerInput[0]);
+            // send paket to server snake 2
+            int a = net.sendPacketToServer(serialize(0x05, playerInput[0], 0));
 
         }
 
