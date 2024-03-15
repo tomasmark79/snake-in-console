@@ -2,12 +2,14 @@
 #include <iostream>
 #include <string>
 #include <cstdint>
+#include <vector>
 #include "enet\enet.h"
 
 using std::cout;
 using std::cerr;
 using std::endl;
 using std::string;
+using std::vector;
 
 class Network
 {
@@ -32,6 +34,15 @@ class Network
     int outConnections;
 
     char stream[256];
+
+    struct PacketCoords
+    {
+        int* x;
+        int* y;
+        int length;
+    };
+
+
 public:
     Network() :
         isNetworkActive(false), server(nullptr), client(nullptr)
@@ -55,19 +66,25 @@ public:
 
     // server side
     int initServer();
-    int hostService();
+    int serverHostService();
 
     // client side
     int initClient();
-    int hostServiceOnClient();
+    int clientHostService();
 
+    int serverIsRegisteringClient();
+    int clientIsConnectingServer();
 
-    int listenForNewClient();
+    int sendPacketToClient(int value);
+    int sendPacketToClient(string strPacket);
+    int sendPacketToClient(vector<int> serialized);
+    vector<int> receivePacketFromClient();
 
-    int connectToServer();
+    int sendPacketToServer(int value);
+    int sendPacketToServer(string strPacket);
+    int sendPacketToServer(vector<int> serialized);
+    vector<int> receivePacketFromServer();
 
-    // independent
-    int sendPacketToPeer(string strPacket);
     int sendPacketToPeerClient(string strPacket);
 
     string getHostName() const

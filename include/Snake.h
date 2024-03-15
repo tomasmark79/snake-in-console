@@ -111,6 +111,12 @@ public:
         return this->snakeCoosY.get();
     };
 
+    void setX(int index, int value)
+    {
+        this->snakeCoosX[index] = value;
+    }
+
+
     const int* getBackupX() const
     {
         return this->backupCoosX.get();

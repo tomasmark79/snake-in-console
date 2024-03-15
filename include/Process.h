@@ -20,6 +20,7 @@ using std::shared_ptr;
 using std::make_shared;
 using std::make_unique;
 using std::string;
+using std::vector;
 
 static const int SCORE_MULTIPLIER = 11;
 static const int SNAKE_SPEED = 1;
@@ -43,9 +44,29 @@ public:
             int totalPlayers,
             string* playerNames,
             Network& net
-            );
+           );
 
     ~Process();
+
+    // return copy of serialized snake coords
+    vector<int> serializeSnakeCoords(int currSnake)
+    {
+        vector<int> head{0x5};
+        vector<int> v_x{};
+        vector<int> v_y{};
+        for (int i = 0; i < snakes[currSnake]->getLength(); i++)
+        {
+            v_x.push_back(snakes[currSnake]->getX()[i]);
+            v_y.push_back(snakes[currSnake]->getY()[i]);
+        }
+        vector<int> serialized{};
+        serialized.reserve(head.size() + v_x.size() + v_y.size());
+        serialized.insert(serialized.end(), head.begin(), head.end());
+        serialized.insert(serialized.end(), v_x.begin(), v_x.end());
+        serialized.insert(serialized.end(), v_y.begin(), v_y.end());
+        return serialized;
+    }
+
     void mainLoop();
     void checkSnakeConflicts(int currSnake);
 

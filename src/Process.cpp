@@ -54,45 +54,59 @@ void Process::mainLoop()
         std::chrono::time_point<std::chrono::system_clock> end_time = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> elapsed_time = (end_time - start_time) / 1000;
 
-        //! Server instance has only one player physically
-        //! Server is requiring coords of clients (foreign snakes)
-        //! Snakes[0] = Server standalone player
-        //! Snakes[1] = Client virtual player
-        //! Snakes[2] = Client virtual player
-        //! Snakes[3] = Client virtual player
+//        //! Server instance has only one player physically
+//        //! Server is requiring coords of clients (foreign snakes)
+//        //! Snakes[0] = Server standalone player
+//        //! Snakes[1] = Client virtual player
+//        //! Snakes[2] = Client virtual player
+//        //! Snakes[3] = Client virtual player
+//
+//        //! Client instance has only one player physically
+//        //! Client has to send current coords to the server
+//        //! Snakes[0] = Client player
 
-        //! Client instance has only one player physically
-        //! Client has to send current coords to the server
-        //! Snakes[0] = Client player
-
-        if (net.getIsServerActive())
-        {
-
-            // Server does
-            net.hostService();
-            net.sendPacketToPeerClient
-            (
-                "Server Snake X:"
-                + std::to_string(snakes[0]->getXHead())
-                + " Y: " + std::to_string(snakes[0]->getYHead())
-                + " Len: " + std::to_string(snakes[0]->getLength())
-            );
-        }
-        else
-        {
-            // Client does
-            // For send must be called hostservice too
-            net.hostServiceOnClient();
-            net.sendPacketToPeer
-            (
-                "Client Snake X:"
-                + std::to_string(snakes[0]->getXHead())
-                + " Y: " + std::to_string(snakes[0]->getYHead())
-                + " Len: " + std::to_string(snakes[0]->getLength())
-            );
-
-        }
-
+//        if (net.getIsServerActive())
+//        {
+//
+//            // Server does
+//            // serverHostService must be callled everytime
+//
+//            if (net.serverHostService() != 1 /* if not disconnected */)
+//            {
+//                net.sendPacketToClient(serializeSnakeCoords(0));
+////                net.sendPacketToPeerClient
+////                (
+////                    "Server Snake X:"
+////                    + std::to_string(snakes[0]->getXHead())
+////                    + " Y: " + std::to_string(snakes[0]->getYHead())
+////                    + " Len: " + std::to_string(snakes[0]->getLength())
+////                );
+//            }
+//        }
+//        else
+//        {
+//            // Client does
+//            vector<int> temp;
+//            temp = net.receivePacketFromServer();
+//
+//
+//
+//
+//            // clientHostService must be callled everytime
+////            if (net.clientHostService() != 1 /* if not disconnected */)
+////            {
+////                net.sendPacketToServer(serializeSnakeCoords(0));
+////                vector<int> temp;
+////                temp = net.receivePacketFromServer();
+////                net.sendPacketToServer
+////                (
+////                    "Client Snake X:"
+////                    + std::to_string(snakes[0]->getXHead())
+////                    + " Y: " + std::to_string(snakes[0]->getYHead())
+////                    + " Len: " + std::to_string(snakes[0]->getLength())
+////                );
+//
+//        }
 
         int playerInput[4] = {-1,-1,-1,-1};
         int keyboardCode = keyboard.getMyKeyboardCode();
@@ -106,6 +120,16 @@ void Process::mainLoop()
             playerInput[2] = keyboardCode - 30;
         else if (keyboardCode >= 40 && keyboardCode <=43)
             playerInput[3] = keyboardCode - 40;
+
+        // overload keyboard movement command if multiplayer going on
+        if (net.getIsServerActive())
+        {
+
+        }
+        else
+        {
+
+        }
 
         // clear
         graphic->clearVideoBuffer();
@@ -143,13 +167,13 @@ void Process::mainLoop()
 
             this->checkSnakeConflicts(currSnake);
 
-            playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
-            playerStats[currSnake] = "Player with Snake "
-                                     + players[currSnake]->getPlayerName()
-                                     + " Points: " + std::to_string(playerPoints[currSnake])
-                                     + (snakes[currSnake]->getIsDead()
-                                        ? " was killed by " + snakes[currSnake]->getDeadDescripion()
-                                        : " lives");
+//            playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
+//            playerStats[currSnake] = "Player with Snake "
+//                                     + players[currSnake]->getPlayerName()
+//                                     + " Points: " + std::to_string(playerPoints[currSnake])
+//                                     + (snakes[currSnake]->getIsDead()
+//                                        ? " was killed by " + snakes[currSnake]->getDeadDescripion()
+//                                        : " lives");
 
             // TODO (tomas#1#): If all snakes Die, stop time
 
@@ -158,12 +182,16 @@ void Process::mainLoop()
         graphic->redrawVideoBuffer();
 
         // print stats
-        for (int i = 0; i < 4; i++)
-            graphic->coutVCentered(playerStats[i]);
-        graphic->coutVCentered("Duration: " +
-                               std::to_string((int)elapsed_time.count()) + "s");
-        graphic->coutVCentered("(H)elp | (R)estart | e(X)it");
+        //for (int i = 0; i < 4; i++)
+        //graphic->coutVCentered(playerStats[i]);
+        //graphic->coutVCentered("Duration: " +
+        //std::to_string((int)elapsed_time.count()) + "s");
+        //graphic->coutVCentered("(H)elp | (R)estart | e(X)it");
 
+        if (net.getIsServerActive())
+            graphic->coutVCentered("Server Session");
+        else
+            graphic->coutVCentered("Client Session");
 
         // all players dead
         if (totalDeadPlayers == totalPlayers)

@@ -110,11 +110,10 @@ int main()
             while (time(nullptr) - startTime < 20)
             {
                 //! Server listen clients
-                if (net.listenForNewClient() == 0)
+                if (net.serverIsRegisteringClient() == 0)
                     {
-                        // Now only one client
                         networkPlayers++;
-                        break;
+                        break; // Now only one client
                     }
             }
             std::cout << "Connected " << networkPlayers << " players." << endl;
@@ -145,7 +144,7 @@ int main()
             {
                 //! Client is connecting to server
                 //! 0 = success
-                if (net.connectToServer() == 0)
+                if (net.clientIsConnectingServer() == 0)
                     break;
             }
             cout << "Connected to host " << net.getHostName() << ":" << net.getPort() << "." << endl;
