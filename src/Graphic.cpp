@@ -207,5 +207,5 @@ string getAppBanner()
         "Copyright (c) 2024 Tomas Mark\n"
         "tomas@digitalspace.name\n"
         "Enjoy this example of OOP " + cpp.getCppV() + " code!\n"
-        "build v0.0.3\n";
+        "build v0.0.4\n";
 }

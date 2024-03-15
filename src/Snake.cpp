@@ -6,11 +6,11 @@
 
 Snake::Snake(int id, int stepDivider, int totalW, int totalH, int spawnX, int spawnY):
     totalW(totalW), totalH(totalH),
-    snakeCoosX(std::make_unique <int[]> (totalW*totalH)),
-    snakeCoosY(std::make_unique <int[]> (totalW*totalH)),
-    backupCoosX(std::make_unique <int[]> (totalW*totalH)),
-    backupCoosY(std::make_unique <int[]> (totalW*totalH)),
-    id(id), stepDivider(stepDivider), length(0), direction(/*(rand() % 4)*/3), isDead(false), deadCode(0)
+    snakeCoosX  (std::make_unique <int[]> (totalW*totalH)),
+    snakeCoosY  (std::make_unique <int[]> (totalW*totalH)),
+    backupCoosX (std::make_unique <int[]> (totalW*totalH)),
+    backupCoosY (std::make_unique <int[]> (totalW*totalH)),
+    id(id), stepDivider(stepDivider), length(0), direction((rand() % 4) /*3*/), isDead(false), deadCode(0)
 {
     // snake baby will born here
     snakeCoosX[0] = spawnX;
