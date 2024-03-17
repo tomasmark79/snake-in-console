@@ -5,14 +5,10 @@
 #include <exception>
 #include "Graphic.h"
 #include <iostream>
-// #include <windows.h> //SetConsoleCursorPosition
+#include <windows.h> //SetConsoleCursorPosition
 #include <limits>
 #include <Cpp.h>
 #include <sstream>
-
-using std::cout;
-using std::endl;
-using std::string;
 
 Graphic::Graphic(int totalW, int totalH)
     :totalW(totalW), totalH(totalH),
@@ -35,20 +31,20 @@ Graphic::~Graphic()
 
 void Graphic::clearScreen() const
 {
-    //system("cls");
+    system("cls");
 }
 
 void Graphic::clearVideoBuffer() const
 {
-//    SetConsoleCursorPosition(
-//        GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
+    SetConsoleCursorPosition(
+        GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
     for (int i = 0; i < totalH; i++)
     {
         for (int j = 0; j < totalW; j++)
         {
             this->videoBuffer[i][j] = ' ';
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 }
 
@@ -99,64 +95,64 @@ void Graphic::addFruitToVideoBuffer(const int* x, const int* y, int totalFruits)
 
 void Graphic::redrawVideoBuffer() const
 {
-//    SetConsoleCursorPosition(
-//        GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
+    SetConsoleCursorPosition(
+        GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
     for (int y = 0; y < totalH; y++)
     {
         for (int x = 0; x < totalW; x++)
         {
-            cout << this->videoBuffer[y][x];
+            std::cout << this->videoBuffer[y][x];
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 }
 
 void Graphic::Cout(std::string msg) const
 {
-    cout << msg << endl;
+    std::cout << msg << std::endl;
 }
 
-void Graphic::coutVCentered(string text) const
+void Graphic::coutVCentered(std::string text) const
 {
-//    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-//    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
-//    GetConsoleScreenBufferInfo(consoleHandle, &consoleInfo);
-//    short currentRow = consoleInfo.dwCursorPosition.Y;
-//
-//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),COORD
-//    {
-//        (short)( (totalW / 2) - (text.length() / 2) ),
-//        currentRow
-//    });
-//
-//    // color == 0 ? (cout << text << endl) : (cout << dye::aqua_on_yellow(text) << endl);
-//    cout << text << endl;
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    GetConsoleScreenBufferInfo(consoleHandle, &consoleInfo);
+    short currentRow = consoleInfo.dwCursorPosition.Y;
+
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),COORD
+    {
+        (short)( (totalW / 2) - (text.length() / 2) ),
+        currentRow
+    });
+
+    // color == 0 ? (cout << text << endl) : (cout << dye::aqua_on_yellow(text) << endl);
+    std::cout << text << std::endl;
 
 }
 
-void Graphic::coutVCAWCoo(short row, string text) const
+void Graphic::coutVCAWCoo(short row, std::string text) const
 {
-//    SetConsoleCursorPosition(
-//        GetStdHandle(STD_OUTPUT_HANDLE),
-//        COORD
-//    {
-//        (short)( (totalW / 2) - (text.length() / 2) ),
-//        row
-//    }
-//    );
-//    cout << text << endl;
+    SetConsoleCursorPosition(
+        GetStdHandle(STD_OUTPUT_HANDLE),
+        COORD
+    {
+        (short)( (totalW / 2) - (text.length() / 2) ),
+        row
+    }
+    );
+    std::cout << text << std::endl;
 }
 
-void Graphic::coutVerticalCenteredMultilineString(int startAtRow, string multilineString) const
+void Graphic::coutVerticalCenteredMultilineString(int startAtRow, std::string multilineString) const
 {
-//    std::istringstream iss(multilineString);
-//    string line;
-//    while (std::getline(iss, line))
-//    {
-//        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD
-//        { (short)( (totalW / 2) - (line.length() / 2) ), static_cast<short>(startAtRow++) } );
-//        cout << line << endl;
-//    }
+    std::istringstream iss(multilineString);
+    std::string line;
+    while (std::getline(iss, line))
+    {
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD
+        { (short)( (totalW / 2) - (line.length() / 2) ), static_cast<short>(startAtRow++) } );
+        std::cout << line << std::endl;
+    }
 }
 
 void Graphic::coutHelp() const
@@ -183,7 +179,7 @@ void Graphic::coutGameOver() const
     this->clearScreen();
 }
 
-string getGameOverBanner()
+std::string getGameOverBanner()
 {
     return
         "_____ _____ _____ _____    _____ _____ _____ _____\n"
@@ -192,7 +188,7 @@ string getGameOverBanner()
         "|_____|__|__|_|_|_|_____|  |_____|\\___/|_____|__|__|\n";
 }
 
-string getAppBanner()
+std::string getAppBanner()
 {
     // 11 rows
     Cpp cpp;

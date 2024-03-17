@@ -6,8 +6,8 @@
 
 Fruit::Fruit(double fruitEmptiness, int totalW, int totalH)
     :totalW(totalW), totalH(totalH),
-     fruitXArr(make_unique <int[]> (totalW*totalH)), // contain coords in array of int which mean ammount of fruits
-     fruitYArr(make_unique <int[]> (totalW*totalH)), // contain coords in array of int which mean ammount of fruits
+     fruitXArr(std::make_unique <int[]> (totalW*totalH)), // contain coords in array of int which mean ammount of fruits
+     fruitYArr(std::make_unique <int[]> (totalW*totalH)), // contain coords in array of int which mean ammount of fruits
      totalFruits(0)
 {
     int smartAlocMemory = totalW*totalH/fruitEmptiness;

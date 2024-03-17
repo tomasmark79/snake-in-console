@@ -6,10 +6,8 @@
 #include "Field.h"
 #include <string>
 
-using std::string;
-
-string getAppBanner();
-string getGameOverBanner();
+std::string getAppBanner();
+std::string getGameOverBanner();
 
 class Graphic
 {
@@ -43,11 +41,11 @@ public:
     );
     void redrawVideoBuffer() const;
 
-    void Cout(string msg) const;
+    void Cout(std::string msg) const;
 
-    void coutVCentered(string text) const;
-    void coutVCAWCoo(short row, string text) const;
-    void coutVerticalCenteredMultilineString(int startAtRow, string multilineString) const;
+    void coutVCentered(std::string text) const;
+    void coutVCAWCoo(short row, std::string text) const;
+    void coutVerticalCenteredMultilineString(int startAtRow, std::string multilineString) const;
 
     void coutHelp() const;
     void coutGameOver() const;

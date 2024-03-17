@@ -4,22 +4,21 @@
 //
 #pragma once
 #include <string>
-using std::string;
 
 class Player
 {
     int playerId;
-    string playerName;
+    std::string playerName;
 public:
-    Player(int playerId, string playerName)
+    Player(int playerId, std::string playerName)
         : playerId(playerId), playerName(playerName) {};
 
-    void setPlayerName(string playerName)
+    void setPlayerName(std::string playerName)
     {
         this->playerName = playerName;
     };
 
-    string getPlayerName() const
+    std::string getPlayerName() const
     {
         return this->playerName;
     };

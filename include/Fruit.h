@@ -6,15 +6,12 @@
 #include "Field.h"
 #include <memory>
 
-using std::shared_ptr;
-using std::make_unique;
-
 class Fruit
 {
     int totalW;
     int totalH;
-    shared_ptr<int[]> fruitXArr;
-    shared_ptr<int[]> fruitYArr;
+    std::shared_ptr<int[]> fruitXArr;
+    std::shared_ptr<int[]> fruitYArr;
     int totalFruits;
 public:
     Fruit(double fruitEmptiness, int totalW, int totalH);

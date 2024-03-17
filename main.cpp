@@ -58,7 +58,7 @@ std::string getStringAnswerFromPlayer(std::string_view question, int min, int ma
     return answer;
 }
 
-bool isAnswerYes(string question)
+bool isAnswerYes(std::string question)
 {
     if (std::tolower((question.substr(0, 3) == "yes")) ||
             std::tolower((question.substr(0, 2) == "ye")) ||
@@ -85,12 +85,12 @@ int main()
 
     // Network net; // isNetworkActive false by default
 
-    std::string isUDPMultiplayer = getStringAnswerFromPlayer("Do you want to play multiplayer game over network? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
+    std::string isUDPMultiplayer = getStringAnswerFromPlayer("Do you want to play multiplayer over network? y/n: ", 1, 3, PLAYER_ANSWER_TRESHHOLD);
     if (isAnswerYes(isUDPMultiplayer))
     {
         // Network Multiplayer
         std::cout << "Network multiplayer: enabled" << std::endl;
-        string isThisGameSessionServer = getStringAnswerFromPlayer("Do you want to HOST multiplayer game for other players? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
+        std::string isThisGameSessionServer = getStringAnswerFromPlayer("Do you want to HOST network game? y/n: ", 1, 3, PLAYER_ANSWER_TRESHHOLD);
         if (isAnswerYes(isThisGameSessionServer))
         {
             // Server Session
@@ -106,19 +106,19 @@ int main()
     }
     else
     {
-        std::string isHotSeatMultiplayer = getStringAnswerFromPlayer("Do you want to play HOT SEAT multiplayer game at one keyboard? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
+        std::string isHotSeatMultiplayer = getStringAnswerFromPlayer("Do you want to play HOT-SEAT game? (up to 2 players) y/n: ", 1, 3, PLAYER_ANSWER_TRESHHOLD);
         // Single player or hot seat
         if (isAnswerYes(isHotSeatMultiplayer))
         {
-            std::string isRequestedCustomProperties = getStringAnswerFromPlayer("Do you want to specify size of snake area and other settings? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
+            std::string isRequestedCustomProperties = getStringAnswerFromPlayer("Do you want to modify default settings? y/n: ", 1, 3, PLAYER_ANSWER_TRESHHOLD);
             if (isAnswerYes(isRequestedCustomProperties))
             {
                 // Custom properties to set by user
                 totalPlayers = 1;
                 playerNames[0] = getStringAnswerFromPlayer("Enter name of your Snake ? ", 2, 20, PLAYER_ANSWER_TRESHHOLD);
-                fieldWidth = getNumericAnswerFromPlayer<int>("Enter width of space area. (min 15 recomended 80) ? ", 20, 360, PLAYER_ANSWER_TRESHHOLD);
-                fieldHeight = getNumericAnswerFromPlayer<int>("Enter height of space area. (min 10 recomended 35) ? ", 10, 360, PLAYER_ANSWER_TRESHHOLD);
-                fruitEmptiness = getNumericAnswerFromPlayer<double>("Enter fruit emptiness (min 0.1 recomended 3.5) ? ", 0.1, 10, PLAYER_ANSWER_TRESHHOLD);
+                fieldWidth = getNumericAnswerFromPlayer<int>("Enter width of space area. (min 15 recomended 80) ?: ", 20, 360, PLAYER_ANSWER_TRESHHOLD);
+                fieldHeight = getNumericAnswerFromPlayer<int>("Enter height of space area. (min 10 recomended 35) ?: ", 10, 360, PLAYER_ANSWER_TRESHHOLD);
+                fruitEmptiness = getNumericAnswerFromPlayer<double>("Enter fruit emptiness (min 0.1, max 10) ?: ", 0.1, 10, PLAYER_ANSWER_TRESHHOLD);
             }
             else
             {
@@ -127,9 +127,9 @@ int main()
             }
 
             // Hot Seat Session
-            totalPlayers = getNumericAnswerFromPlayer<int>("Enter number of player. 1-4 ? ", 1, 4, PLAYER_ANSWER_TRESHHOLD);
+            totalPlayers = getNumericAnswerFromPlayer<int>("Enter number of player. 1-4 ?: ", 1, 4, PLAYER_ANSWER_TRESHHOLD);
             for (int playerId = 0; playerId < totalPlayers; playerId++)
-                playerNames[playerId] = getStringAnswerFromPlayer("Enter name of " + playerNames[playerId] + " ?", 2, 20, PLAYER_ANSWER_TRESHHOLD);
+                playerNames[playerId] = getStringAnswerFromPlayer("Enter name of " + playerNames[playerId] + " ?: ", 2, 20, PLAYER_ANSWER_TRESHHOLD);
 
         }
         else
@@ -141,9 +141,9 @@ int main()
                 // Custom properties to set by user
                 totalPlayers = 1;
                 playerNames[0] = getStringAnswerFromPlayer("Enter name of your Snake ? ", 2, 20, PLAYER_ANSWER_TRESHHOLD);
-                fieldWidth = getNumericAnswerFromPlayer<int>("Enter width of space area. (min 15 recomended 80) ? ", 20, 360, PLAYER_ANSWER_TRESHHOLD);
-                fieldHeight = getNumericAnswerFromPlayer<int>("Enter height of space area. (min 10 recomended 35) ? ", 10, 360, PLAYER_ANSWER_TRESHHOLD);
-                fruitEmptiness = getNumericAnswerFromPlayer<double>("Enter fruit emptiness (min 0.1 recomended 3.5) ? ", 0.1, 10, PLAYER_ANSWER_TRESHHOLD);
+                fieldWidth = getNumericAnswerFromPlayer<int>("Enter width of space area. (min 15 recomended 80) ?: ", 20, 360, PLAYER_ANSWER_TRESHHOLD);
+                fieldHeight = getNumericAnswerFromPlayer<int>("Enter height of space area. (min 10 recomended 35) ?: ", 10, 360, PLAYER_ANSWER_TRESHHOLD);
+                fruitEmptiness = getNumericAnswerFromPlayer<double>("Enter fruit emptiness (min 0.1, max 10) ?: ", 0.1, 10, PLAYER_ANSWER_TRESHHOLD);
             }
             else
             {

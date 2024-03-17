@@ -9,21 +9,21 @@
 #include <exception>
 
 Game::Game(int width, int height, double fruitEmptiness,
-                 int totalPlayers, string* playerNames/*, Network& net*/)
+                 int totalPlayers, std::string* playerNames/*, Network& net*/)
     : totalPlayers(totalPlayers),
       totalDeadPlayers(0),
-      field(make_shared    <Field>   (width, height)),
-      fruit(make_unique    <Fruit>   (fruitEmptiness, width, height)),
-      graphic(make_unique  <Graphic> (width, height)),
-      players(make_unique  <unique_ptr <Player> []> (totalPlayers + 1)),
-      snakes(make_unique   <shared_ptr <Snake>  []> (totalPlayers + 1)),
+      field(std::make_shared    <Field>   (width, height)),
+      fruit(std::make_unique    <Fruit>   (fruitEmptiness, width, height)),
+      graphic(std::make_unique  <Graphic> (width, height)),
+      players(std::make_unique  <std::unique_ptr <Player> []> (totalPlayers + 1)),
+      snakes(std::make_unique   <std::shared_ptr <Snake>  []> (totalPlayers + 1)),
       isGameGoingOn(true) /*,net(net)*/
 {
     // spawn player's id and names
     for (int playerId = 0; playerId < totalPlayers; playerId++)
     {
-        players[playerId] = make_unique<Player>(playerId, playerNames[playerId]);
-        snakes[playerId] = make_unique<Snake>(playerId, SNAKE_SPEED, width, height, width/2, height/2);
+        players[playerId] = std::make_unique<Player>(playerId, playerNames[playerId]);
+        snakes[playerId] = std::make_unique<Snake>(playerId, SNAKE_SPEED, width, height, width/2, height/2);
     }
 
     this->mainLoop();
@@ -99,7 +99,7 @@ void Game::mainLoop()
             {
                 snakes[currSnake]->growUp();
                 fruit->refreshFruit(eattenFruitElement-1);
-                // Beep(5300, 10);
+                Beep(5300, 10);
             }
 
             this->checkSnakeConflicts(currSnake);
@@ -114,7 +114,6 @@ void Game::mainLoop()
 
 
         } // go through snakes end
-
         graphic->redrawVideoBuffer();
 
         // print stats

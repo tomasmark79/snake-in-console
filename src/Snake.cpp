@@ -5,7 +5,6 @@
 #include <memory>
 #include "Snake.h"
 
-
 Snake::Snake(int id, int stepDivider, int totalW, int totalH, int spawnX, int spawnY):
     totalW(totalW), totalH(totalH),
     snakeCoosX  (std::make_unique <int[]> (totalW*totalH)),
