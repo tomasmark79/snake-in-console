@@ -21,8 +21,8 @@
 //SOFTWARE.
 
 #pragma once
-#include <windows.h>
-BOOL WINAPI CtrlHandler(DWORD fdwCtrlType);
+//#include <windows.h>
+//BOOL WINAPI CtrlHandler(DWORD fdwCtrlType);
 class Keyboard
 {
     enum playerControlLayout1

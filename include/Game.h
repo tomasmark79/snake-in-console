@@ -25,7 +25,7 @@ using std::vector;
 static const int SCORE_MULTIPLIER = 11;
 static const int SNAKE_SPEED = 1;
 
-class Process
+class Game
 {
     int totalPlayers;
     int totalDeadPlayers;
@@ -38,14 +38,14 @@ class Process
     // Network& net;
 
 public:
-    Process(int width,
+    Game(int width,
             int height,
             double fruitEmptiness,
             int totalPlayers,
             string* playerNames /*, Network& net */
            );
 
-    ~Process();
+    ~Game();
 
     void mainLoop();
     void checkSnakeConflicts(int currSnake);

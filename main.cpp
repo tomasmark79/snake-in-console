@@ -2,9 +2,9 @@
 //
 //Copyright (c) 2024 Tomas Mark
 //
-#include "Process.h"
+#include "Game.h"
 #include "Graphic.h"
-#include "Network.h" // https://github.com/tomasmark79/server-client
+// #include "Network.h" // https://github.com/tomasmark79/server-client
 #include <cctype> // tolower
 #include <iostream>
 #include <random>
@@ -81,36 +81,36 @@ int main()
     int fieldHeight     = 25;
     int fruitEmptiness  = 3.5;  // more is less fruit
 
-    int networkPlayers  = 0;
+    // int networkPlayers  = 0;
 
-    Network net; // isNetworkActive false by default
+    // Network net; // isNetworkActive false by default
 
-    string isUDPMultiplayer = getStringAnswerFromPlayer("Do you want to play multiplayer game over network? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
+    std::string isUDPMultiplayer = getStringAnswerFromPlayer("Do you want to play multiplayer game over network? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
     if (isAnswerYes(isUDPMultiplayer))
     {
         // Network Multiplayer
-        cout << "Network multiplayer: enabled" << endl;
+        std::cout << "Network multiplayer: enabled" << std::endl;
         string isThisGameSessionServer = getStringAnswerFromPlayer("Do you want to HOST multiplayer game for other players? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
         if (isAnswerYes(isThisGameSessionServer))
         {
             // Server Session
-            cout << "Server session started ... " << endl;
+            std::cout << "Server session started ... " << std::endl;
             return 0;
         }
         else
         {
             // Client Session
-            cout << "Client session started ... " << endl;
+            std::cout << "Client session started ... " << std::endl;
             return 0;
         }
     }
     else
     {
-        string isHotSeatMultiplayer = getStringAnswerFromPlayer("Do you want to play HOT SEAT multiplayer game at one keyboard? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
+        std::string isHotSeatMultiplayer = getStringAnswerFromPlayer("Do you want to play HOT SEAT multiplayer game at one keyboard? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
         // Single player or hot seat
         if (isAnswerYes(isHotSeatMultiplayer))
         {
-            string isRequestedCustomProperties = getStringAnswerFromPlayer("Do you want to specify size of snake area and other settings? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
+            std::string isRequestedCustomProperties = getStringAnswerFromPlayer("Do you want to specify size of snake area and other settings? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
             if (isAnswerYes(isRequestedCustomProperties))
             {
                 // Custom properties to set by user
@@ -135,7 +135,7 @@ int main()
         else
         {
             // Single Player Session
-            string isRequestedCustomProperties = getStringAnswerFromPlayer("Do you want to specify size of snake area and other settings? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
+            std::string isRequestedCustomProperties = getStringAnswerFromPlayer("Do you want to specify size of snake area and other settings? yes/no ?", 1, 3, PLAYER_ANSWER_TRESHHOLD);
             if (isAnswerYes(isRequestedCustomProperties))
             {
                 // Custom properties to set by user
@@ -155,7 +155,7 @@ int main()
 
     while(true)
     {
-        Process gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames/*, net*/);
+        Game gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames/*, net*/);
         if (!gameSnake.getIsGameGoingOn())
             break;
     }

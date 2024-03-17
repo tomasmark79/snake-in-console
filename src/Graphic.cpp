@@ -5,7 +5,7 @@
 #include <exception>
 #include "Graphic.h"
 #include <iostream>
-#include <windows.h> //SetConsoleCursorPosition
+// #include <windows.h> //SetConsoleCursorPosition
 #include <limits>
 #include <Cpp.h>
 #include <sstream>
@@ -35,13 +35,13 @@ Graphic::~Graphic()
 
 void Graphic::clearScreen() const
 {
-    system("cls");
+    //system("cls");
 }
 
 void Graphic::clearVideoBuffer() const
 {
-    SetConsoleCursorPosition(
-        GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
+//    SetConsoleCursorPosition(
+//        GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
     for (int i = 0; i < totalH; i++)
     {
         for (int j = 0; j < totalW; j++)
@@ -99,8 +99,8 @@ void Graphic::addFruitToVideoBuffer(const int* x, const int* y, int totalFruits)
 
 void Graphic::redrawVideoBuffer() const
 {
-    SetConsoleCursorPosition(
-        GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
+//    SetConsoleCursorPosition(
+//        GetStdHandle(STD_OUTPUT_HANDLE), COORD{ 0,0 });
     for (int y = 0; y < totalH; y++)
     {
         for (int x = 0; x < totalW; x++)
@@ -118,45 +118,45 @@ void Graphic::Cout(std::string msg) const
 
 void Graphic::coutVCentered(string text) const
 {
-    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
-    GetConsoleScreenBufferInfo(consoleHandle, &consoleInfo);
-    short currentRow = consoleInfo.dwCursorPosition.Y;
-
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),COORD
-    {
-        (short)( (totalW / 2) - (text.length() / 2) ),
-        currentRow
-    });
-
-    // color == 0 ? (cout << text << endl) : (cout << dye::aqua_on_yellow(text) << endl);
-    cout << text << endl;
+//    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+//    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+//    GetConsoleScreenBufferInfo(consoleHandle, &consoleInfo);
+//    short currentRow = consoleInfo.dwCursorPosition.Y;
+//
+//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),COORD
+//    {
+//        (short)( (totalW / 2) - (text.length() / 2) ),
+//        currentRow
+//    });
+//
+//    // color == 0 ? (cout << text << endl) : (cout << dye::aqua_on_yellow(text) << endl);
+//    cout << text << endl;
 
 }
 
 void Graphic::coutVCAWCoo(short row, string text) const
 {
-    SetConsoleCursorPosition(
-        GetStdHandle(STD_OUTPUT_HANDLE),
-        COORD
-    {
-        (short)( (totalW / 2) - (text.length() / 2) ),
-        row
-    }
-    );
-    cout << text << endl;
+//    SetConsoleCursorPosition(
+//        GetStdHandle(STD_OUTPUT_HANDLE),
+//        COORD
+//    {
+//        (short)( (totalW / 2) - (text.length() / 2) ),
+//        row
+//    }
+//    );
+//    cout << text << endl;
 }
 
 void Graphic::coutVerticalCenteredMultilineString(int startAtRow, string multilineString) const
 {
-    std::istringstream iss(multilineString);
-    string line;
-    while (std::getline(iss, line))
-    {
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD
-        { (short)( (totalW / 2) - (line.length() / 2) ), static_cast<short>(startAtRow++) } );
-        cout << line << endl;
-    }
+//    std::istringstream iss(multilineString);
+//    string line;
+//    while (std::getline(iss, line))
+//    {
+//        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD
+//        { (short)( (totalW / 2) - (line.length() / 2) ), static_cast<short>(startAtRow++) } );
+//        cout << line << endl;
+//    }
 }
 
 void Graphic::coutHelp() const

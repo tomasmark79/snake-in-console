@@ -2,13 +2,13 @@
 //
 //Copyright (c) 2024 Tomas Mark
 //
-#include "Process.h"
+#include "Game.h"
 #include <thread>   // std::this_thread::sleep_for
 #include <iomanip>  // std::setprecision
 #include <sstream>  // sstreamstring
 #include <exception>
 
-Process::Process(int width, int height, double fruitEmptiness,
+Game::Game(int width, int height, double fruitEmptiness,
                  int totalPlayers, string* playerNames/*, Network& net*/)
     : totalPlayers(totalPlayers),
       totalDeadPlayers(0),
@@ -29,7 +29,7 @@ Process::Process(int width, int height, double fruitEmptiness,
     this->mainLoop();
 }
 
-Process::~Process()
+Game::~Game()
 {
     snakes.reset();
     players.reset();
@@ -38,7 +38,7 @@ Process::~Process()
     field.reset();
 }
 
-void Process::mainLoop()
+void Game::mainLoop()
 {
     int eattenFruitElement = 0;
     int playerPoints[4] = {0,0,0,0};
@@ -99,7 +99,7 @@ void Process::mainLoop()
             {
                 snakes[currSnake]->growUp();
                 fruit->refreshFruit(eattenFruitElement-1);
-                Beep(5300, 10);
+                // Beep(5300, 10);
             }
 
             this->checkSnakeConflicts(currSnake);
@@ -157,7 +157,7 @@ void Process::mainLoop()
 //!
 //!
 // TODO (tomas#1#): Required remove returns, but mixed condition can occur
-void Process::checkSnakeConflicts(int currSnake)
+void Game::checkSnakeConflicts(int currSnake)
 {
     if (snakes[currSnake]->getIsDead())
         return;
@@ -208,7 +208,7 @@ void Process::checkSnakeConflicts(int currSnake)
     }
 }
 
-bool Process::getIsGameGoingOn() const
+bool Game::getIsGameGoingOn() const
 {
     return this->isGameGoingOn;
 }

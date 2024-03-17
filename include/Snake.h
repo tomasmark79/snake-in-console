@@ -7,12 +7,13 @@
 #include <string>
 #include <memory>
 
-using std::map;
-using std::string;
-using std::unique_ptr;
-using std::shared_ptr;
-using std::make_shared;
-using std::make_unique;
+
+//using std::map;
+//using std::string;
+//using std::unique_ptr;
+//using std::shared_ptr;
+//using std::make_shared;
+//using std::make_unique;
 
 static const short MAX_SNAKE_LENGTH = 256+1;
 
@@ -20,10 +21,10 @@ class Snake
 {
     int totalW;
     int totalH;
-    shared_ptr<int[]> snakeCoosX;
-    shared_ptr<int[]> snakeCoosY;
-    shared_ptr<int[]> backupCoosX;
-    shared_ptr<int[]> backupCoosY;
+    std::shared_ptr<int[]> snakeCoosX;
+    std::shared_ptr<int[]> snakeCoosY;
+    std::shared_ptr<int[]> backupCoosX;
+    std::shared_ptr<int[]> backupCoosY;
 
     int id;
     int stepDivider;
@@ -32,7 +33,7 @@ class Snake
     bool isDead;
     int deadCode;
 
-    const map<int, string> deadDescription
+    const std::map<int, std::string> deadDescription
     {
         {0, "is living"}, {1, "wall"}, {2, "self"}, {3, "another Snake"}
     };
@@ -68,7 +69,7 @@ public:
         return this->isDead;
     };
 
-    string getDeadDescripion() const
+    std::string getDeadDescripion() const
     {
         return this->deadDescription.at(deadCode);
     };
