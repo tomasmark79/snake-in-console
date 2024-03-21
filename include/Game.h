@@ -12,7 +12,7 @@
 #include <chrono>
 #include <string>
 #include <vector>
-// #include "Network.h"
+#include "NetworkManager.h" // https://github.com/tomasmark79/server-client
 #include <map>
 
 static const int SCORE_MULTIPLIER = 11;
@@ -28,14 +28,15 @@ class Game
     std::unique_ptr<std::unique_ptr<Player>[]> players;
     std::unique_ptr<std::shared_ptr<Snake> []> snakes;
 
-    // Network& net;
+    NetworkManager& net;
 
 public:
     Game(int width,
             int height,
             double fruitEmptiness,
             int totalPlayers,
-            std::string* playerNames /*, Network& net */
+            std::string* playerNames,
+            NetworkManager& net
            );
 
     ~Game();

@@ -9,7 +9,7 @@
 #include <exception>
 
 Game::Game(int width, int height, double fruitEmptiness,
-                 int totalPlayers, std::string* playerNames/*, Network& net*/)
+           int totalPlayers, std::string* playerNames, NetworkManager& net)
     : totalPlayers(totalPlayers),
       totalDeadPlayers(0),
       field(std::make_shared    <Field>   (width, height)),
@@ -17,7 +17,7 @@ Game::Game(int width, int height, double fruitEmptiness,
       graphic(std::make_unique  <Graphic> (width, height)),
       players(std::make_unique  <std::unique_ptr <Player> []> (totalPlayers + 1)),
       snakes(std::make_unique   <std::shared_ptr <Snake>  []> (totalPlayers + 1)),
-      isGameGoingOn(true) /*,net(net)*/
+      isGameGoingOn(true),net(net)
 {
     // spawn player's id and names
     for (int playerId = 0; playerId < totalPlayers; playerId++)
@@ -38,6 +38,14 @@ Game::~Game()
     field.reset();
 }
 
+#define DATA_RECEIVED   (int)3
+
+// [0] = direction
+// [1] = reserved
+vector<int> bufToSendtoServer = {1,0};
+vector<int> bufToSendtoClient = {1,0};
+vector<int> eraryVector;
+
 void Game::mainLoop()
 {
     int eattenFruitElement = 0;
@@ -53,10 +61,41 @@ void Game::mainLoop()
         std::chrono::time_point<std::chrono::system_clock> end_time = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> elapsed_time = (end_time - start_time) / 1000;
 
-
-
         int playerInput[4] = {-1,-1,-1,-1};
         int keyboardCode = keyboard.getMyKeyboardCode();
+
+        if (net.getIsServer())
+        {
+            // receiving data from other side
+            int status = net.serverHostService(eraryVector, 50);
+            string str;
+            if (eraryVector.size() > 0 && status == DATA_RECEIVED)
+            {
+                for (size_t i = 0; i < eraryVector.size(); i++)
+                    str += std::to_string(eraryVector[i]) + " ";
+            }
+            graphic->coutVCentered(str);
+
+            // Send vector to client
+            net.sendVectorToClient(bufToSendtoClient, bufToSendtoClient.size());
+        }
+        else
+        {
+            // receiving data from other side
+            int status = net.clientHostService(eraryVector, 50);
+            string str;
+            if (eraryVector.size() > 0 && status == DATA_RECEIVED)
+            {
+
+                for (size_t i =0; i < eraryVector.size(); i++)
+                    str += std::to_string(eraryVector[i]) + " ";
+            }
+            graphic->coutVCentered(str);
+
+            // Send vector to server
+            net.sendVectorToServer(bufToSendtoServer, bufToSendtoServer.size());
+        }
+
 
         // split keybord input to players
         if (keyboardCode >= 10 && keyboardCode <=13)
@@ -104,13 +143,13 @@ void Game::mainLoop()
 
             this->checkSnakeConflicts(currSnake);
 
-            playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
-            playerStats[currSnake] = "Player with Snake "
-                                     + players[currSnake]->getPlayerName()
-                                     + " Points: " + std::to_string(playerPoints[currSnake])
-                                     + (snakes[currSnake]->getIsDead()
-                                        ? " was killed by " + snakes[currSnake]->getDeadDescripion()
-                                        : " lives");
+//            playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
+//            playerStats[currSnake] = "Player with Snake "
+//                                     + players[currSnake]->getPlayerName()
+//                                     + " Points: " + std::to_string(playerPoints[currSnake])
+//                                     + (snakes[currSnake]->getIsDead()
+//                                        ? " was killed by " + snakes[currSnake]->getDeadDescripion()
+//                                        : " lives");
 
 
         } // go through snakes end
@@ -118,10 +157,10 @@ void Game::mainLoop()
 
         // print stats
         for (int i = 0; i < 4; i++)
-        graphic->coutVCentered(playerStats[i]);
-        graphic->coutVCentered("Duration: " +
-        std::to_string((int)elapsed_time.count()) + "s");
-        graphic->coutVCentered("(H)elp | (R)estart | e(X)it");
+            graphic->coutVCentered(playerStats[i]);
+//        graphic->coutVCentered("Duration: " +
+//                               std::to_string((int)elapsed_time.count()) + "s");
+//        graphic->coutVCentered("(H)elp | (R)estart | e(X)it");
 
         // all players dead
         if (totalDeadPlayers == totalPlayers)

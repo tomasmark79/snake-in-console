@@ -73,7 +73,7 @@ int main()
     // // // // // // // // // // // // // // // // // // // // //
     NetworkManager net;
     vector<int> eraryVector;
-
+    // // // // // // // // // // // // // // // // // // // // //
 
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -89,8 +89,6 @@ int main()
 
     // int networkPlayers  = 0;
 
-    // Network net; // isNetworkActive false by default
-
     std::string isUDPMultiplayer = getStringAnswerFromPlayer("Do you want to play multiplayer over network? y/n: ", 1, 3, PLAYER_ANSWER_TRESHHOLD);
     if (isAnswerYes(isUDPMultiplayer))
     {
@@ -101,13 +99,28 @@ int main()
         {
             // Server Session
             std::cout << "Server session started ... " << std::endl;
-            return 0;
+            net
+            .setIsServer(true)
+            .setBindHostName("192.168.79.101")
+            .setBindPort(7996)
+            .setMaxClients(4)
+            .setChannels(2)
+            .setAmountIn(0)
+            .setAmountOut(0);
+            net.initENet();
+            net.registerClients(1000, 10);
         }
         else
         {
             // Client Session
             std::cout << "Client session started ... " << std::endl;
-            return 0;
+            net
+            .setIsServer(false)
+            .setRemoteHostName("192.168.79.101")
+            .setRemotePort(7996)
+            .setOutConnections(1);
+            net.initENet();
+            net.registerServer(1000, 10);
         }
     }
     else
@@ -161,7 +174,7 @@ int main()
 
     while(true)
     {
-        Game gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames/*, net*/);
+        Game gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames, net);
         if (!gameSnake.getIsGameGoingOn())
             break;
     }
