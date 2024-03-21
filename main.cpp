@@ -4,7 +4,7 @@
 //
 #include "Game.h"
 #include "Graphic.h"
-// #include "Network.h" // https://github.com/tomasmark79/server-client
+#include "NetworkManager.h" // https://github.com/tomasmark79/server-client
 #include <cctype> // tolower
 #include <iostream>
 #include <random>
@@ -69,6 +69,12 @@ bool isAnswerYes(std::string question)
 
 int main()
 {
+
+    // // // // // // // // // // // // // // // // // // // // //
+    NetworkManager net;
+    vector<int> eraryVector;
+
+
     std::random_device rd;
     std::mt19937 gen(rd());
     std::cout << getAppBanner();

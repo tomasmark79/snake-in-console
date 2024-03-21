@@ -3,6 +3,7 @@
 //Copyright (c) 2024 Tomas Mark
 //
 #include "Fruit.h"
+#include <cstdlib>
 
 Fruit::Fruit(double fruitEmptiness, int totalW, int totalH)
     :totalW(totalW), totalH(totalH),
