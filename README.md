@@ -11,15 +11,17 @@ The Snake game is rendered using only ASCII characters.
 
 This game is not perfect. But It works!
 
-Single Player
+Network MultiPlayer
 
-https://github.com/tomasmark79/snake-in-console/assets/44719504/18b0d478-8cb9-4583-9580-33f1d8a77a2b
+https://github.com/tomasmark79/snake-in-console/assets/44719504/e8a7397a-390e-451c-8248-73bca63dce72
 
 Hot Seat
 
 https://github.com/tomasmark79/snake-in-console/assets/44719504/b0a1e7e8-10b2-4ef8-bb4e-2cd7843d9454
 
-Network MultiPlayer
+Single Player
 
-https://github.com/tomasmark79/snake-in-console/assets/44719504/e8a7397a-390e-451c-8248-73bca63dce72
+https://github.com/tomasmark79/snake-in-console/assets/44719504/18b0d478-8cb9-4583-9580-33f1d8a77a2b
+
+
 
