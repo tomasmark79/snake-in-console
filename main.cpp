@@ -73,6 +73,7 @@ int main()
     // // // // // // // // // // // // // // // // // // // // //
     NetworkManager net;
     vector<int> eraryVector;
+    bool isMultiplayerActive = false;
     // // // // // // // // // // // // // // // // // // // // //
 
     std::random_device rd;
@@ -92,6 +93,8 @@ int main()
     std::string isUDPMultiplayer = getStringAnswerFromPlayer("Do you want to play multiplayer over network? y/n: ", 1, 3, PLAYER_ANSWER_TRESHHOLD);
     if (isAnswerYes(isUDPMultiplayer))
     {
+        isMultiplayerActive = true;
+        totalPlayers = 2;
         // Network Multiplayer
         std::cout << "Network multiplayer: enabled" << std::endl;
         std::string isThisGameSessionServer = getStringAnswerFromPlayer("Do you want to HOST network game? y/n: ", 1, 3, PLAYER_ANSWER_TRESHHOLD);
@@ -174,7 +177,7 @@ int main()
 
     while(true)
     {
-        Game gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames, net);
+        Game gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames, net, isMultiplayerActive);
         if (!gameSnake.getIsGameGoingOn())
             break;
     }

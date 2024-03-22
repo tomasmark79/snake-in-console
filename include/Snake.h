@@ -45,7 +45,7 @@ class Snake
 public:
     Snake(int id, int stepDivider, int totalW, int totalH, int spawnX, int spawnY);
     ~Snake();
-    void setMyDirectionAndShift(int directionPassed);
+    void setMyDirectionAndShift(int directionPassed, bool stopSnake = false);
 
     int getDirection() const
     {

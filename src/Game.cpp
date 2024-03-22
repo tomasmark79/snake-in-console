@@ -9,7 +9,7 @@
 #include <exception>
 
 Game::Game(int width, int height, double fruitEmptiness,
-           int totalPlayers, std::string* playerNames, NetworkManager& net)
+           int totalPlayers, std::string* playerNames, NetworkManager& net, bool isMultiplayerActive)
     : totalPlayers(totalPlayers),
       totalDeadPlayers(0),
       field(std::make_shared    <Field>   (width, height)),
@@ -17,7 +17,7 @@ Game::Game(int width, int height, double fruitEmptiness,
       graphic(std::make_unique  <Graphic> (width, height)),
       players(std::make_unique  <std::unique_ptr <Player> []> (totalPlayers + 1)),
       snakes(std::make_unique   <std::shared_ptr <Snake>  []> (totalPlayers + 1)),
-      isGameGoingOn(true),net(net)
+      isGameGoingOn(true),net(net), isMultiplayerActive(isMultiplayerActive)
 {
     // spawn player's id and names
     for (int playerId = 0; playerId < totalPlayers; playerId++)
@@ -62,50 +62,88 @@ void Game::mainLoop()
         std::chrono::duration<double, std::milli> elapsed_time = (end_time - start_time) / 1000;
 
         int playerInput[4] = {-1,-1,-1,-1};
+        int remoteKeyboardCode = -1;
         int keyboardCode = keyboard.getMyKeyboardCode();
 
-        if (net.getIsServer())
+        if (isMultiplayerActive)
         {
-            // receiving data from other side
-            int status = net.serverHostService(eraryVector, 50);
-            string str;
-            if (eraryVector.size() > 0 && status == DATA_RECEIVED)
-            {
-                for (size_t i = 0; i < eraryVector.size(); i++)
-                    str += std::to_string(eraryVector[i]) + " ";
-            }
-            graphic->coutVCentered(str);
 
-            // Send vector to client
-            net.sendVectorToClient(bufToSendtoClient, bufToSendtoClient.size());
+            isRemoteSnakeSync = false;
+
+            // Store pressed keyboard to colleague session
+            bufToSendtoClient[0] = keyboardCode;
+            bufToSendtoServer[0] = keyboardCode;
+
+            if (net.getIsServer())
+            {
+                // wait until data received
+                time_t startTime = time(nullptr);
+                while (time(nullptr) - startTime < 10) /* is good first timeout for sync in seconds */
+                {
+                    int status = net.serverHostService(eraryVector, 50);
+                    if (eraryVector.size() > 0 && status == 3)
+                    {
+                        // Snake 2 took remote direction
+                        remoteKeyboardCode = (eraryVector[0]);
+                        std::cout << std::to_string(remoteKeyboardCode);
+                        isRemoteSnakeSync = true;
+                        break;
+                    }
+                }
+
+                // Local Snake Directions
+                if (keyboardCode >= 10 && keyboardCode <=13)
+                    playerInput[0] = keyboardCode - 10;
+
+                // Send local Direction to other side
+                net.sendVectorToClient(bufToSendtoClient, bufToSendtoClient.size());
+
+                // Get remote Snake Directions
+                if (remoteKeyboardCode >= 10 && remoteKeyboardCode <=13)
+                    playerInput[1] = remoteKeyboardCode - 10;
+            }
+            else
+            {
+                // receiving data from other side
+                time_t startTime = time(nullptr);
+                while (time(nullptr) - startTime < 10) /* is good first timeout for sync in seconds */
+                {
+                    int status = net.clientHostService(eraryVector, 50);
+                    if (eraryVector.size() > 0 && status == 3)
+                    {
+                        // Snake 2 took remote direction
+                        remoteKeyboardCode = (eraryVector[0]);
+                        std::cout << std::to_string(remoteKeyboardCode);
+                        isRemoteSnakeSync = true;
+                        break;
+                    }
+                }
+
+                // Local Snake Directions
+                if (keyboardCode >= 10 && keyboardCode <=13)
+                    playerInput[0] = keyboardCode - 10;
+
+                // Send local Direction to other side
+                net.sendVectorToServer(bufToSendtoServer, bufToSendtoServer.size());
+
+                // Get remote Snake Directions
+                if (remoteKeyboardCode >= 10 && remoteKeyboardCode <=13)
+                    playerInput[1] = remoteKeyboardCode - 10;
+
+            }
         }
         else
         {
-            // receiving data from other side
-            int status = net.clientHostService(eraryVector, 50);
-            string str;
-            if (eraryVector.size() > 0 && status == DATA_RECEIVED)
-            {
-
-                for (size_t i =0; i < eraryVector.size(); i++)
-                    str += std::to_string(eraryVector[i]) + " ";
-            }
-            graphic->coutVCentered(str);
-
-            // Send vector to server
-            net.sendVectorToServer(bufToSendtoServer, bufToSendtoServer.size());
+            // split keyboard input to players if no network multiplayer
+            if (keyboardCode >= 10 && keyboardCode <=13)
+                playerInput[0] = keyboardCode - 10;
+            else if (keyboardCode >= 20 && keyboardCode <=23)
+                playerInput[1] = keyboardCode - 20;
+            else if (keyboardCode >= 30 && keyboardCode <=33)
+                playerInput[2] = keyboardCode - 30;
+            else if (keyboardCode >= 40 && keyboardCode <=43)
+                playerInput[3] = keyboardCode - 40;
         }
-
-
-        // split keybord input to players
-        if (keyboardCode >= 10 && keyboardCode <=13)
-            playerInput[0] = keyboardCode - 10;
-        else if (keyboardCode >= 20 && keyboardCode <=23)
-            playerInput[1] = keyboardCode - 20;
-        else if (keyboardCode >= 30 && keyboardCode <=33)
-            playerInput[2] = keyboardCode - 30;
-        else if (keyboardCode >= 40 && keyboardCode <=43)
-            playerInput[3] = keyboardCode - 40;
 
         // clear
         graphic->clearVideoBuffer();
@@ -123,7 +161,7 @@ void Game::mainLoop()
         for (int currSnake = 0; currSnake < this->totalPlayers; currSnake ++)
         {
             // Snake direction and movement and buffer filling
-            snakes[currSnake]->setMyDirectionAndShift(playerInput[currSnake]);
+            snakes[currSnake]->setMyDirectionAndShift(playerInput[currSnake], !isRemoteSnakeSync);
 
             graphic->addSnakeToVideoBuffer(currSnake,
                                            snakes[currSnake]->getX(),
@@ -165,22 +203,22 @@ void Game::mainLoop()
         // all players dead
         if (totalDeadPlayers == totalPlayers)
         {
-            graphic->coutGameOver();
-            break;
+            // graphic->coutGameOver();
+            //  break;
         }
 
         // restart game
-        if (keyboardCode == 6)
+        if (keyboardCode == 6 || remoteKeyboardCode == 6)
             break;
 
-        if (keyboardCode == 4)
+        if (keyboardCode == 4 || remoteKeyboardCode == 4)
         {
             this->isGameGoingOn = false;
             break;
         }
 
         // help game
-        if (keyboardCode == 5)
+        if (keyboardCode == 5 || remoteKeyboardCode == 5)
             graphic->coutHelp();
 
         // sleep interval in ms

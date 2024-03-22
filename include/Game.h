@@ -29,6 +29,8 @@ class Game
     std::unique_ptr<std::shared_ptr<Snake> []> snakes;
 
     NetworkManager& net;
+    bool isMultiplayerActive;
+    bool isRemoteSnakeSync = false;
 
 public:
     Game(int width,
@@ -36,7 +38,8 @@ public:
             double fruitEmptiness,
             int totalPlayers,
             std::string* playerNames,
-            NetworkManager& net
+            NetworkManager& net,
+            bool isMultiplayerActive
            );
 
     ~Game();

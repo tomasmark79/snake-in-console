@@ -18,6 +18,8 @@ Snake::Snake(int id, int stepDivider, int totalW, int totalH, int spawnX, int sp
     snakeCoosY[0] = spawnY;
 
     // TODO (tomas#1#): Direction must be fot every snake different at the start of the game
+    // Now we send no direction at the start of game
+    direction = -1;
 }
 
 Snake::~Snake()
@@ -65,13 +67,18 @@ bool Snake::isStepBack(int directionPassed) const
     return false;
 }
 
-void Snake::setMyDirectionAndShift(int directionPassed)
+void Snake::setMyDirectionAndShift(int directionPassed, bool stopSnake)
 {
+    if (stopSnake)
+        return;
+
     if (this->isDead)
         return;
 
     if(this->isStepBack(directionPassed))
+    {
         return;
+    }
 
     if (directionPassed >= 0 && directionPassed <= 3) // allowed directions
         this->direction = directionPassed;
