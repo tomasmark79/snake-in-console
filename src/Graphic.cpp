@@ -74,12 +74,12 @@ void Graphic::addSnakeToVideoBuffer(const int id, const int* x, const int* y, in
         if (!isDie)
         {
             this->videoBuffer[y [bodyElement] ] [x [bodyElement] ] =
-                bodyElement == 0 ? char(id+1) : '0';
+                bodyElement == 0 ? static_cast<char>(id + 49) : '0';
         }
         else
         {
             this->videoBuffer[y [bodyElement] ] [x [bodyElement] ] =
-                bodyElement == 0 ? char(id+1) : 'X';
+                bodyElement == 0 ? static_cast<char>(id + 49) : 'X';
 
         }
     }

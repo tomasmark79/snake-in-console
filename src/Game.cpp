@@ -38,10 +38,13 @@ Game::~Game()
     field.reset();
 }
 
-#define DATA_RECEIVED   (int)3
+#define DISCONNECTED    (int) 2
+#define DATA_RECEIVED   (int) 3
+// Network protocol for Snake
+// [0] = keyboard command
+// [1] = reserved for future
+// [2] = reserved for future of future
 
-// [0] = direction
-// [1] = reserved
 vector<int> bufToSendtoServer = {1,0};
 vector<int> bufToSendtoClient = {1,0};
 vector<int> eraryVector;
@@ -69,6 +72,8 @@ void Game::mainLoop()
         {
 
             isRemoteSnakeSync = false;
+            isSomeoneDisconnected = false;
+
 
             // Store pressed keyboard to colleague session
             bufToSendtoClient[0] = keyboardCode;
@@ -78,15 +83,22 @@ void Game::mainLoop()
             {
                 // wait until data received
                 time_t startTime = time(nullptr);
-                while (time(nullptr) - startTime < 10) /* is good first timeout for sync in seconds */
+                // 5 seconds timout if some noise on the way
+                while (time(nullptr) - startTime < 5)
                 {
+                    // 50 ms for get the answer for the other side
                     int status = net.serverHostService(eraryVector, 50);
-                    if (eraryVector.size() > 0 && status == 3)
+                    if (eraryVector.size() > 0 && status == DATA_RECEIVED)
                     {
                         // Snake 2 took remote direction
                         remoteKeyboardCode = (eraryVector[0]);
                         std::cout << std::to_string(remoteKeyboardCode);
-                        isRemoteSnakeSync = true;
+                        isRemoteSnakeSync = true; /* we get an answer - snake can move */
+                        break;
+                    }
+                    else if (status == DISCONNECTED)
+                    {
+                        isSomeoneDisconnected = true;
                         break;
                     }
                 }
@@ -106,15 +118,22 @@ void Game::mainLoop()
             {
                 // receiving data from other side
                 time_t startTime = time(nullptr);
-                while (time(nullptr) - startTime < 10) /* is good first timeout for sync in seconds */
+                // 5 seconds timout if some noise on the way
+                while (time(nullptr) - startTime < 5)
                 {
+                    // 50 ms for get the answer for the other side
                     int status = net.clientHostService(eraryVector, 50);
-                    if (eraryVector.size() > 0 && status == 3)
+                    if (eraryVector.size() > 0 && status == DATA_RECEIVED)
                     {
                         // Snake 2 took remote direction
                         remoteKeyboardCode = (eraryVector[0]);
                         std::cout << std::to_string(remoteKeyboardCode);
-                        isRemoteSnakeSync = true;
+                        isRemoteSnakeSync = true; /* we get an answer - snake can move */
+                        break;
+                    }
+                    else if (status == DISCONNECTED)
+                    {
+                        isSomeoneDisconnected = true;
                         break;
                     }
                 }
@@ -134,6 +153,7 @@ void Game::mainLoop()
         }
         else
         {
+            isRemoteSnakeSync = true; // always true for local game
             // split keyboard input to players if no network multiplayer
             if (keyboardCode >= 10 && keyboardCode <=13)
                 playerInput[0] = keyboardCode - 10;
@@ -181,30 +201,43 @@ void Game::mainLoop()
 
             this->checkSnakeConflicts(currSnake);
 
-//            playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
-//            playerStats[currSnake] = "Player with Snake "
-//                                     + players[currSnake]->getPlayerName()
-//                                     + " Points: " + std::to_string(playerPoints[currSnake])
-//                                     + (snakes[currSnake]->getIsDead()
-//                                        ? " was killed by " + snakes[currSnake]->getDeadDescripion()
-//                                        : " lives");
+            playerPoints[currSnake] = snakes[currSnake]->getLength() * SCORE_MULTIPLIER;
+            playerStats[currSnake] = "Player with Snake "
+                                     + players[currSnake]->getPlayerName()
+                                     + " Points: " + std::to_string(playerPoints[currSnake])
+                                     + (snakes[currSnake]->getIsDead()
+                                        ? " was killed by " + snakes[currSnake]->getDeadDescripion()
+                                        : " lives");
 
 
         } // go through snakes end
         graphic->redrawVideoBuffer();
 
         // print stats
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < totalPlayers; i++)
             graphic->coutVCentered(playerStats[i]);
-//        graphic->coutVCentered("Duration: " +
-//                               std::to_string((int)elapsed_time.count()) + "s");
-//        graphic->coutVCentered("(H)elp | (R)estart | e(X)it");
+        graphic->coutVCentered("Duration: " +
+                               std::to_string((int)elapsed_time.count()) + "s");
+
+        // Additive multiplayer conditions
+        if (isMultiplayerActive)
+        {
+            if (net.getIsServer())
+                graphic->coutVCentered("Server Sesion");
+            else
+                graphic->coutVCentered("Client Sesion");
+
+            graphic->coutVCentered("(H)elp | (R)estart | e(X)it");
+
+            if (isSomeoneDisconnected)
+                break;
+        }
 
         // all players dead
         if (totalDeadPlayers == totalPlayers)
         {
-            // graphic->coutGameOver();
-            //  break;
+            graphic->coutGameOver();
+            break;
         }
 
         // restart game

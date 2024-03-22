@@ -100,11 +100,13 @@ int main()
         std::string isThisGameSessionServer = getStringAnswerFromPlayer("Do you want to HOST network game? y/n: ", 1, 3, PLAYER_ANSWER_TRESHHOLD);
         if (isAnswerYes(isThisGameSessionServer))
         {
+            std::string bindIP = getStringAnswerFromPlayer("Enter IP address where server will host the game\nand press enter? ex. 192.168.1.1: ", 7, 15, PLAYER_ANSWER_TRESHHOLD);
             // Server Session
             std::cout << "Server session started ... " << std::endl;
             net
             .setIsServer(true)
-            .setBindHostName("192.168.79.101")
+            //.setBindHostName("192.168.79.101")
+            .setBindHostName(bindIP)
             .setBindPort(7996)
             .setMaxClients(4)
             .setChannels(2)
@@ -116,10 +118,12 @@ int main()
         else
         {
             // Client Session
+            std::string remoteIP = getStringAnswerFromPlayer("Enter remote server IP address where server will host the game\nand press enter? ex. 192.168.1.1: ", 7, 15, PLAYER_ANSWER_TRESHHOLD);
             std::cout << "Client session started ... " << std::endl;
             net
             .setIsServer(false)
-            .setRemoteHostName("192.168.79.101")
+            // .setRemoteHostName("192.168.79.101")
+            .setRemoteHostName(remoteIP)
             .setRemotePort(7996)
             .setOutConnections(1);
             net.initENet();
@@ -175,12 +179,12 @@ int main()
         }
     }
 
-    while(true)
-    {
+//    while(true)
+//    {
         Game gameSnake(fieldWidth, fieldHeight, fruitEmptiness, totalPlayers, playerNames, net, isMultiplayerActive);
-        if (!gameSnake.getIsGameGoingOn())
-            break;
-    }
+//        if (!gameSnake.getIsGameGoingOn())
+//            break;
+//    }
     return 0;
 
 }

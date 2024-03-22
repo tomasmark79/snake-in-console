@@ -31,6 +31,7 @@ class Game
     NetworkManager& net;
     bool isMultiplayerActive;
     bool isRemoteSnakeSync = false;
+    bool isSomeoneDisconnected = false;
 
 public:
     Game(int width,
