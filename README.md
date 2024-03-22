@@ -12,6 +12,7 @@ The Snake game is rendered using only ASCII characters.
 This game is not perfect. But It works!
 
 Single Player
+
 https://github.com/tomasmark79/snake-in-console/assets/44719504/18b0d478-8cb9-4583-9580-33f1d8a77a2b
 
 
