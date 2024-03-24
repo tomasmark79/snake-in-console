@@ -1,26 +1,25 @@
-# snake-in-console
-Traditional ***Snake*** game in C++ for Windows console with multiplayer feature.
+The ***SNAKE*** game.
 
-1. Single Player
-2. Hot Seat Player - up to 4 player at one keyboard
-3. Network Multiplayer  - udp internet communication up to 2 players
+Written in C++ / v. 17.
 
-Welcome:
-In an effort to get some warm up practice in I decided to create my own Snake game example, which can be played within the Windows console.
-The Snake game is rendered using only ASCII characters.
+Features:
+Graphics rendered in **ASCII** within Windows Terminal (powershell, tabby, etc.)
+**Single Player** - keyboard controls are W A S D
+**Hot Seat Player** - up to 4 players, keyboard control are W A S D - I J K L - [ ; ' \ - 8 4 5 3
+**Internet Network Multiplayer via UDP protocol**  - up to 2 players
 
-This game is not perfect. But It works!
+For UDP communication was used eNet library from: http://enet.bespin.org/ (you need it for compile Snake)
+The C++ wrapper for eNet library is here: https://github.com/tomasmark79/server-client (you need it for compile Snake)
 
-***Network MultiPlayer***
-For UDP Client/Server connection is used eNet library from: http://enet.bespin.org/. The C++ wrapper I written is here: https://github.com/tomasmark79/server-client.
-The code its not perfect, but for only the excersice enough.
-
-To start game you have to enter bind IP address for server and remote IP address for client and you are ready to multi play over internet network with your colleague.
+To start multiplayer game over internet, intranet or localhost:
+Hosting player enter the IP address or FQDN and will host the game.
+Client player enter the IP address or FQDN and will connect to the host.
+Protocol used UDP, port used 7996.
 
 https://github.com/tomasmark79/snake-in-console/assets/44719504/e8a7397a-390e-451c-8248-73bca63dce72
 
 ***Hot Seat***
-Up to 4 players with one keyobard can play this game. Big fun :D
+Up to 4 players.
 
 https://github.com/tomasmark79/snake-in-console/assets/44719504/b0a1e7e8-10b2-4ef8-bb4e-2cd7843d9454
 
